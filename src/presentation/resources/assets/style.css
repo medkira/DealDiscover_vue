@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --primary-50: 239 249 255; /* Pale sky blue (Lightest) */
+  --primary-100: 216 238 253; /* Lighter sky blue */
+  --primary-200: 187 223 251; /* Light blue */
+  --primary-300: 140 204 249; /* Medium blue */
+  --primary-400: 93 185 247; /* Light cerulean blue */
+  --primary-500: 41 166 245; /* Cerulean Blue (Your chosen blue) */
+  --primary-600: 0 147 242; /* Darker cerulean blue */
+  --primary-700: 0 119 239; /* Even darker cerulean blue */
+  --primary-800: 0 92 236; /* Very dark blue */
+  --primary-900: 0 66 233; /* Almost black with a blue tint */
+  --primary-950: 0 40 230; /* Darkest blue (Almost black) */
+  --surface-0: 255 255 255; /* White (unchanged) */
+  --surface-50: 249 250 251; /* Light gray (unchanged) */
+  --surface-100: 243 244 246; /* Lighter gray (unchanged) */
+  --surface-200: 229 231 235; /* Gray (unchanged) */
+  --surface-300: 209 213 219; /* Darker gray (unchanged) */
+  --surface-400: 156 163 175; /* Even darker gray (unchanged) */
+  --surface-500: 107 114 128; /* Black (unchanged) */
+  --surface-600: 75 85 99; /* Darker black (unchanged) */
+  --surface-700: 55 65 81; /* Even darker black (unchanged) */
+  --surface-800: 31 41 55; /* Almost black (unchanged) */
+  --surface-900: 17 24 39; /* Black (unchanged) */
+}
