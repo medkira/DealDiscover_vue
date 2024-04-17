@@ -3,6 +3,7 @@ import './presentation/resources/assets/style.css'
 import PrimeVue from 'primevue/config';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import "primeicons/primeicons.css";
 
 
 // @ts-ignore

@@ -25,3 +25,10 @@
   --surface-800: 31 41 55; /* Almost black (unchanged) */
   --surface-900: 17 24 39; /* Black (unchanged) */
 }
+
+/* In your CSS file */
+.bg-custom-title-color {
+  background-color: #f4f8fb;
+}
+
+

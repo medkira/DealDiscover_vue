@@ -10,8 +10,9 @@ export default {
       'm-0',
       {
         'px-4 py-4': props.size == 'large',
-        'px-2 py-2': props.size == 'small',
-        'p-3': props.size == null
+        'px-9 py-2': props.size == 'small',
+        'p-3': props.size == null,
+        
       },
 
       // Shape
@@ -23,7 +24,7 @@ export default {
       { 'first:ml-0 -ml-px': parent.instance.$name == 'InputGroup' && !props.showButtons },
 
       // Colors
-      'text-surface-600 dark:text-surface-200',
+      'text-surface-800 dark:text-surface-200',
       'placeholder:text-surface-400 dark:placeholder:text-surface-500',
       'bg-surface-0 dark:bg-surface-900',
       'border',

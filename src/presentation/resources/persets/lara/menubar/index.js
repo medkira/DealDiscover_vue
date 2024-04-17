@@ -23,7 +23,7 @@ export default {
             // Flexbox
             'sm:flex',
             'items-center',
-            'flex-wrap',
+            // 'flex-wrap',
             'flex-col sm:flex-row',
             { hidden: !props?.mobileActive, flex: props?.mobileActive },
 

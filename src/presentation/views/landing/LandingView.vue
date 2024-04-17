@@ -1,55 +1,46 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDialog.vue'
-
+import { RouterView, RouterLink } from 'vue-router'
+import MenuBar from '@/presentation/components/MenuBar.vue'
+import SectionOne from '@/presentation/components/SectionOne.vue'
+import LatestPlace from '@/presentation/components/LatestPlace.vue'
+import MessageVue from '@/presentation/components/MessageVue.vue'
+import TestView from '@/presentation/components/TestView.vue'
 </script>
 
 <template>
+  <div>
+    <main>
+      <MenuBar />
+      <div class="pt-10 pb-10">
+        <SectionOne />
+      </div>
+      <LatestPlace/>
+      <!-- <RouterLink to="/about">About</RouterLink> -->
+      <!-- <MessageVue/> -->
+      <!-- <TestView/> -->
+    </main>
 
-
-  <header>
-    <LoginOrRegisterDialog />
-  </header>
-  <main>
-
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <!-- <RouterLink to="/auth/login">Login</RouterLink> -->
-      <RouterLink to="/places">places</RouterLink>
-      <RouterLink to="/foods">foods</RouterLink>
-    </nav>
-
-
-    <div class="m-10 flex rounded-lg overflow-hidden bg-gray-800 shadow-md w-full max-w-md mx-auto">
-      <input type="search" name="search" id="search"
-        class="flex-grow px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 rounded-l-lg text-gray-300 bg-transparent placeholder-gray-500"
-        placeholder="Search">
-      <button type="submit"
-        class="px-4 py-3 text-white font-medium bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white rounded-r-lg">
-        Search
-      </button>
-
-    </div>
-
-
-
-    <RouterView />
-
-
-
-
-
-
-  </main>
+  </div>
 </template>
 
+<!-- <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/places">places</RouterLink>
+      <RouterLink to="/foods">foods</RouterLink>
+    </nav> -->
 
+<!-- 
+    <div class="m-10 flex rounded-lg overflow-hidden bg-gray-800 shadow-md w-full max-w-md mx-auto">
+  <input type="search" name="search" id="search"
+    class="flex-grow px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 rounded-l-lg text-gray-300 bg-transparent placeholder-gray-500"
+    placeholder="Search">
+  <button type="submit"
+    class="px-4 py-3 text-white font-medium bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white rounded-r-lg">
+    Search
+  </button>
 
-
-
-
-
+</div> -->
 
 <!-- 
     <div class="card flex justify-center">
@@ -66,10 +57,6 @@ import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDial
         </p>
       </Dialog>
     </div> -->
-
-
-
-
 
 <style scoped>
 header {

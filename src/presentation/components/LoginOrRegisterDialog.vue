@@ -1,132 +1,177 @@
 <script setup lang="ts">
-import Dialog from 'primevue/dialog';
+import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import { ref } from "vue";
-import Dropdown from 'primevue/dropdown';
-import { LoginStore } from '@/presentation/stores/Auth/LoginStore';
+import { ref } from 'vue'
+import Dropdown from 'primevue/dropdown'
+import { LoginStore } from '@/presentation/stores/Auth/LoginStore'
 import GoogleLoginButton from '@/presentation/components/Buttons/GoogleLoginButton.vue'
+import FloatLabel from 'primevue/floatlabel'
 
-const authStore = LoginStore();
+const authStore = LoginStore()
 
-
-
-const email = ref('');
-const password = ref('');
-const selectedRole = ref('');
+const email = ref('')
+const password = ref('')
+const selectedRole = ref('')
 const roleOptions = [
-    { label: 'Owner', value: 'owner' },
-    { label: 'User', value: 'noramUser' }
-];
+  { label: 'Owner', value: 'owner' },
+  { label: 'User', value: 'noramUser' }
+]
 
-const visible = ref(false);
-const isLoginActive = ref(true);
+const visible = ref(false)
+const isLoginActive = ref(true)
 
 const submitLogin = async () => {
-    await authStore.login({ email: email.value, password: password.value });
-    if (authStore.isLoggedIn == true) {
-        visible.value = false;
-    }
-
-};
-
-const submitRegister = async () => {
-
+  await authStore.login({ email: email.value, password: password.value })
+  if (authStore.isLoggedIn == true) {
+    visible.value = false
+  }
 }
 
-
-
+const submitRegister = async () => {}
 </script>
 
 <template>
-    <Button label="Login" @click="visible = true" class="p-10" />
-    <div class="card flex justify-center ">
-
-        <Dialog v-model:visible="visible" modal :pt="{
+  <Button label="Login" @click="visible = true" class="p-10" />
+  <div class="card flex justify-center">
+    <Dialog
+      v-model:visible="visible"
+      modal
+      :pt="{
         mask: {
-            style: 'backdrop-filter: blur(2px)'
+          style: 'backdrop-filter: blur(2px)'
         }
-    }">
-            <template #container="{ closeCallback }">
-                <div class="flex flex-col px-10 py-7 gap-5 "
-                    style="border-radius: 12px; background-image: radial-gradient(circle at left top, rgb(var(--primary-400)), rgb(var(--primary-700)))">
+      }"
+    >
+      <template #container="{ closeCallback }">
+        <div
+          class="flex flex-col px-10 py-7 gap-5"
+          style="
+            border-radius: 12px;
+            background-image: radial-gradient(
+              circle at left top,
+              rgb(var(--primary-400)),
+              rgb(var(--primary-700))
+            );
+          "
+        >
+          <div class="flex items-center gap-4 mb-4">
+            <Button
+              label="Sign-In"
+              @click="isLoginActive = true"
+              v-model="isLoginActive"
+              text
+              class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10 text-white-600"
+              style="color:"
+            ></Button>
+            <Button
+              label="Register"
+              @click="isLoginActive = !isLoginActive"
+              text
+              class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"
+            ></Button>
+          </div>
+          <template v-if="isLoginActive">
+            <div
+              v-if="authStore.loginStatusMessage"
+              class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50"
+            >
+              {{ authStore.loginStatusMessage }}
+            </div>
+            <div class="inline-flex flex-col gap-2">
+              <FloatLabel>
+                <InputText
+                  id="username"
+                  class="bg-white/20 border-0 p-4 px-14 text-primary-50"
+                  v-model="email"
+                />
+                <label for="username" class="text-primary-50 font-semibold">Username</label>
+              </FloatLabel>
+            </div>
+            <div class="inline-flex flex-col gap-2" style="margin-top: 15px">
+              <!-- Adjust the margin-top value as needed -->
+              <FloatLabel>
+                <InputText
+                  id="password"
+                  class="bg-white/20 border-0 p-4 px-14 text-primary-50"
+                  v-model="password"
+                />
+                <label for="password" class="text-primary-50 font-semibold">Password</label>
+              </FloatLabel>
+            </div>
 
-                    <div class="flex items-center gap-4 mb-4">
-                        <Button label="Sign-In" @click="isLoginActive = true" v-model="isLoginActive" text
-                            class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10 text-white-600"
-                            style="color: "></Button>
-                        <Button label="Register" @click="isLoginActive = !isLoginActive" text
-                            class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
-                    </div>
-                    <template v-if="isLoginActive">
-                        <div v-if="authStore.loginStatusMessage"
-                            class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50">
-                            {{ authStore.loginStatusMessage }}
-                        </div>
-                        <div class="inline-flex flex-col gap-2">
-                            <label for="username" class="text-primary-50 font-semibold">Username</label>
-                            <InputText v-model="email" id="username" class="bg-white/20 border-0 p-4 text-primary-50">
-                            </InputText>
-                        </div>
-                        <div class="inline-flex flex-col gap-2">
-                            <label for="password" class="text-primary-50 font-semibold">Password</label>
-                            <InputText v-model="password" id="password" class="bg-white/20 border-0 p-4 text-primary-50"
-                                type="password">
-                            </InputText>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <Button label="Sign-In" @click="submitLogin" text
-                                class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
-                            <Button label="Cancel" @click="closeCallback" text
-                                class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
-                        </div>
+            <div class="flex items-center gap-2">
+              <Button
+                label="Sign-In"
+                @click="submitLogin"
+                text
+                class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"
+              ></Button>
+              <Button
+                label="Cancel"
+                @click="closeCallback"
+                text
+                class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"
+              ></Button>
+            </div>
 
+            <div class="flex items-center justify-cente">
+              <GoogleLoginButton />
+            </div>
+          </template>
 
-                        <div class="flex items-center justify-cente">
-                            <GoogleLoginButton />
-                        </div>
-
-                    </template>
-
-                    <template v-else>
-                        <div class="inline-flex flex-col gap-2">
-                            <label for="name" class="text-primary-50 font-semibold">Name</label>
-                            <InputText id="name" class="bg-white/20 border-0 p-4 text-primary-50"></InputText>
-                        </div>
-                        <div class="inline-flex flex-col gap-2">
-                            <label for="email" class="text-primary-50 font-semibold">Email</label>
-                            <InputText id="email" class="bg-white/20 border-0 p-4 text-primary-50" type="email">
-                            </InputText>
-                        </div>
-                        <div class="inline-flex flex-col gap-2">
-                            <label for="registerPassword" class="text-primary-50 font-semibold">Password</label>
-                            <InputText id="registerPassword" class="bg-white/20 border-0 p-4 text-primary-50"
-                                type="password">
-                            </InputText>
-                        </div>
-                        <div class="inline-flex flex-col gap-2">
-                            <label for="role" class="text-primary-50 font-semibold">Role</label>
-                            <Dropdown id="role" v-model="selectedRole" :options="roleOptions"
-                                placeholder="Select a Role" option-label="label" option-value="value"
-                                class="bg-white/20 border-0 p-4 text-primary-50">
-                            </Dropdown>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <Button label="Register" @click="submitRegister" text
-                                class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
-                            <Button label="Cancel" @click="closeCallback" text
-                                class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
-                        </div>
-                    </template>
-                </div>
-
-            </template>
-        </Dialog>
-    </div>
+          <template v-else>
+            <div class="inline-flex flex-col gap-2">
+              <label for="name" class="text-primary-50 font-semibold">Name</label>
+              <InputText id="name" class="bg-white/20 border-0 p-4 text-primary-50"></InputText>
+            </div>
+            <div class="inline-flex flex-col gap-2">
+              <label for="email" class="text-primary-50 font-semibold">Email</label>
+              <InputText id="email" class="bg-white/20 border-0 p-4 text-primary-50" type="email">
+              </InputText>
+            </div>
+            <div class="inline-flex flex-col gap-2">
+              <label for="registerPassword" class="text-primary-50 font-semibold">Password</label>
+              <InputText
+                id="registerPassword"
+                class="bg-white/20 border-0 p-4 text-primary-50"
+                type="password"
+              >
+              </InputText>
+            </div>
+            <div class="inline-flex flex-col gap-2">
+              <label for="role" class="text-primary-50 font-semibold">Role</label>
+              <Dropdown
+                id="role"
+                v-model="selectedRole"
+                :options="roleOptions"
+                placeholder="Select a Role"
+                option-label="label"
+                option-value="value"
+                class="bg-white/20 border-0 p-4 text-primary-50"
+              >
+              </Dropdown>
+            </div>
+            <div class="flex items-center gap-2">
+              <Button
+                label="Register"
+                @click="submitRegister"
+                text
+                class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"
+              ></Button>
+              <Button
+                label="Cancel"
+                @click="closeCallback"
+                text
+                class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"
+              ></Button>
+            </div>
+          </template>
+        </div>
+      </template>
+    </Dialog>
+  </div>
 </template>
-
-
-
 
 <!-- <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg"
             class="block mx-auto">

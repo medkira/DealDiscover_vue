@@ -31,7 +31,7 @@ export default {
             'flex items-center',
 
             // Spacing
-            'p-5',
+            'p-3',
             '-mb-[2px]',
 
             // Shape
@@ -44,18 +44,18 @@ export default {
                 'bg-surface-0 dark:bg-surface-800': state.d_activeIndex !== context.index,
                 'text-surface-700 dark:text-surface-0/80': state.d_activeIndex !== context.index,
 
-                'bg-surface-0 dark:bg-surface-800': state.d_activeIndex === context.index,
-                'border-primary-500 dark:border-primary-400': state.d_activeIndex === context.index,
-                'text-primary-500 dark:text-primary-400': state.d_activeIndex === context.index
+                // 'bg-surface-0 dark:bg-surface-800': state.d_activeIndex === context.index,
+                // 'border-primary-500 dark:border-primary-400': state.d_activeIndex === context.index,
+                // 'text-primary-500 dark:text-primary-400': state.d_activeIndex === context.index
             },
 
             // States
             'focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:ring focus-visible:ring-inset',
             'focus-visible:ring-primary-400/50 dark:focus-visible:ring-primary-300/50',
             {
-                'hover:bg-surface-0 dark:hover:bg-surface-800/80': state.d_activeIndex !== context.index,
-                'hover:border-surface-400 dark:hover:border-primary-400': state.d_activeIndex !== context.index,
-                'hover:text-surface-900 dark:hover:text-surface-0': state.d_activeIndex !== context.index
+                // 'hover:bg-surface-0 dark:hover:bg-surface-800/80': state.d_activeIndex !== context.index,
+                // 'hover:border-surface-400 dark:hover:border-primary-400': state.d_activeIndex !== context.index,
+                // 'hover:text-surface-900 dark:hover:text-surface-0': state.d_activeIndex !== context.index
             },
 
             // Transitions

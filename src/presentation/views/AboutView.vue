@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { appServiceClientInstance } from '@/app/factory/di';
 import type { AxiosResponse } from 'node_modules/axios/index.cjs';
+import LatestPlace from '../components/LatestPlace.vue';
 
 function isAxiosResponse<T>(response: any): response is AxiosResponse<T> {
   return response && typeof response === 'object' && 'status' in response && 'data' in response;
 }
 const fetchData = async () => {
-  const res = await appServiceClientInstance.getLatestPost({ page: "5" });
+  const res = await appServiceClientInstance.getLatestPost({ page: "5" ,type: 'place'});
   console.log(res);
   return res;
 };
@@ -24,6 +25,7 @@ const fetchData = async () => {
   <button @click="fetchData" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
     Fetch Data
   </button>
+  <LatestPlace/>
 </template>
 
 <style>

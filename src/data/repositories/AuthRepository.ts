@@ -21,7 +21,7 @@ export class AuthRepository implements LoginRepository {
             // console.log("either right: ", Either.right(response.data))
             return Either.right(response.data);
             // }
-        } catch (error) {
+        } catch (error: any) {
 
             const errorHandler = new ErrorHandler(error);
             const failure: Failure = errorHandler.failure;

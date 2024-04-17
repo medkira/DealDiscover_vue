@@ -1,26 +1,52 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/presentation/views/home/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
-import PlacesView from '../views/places/PlacesView.vue';
+import PlacesView from '../views/places/PlacesView.vue'
+import LandingView from '@/presentation/views/landing/LandingView.vue'
+import LatestPlace from '../components/LatestPlace.vue'
 // import LoginView from '@/presentation/views/login/View/LoginView.vue'
 // import LandingView from '@/presentation/views/landing/LandingView.vue';
 
 // import AppCookie from '@/app/storage/app_cookie'
-import RouterGuard from './Guard/routerGuards';
+import RouterGuard from './Guard/routerGuards'
 // import LoginOrRegisterDialog from '../components/LoginOrRegisterDialog.vue';
-
-
-
+import DefaultLayout from '../layout/DefaultLayout.vue'
+import PostsView from '../components/PostsView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/about',
-      name: 'about',
-      component: AboutView
+      path: '/Places',
+      name: 'Places',
+      component: LatestPlace,
+      meta: {
+        layout: DefaultLayout
+      }
     },
-
-
+    {
+      path: '/Posts',
+      name: 'Posts',
+      component: PostsView,
+      meta: {
+        layout: DefaultLayout
+      }
+    },
+    // {
+    //   path: '/Foods',
+    //   name: 'Foods',
+    //   component: AboutView,
+    //   meta: {
+    //     layout: DefaultLayout
+    //   }
+    // },
+    {
+      path: '/',
+      name: 'landing',
+      component: LandingView,
+      meta: {
+        layout: DefaultLayout
+      }
+    },
 
     // {
     //   path: '/auth',
@@ -43,47 +69,33 @@ const router = createRouter({
       path: '/place/:id',
       name: 'place',
       component: PlacesView
-    },
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-      alias: '/home',
-      // children: [
-      //   {
-      //     path: 'places',
-      //     name: 'places',
-      //     component: PlacesView,
-      //   },
+    }
 
-      //   {
-      //     path: 'foods',
-      //     name: 'foods',
-      //     component: FoodsView,
-      //   }
-      // ]
-    },
+    // {
+    //   path: '/',
+    //   name: 'home',
+    //   component: HomeView,
+    //   alias: '/home',
+    // children: [
+    //   {
+    //     path: 'places',
+    //     name: 'places',
+    //     component: PlacesView,
+    //   },
+
+    //   {
+    //     path: 'foods',
+    //     name: 'foods',
+    //     component: FoodsView,
+    //   }
+    // ]
+    // },
   ]
-});
+})
 
 export default router
 
-
-
-new RouterGuard();
-
-
-
-
-
-
-
-
-
-
-
-
-
+// new RouterGuard();
 
 // router.beforeEach((to, from, next) => {
 //   if (to.name !== 'login' && !isAuthenticated) next({ name: 'login' })

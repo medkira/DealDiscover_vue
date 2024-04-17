@@ -2,15 +2,18 @@
 import { appServiceClientInstance } from "@/app/factory/di";
 import IconGoogle from "@/presentation/components/icons/IconGoogle.vue"
 import { NetworkConstants } from "@/app/constants";
+import router from "@/presentation/router";
 
 // export default {
 //     name: 'SignInButton',
 // };
 
 const loginGoogle = async () => {
-    const res = await appServiceClientInstance.authGoogle()
-    // console.log((res).data)
-}
+     const res = await appServiceClientInstance.authGoogle()
+    console.log('testttt',res.data.authenticationToken)
+    
+    // router.push("home")
+}   
 </script>
 
 <template>
@@ -18,9 +21,9 @@ const loginGoogle = async () => {
         <IconGoogle />
         Sign in with Google
     </button>
-    <a href="http://localhost:8080/api/google">
+    <!-- <a href="http://localhost:8080/api/google">
         TEST
-    </a>
+    </a> -->
 </template>
 
 
