@@ -10,13 +10,21 @@ export default class RouterGuard {
         router.beforeEach(async (to, from) => {
             const cookieAdapter = new AppCookie();
             const isAuthenticated = cookieAdapter.getTokenCookie();
-            if (!isAuthenticated && to.name !== 'home') {
+            console.log("TO RESULT, ", to)
+            const publicRoutes = ['home', 'places',];
+            if (!isAuthenticated && !publicRoutes.includes(to.name as string)) {
+                // if (!isAuthenticated && to.name !== 'home') {
+
                 // Redirect the user to the login page if not authenticated
                 return { name: 'home' }
-            } else if (isAuthenticated && to.name === 'home') {
-                // Redirect the user to the home page if  authenticated
-                return { name: 'home' }
             }
+
+            // ! example mta3 infinite loop rour !!!
+            // else if (isAuthenticated && to.name === 'home') {
+            //     console.log("HI HOME")
+            //     // Redirect the user to the home page if  authenticated
+            //     return { name: 'home' }
+            // }
         });
     }
 }

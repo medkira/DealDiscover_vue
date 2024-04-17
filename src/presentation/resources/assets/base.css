@@ -62,11 +62,15 @@ body {
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
+
   transition:
     color 0.5s,
     background-color 0.5s;
-  line-height: 1.6;
-  font-family:
+  font-family: 'Exo 2', sans-serif;
+  font-optical-sizing: auto;
+
+  /* font-family:
+    Roboto,
     Inter,
     -apple-system,
     BlinkMacSystemFont,
@@ -78,9 +82,36 @@ body {
     'Fira Sans',
     'Droid Sans',
     'Helvetica Neue',
-    sans-serif;
-  font-size: 15px;
+    sans-serif; */
+  font-size: 16px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background: #2980b9;
+  background: linear-gradient(to left, #d1d3d3, #5fbadb, #267db8);
+  background: linear-gradient(to left, #d1d3d3, #5fbadb, #267db8);
+  /* background: #56ccf2;
+  background: -webkit-linear-gradient(to right, #2f80ed, #56ccf2); 
+  background: linear-gradient(
+    to right,
+    #2f80ed,
+    #56ccf2
+  );  
+  /* background: #485563; 
+  background: -webkit-linear-gradient(to right, #29323c, #485563); 
+  background: linear-gradient(
+    to right,
+    #29323c,
+    #485563
+  );  
+
+
+  /* background: #0f2027; */
+  /* background: -webkit-linear-gradient(to right, #2c5364, #203a43, #0f2027);
+  background: linear-gradient(to right, #39697e, #213b44, #042f41); */
+  /* 
+  background: #74ebd5;
+  background: -webkit-linear-gradient(to right, #acb6e5, #74ebd5);
+  background: linear-gradient(to right, #acb6e5, #74ebd5); */
 }

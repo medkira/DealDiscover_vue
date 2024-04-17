@@ -1,4 +1,5 @@
 import { NetworkConstants } from "@/app/constants";
+import type { SignUserRepository } from "@/domain/repository/authentication/SignUpUserInterface";
 import type { AxiosInstance, AxiosResponse } from "axios";
 
 export class AppServiceClient {
@@ -12,9 +13,13 @@ export class AppServiceClient {
         return await this.http.post(`${NetworkConstants.BASE_API}/login`, loginRequest);
     }
 
-    async authGoogle(): Promise<AxiosResponse<{ authenticationToken: string }>> {
-        return await this.http.get(`${NetworkConstants.BASE_API}/google`);
+    async registeUser(registerRequest: { username: string, email: string, password: string, role: string }): Promise<AxiosResponse<SignUserRepository.Response>> {
+        return await this.http.post(`${NetworkConstants.BASE_API}/register`, registerRequest);
     }
+
+    // async registerOwner(registerRequest: { email: string, password: string, role: string }): Promise<AxiosResponse<{ authenticationToken: string }>> {
+    //     return await this.http.post(`${NetworkConstants.BASE_API}/register`, registerRequest);
+    // }
 
 
     // ? Post

@@ -1,26 +1,32 @@
 <script setup lang="ts">
-import { appServiceClientInstance } from "@/app/factory/di";
+// import { appServiceClientInstance } from "@/app/factory/di";
 import IconGoogle from "@/presentation/components/icons/IconGoogle.vue"
 import { NetworkConstants } from "@/app/constants";
-
+import { ref } from 'vue';
 // export default {
 //     name: 'SignInButton',
 // };
+// defineProps({
+// });
+
+const props = defineProps<{
+    buttonName: string
+}>()
+const { buttonName } = props
 
 const loginGoogle = async () => {
-    const res = await appServiceClientInstance.authGoogle()
-    // console.log((res).data)
+    window.location.href = `${NetworkConstants.BASE_API}/google`;
+    // const res = await appServiceClientInstance.authGoogle()
+    // console.log("data: ", res.data)
 }
 </script>
 
 <template>
     <button class="signin" @click="loginGoogle">
         <IconGoogle />
-        Sign in with Google
+        {{ buttonName }}
     </button>
-    <a href="http://localhost:8080/api/google">
-        TEST
-    </a>
+
 </template>
 
 

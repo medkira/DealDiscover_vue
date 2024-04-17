@@ -21,6 +21,7 @@ export default class AxiosFactory {
             baseURL: NetworkConstants.BASE_URL,
             timeout: 50000,
         });
+        axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
         // we can add any interceptors either for req or res after 
         // the axiosInstace creation 
         // how: with and class called AxiosInterceptor(axiosInstance) 

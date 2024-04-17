@@ -2,6 +2,7 @@ import { RemoteDataSourceImpl } from "@/data/data_source/remote_data_source";
 import { AppServiceClient } from "@/data/network/app_api";
 import AxiosFactory from "@/data/network/axios_factory";
 import { AuthRepository } from "@/data/repositories/AuthRepository";
+import AppCookie from "../storage/app_cookie";
 
 
 
@@ -14,3 +15,13 @@ const remoteDataSourceInstance = new RemoteDataSourceImpl(appServiceClientInstan
 
 export const authRepository = new AuthRepository(remoteDataSourceInstance);
 
+
+
+// cookie factory
+export const cookieAdapter = new AppCookie();
+
+
+// can decalre stores factory here 
+// or better if there factory class that return 
+// the store i need 
+//=> reate the instance of the store only when i call it

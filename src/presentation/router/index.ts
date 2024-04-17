@@ -7,6 +7,7 @@ import PlacesView from '../views/places/PlacesView.vue';
 
 // import AppCookie from '@/app/storage/app_cookie'
 import RouterGuard from './Guard/routerGuards';
+import FoodsView from '../views/foods/FoodsView.vue';
 // import LoginOrRegisterDialog from '../components/LoginOrRegisterDialog.vue';
 
 
@@ -20,6 +21,17 @@ const router = createRouter({
       component: AboutView
     },
 
+    {
+      path: '/places',
+      name: 'places',
+      component: PlacesView
+    },
+    {
+      path: '/foods',
+      name: 'foods',
+      component: FoodsView
+
+    },
 
 
     // {

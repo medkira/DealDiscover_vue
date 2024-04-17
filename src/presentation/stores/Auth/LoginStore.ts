@@ -1,35 +1,26 @@
-import { NetworkConstants } from '@/app/constants';
-import AxiosFactory from '@/data/network/axios_factory';
-import { Either } from '@/domain/either/Either';
-import { ErrorHandler, type Failure } from '@/data/network/error_handler';
-import type { AxiosError, AxiosResponse } from 'axios';
-import { defineStore, acceptHMRUpdate } from 'pinia'
+import { defineStore } from 'pinia'
 import { authRepository } from '@/app/factory/di';
-import AppCookie from '@/app/storage/app_cookie';
 import router from '@/presentation/router';
-// import { useUserStore } from './user'
+import { AuthenticationStore } from './AuthenticationStore';
 
 export const LoginStore = defineStore('LoginStore', {
-
     state: () => ({
         loginFailure: "",
         loginLoading: false,
-        logingSuccess: { token: "" }
+        logingSuccess: { token: "" },
+        tokenLOG: false
     }),
     getters: {
         isLoggedIn: (state) => state.logingSuccess.token !== "",
-        // isLoading: (state) => state.loginLoading,
-        // isLoading: (state) => {
-        //     return state.loginLoading = state.loginFailure || !!state.logingSuccess.token;
-        // },
+
 
         getFailureMessage: (state) => state.loginFailure,
-
+        getSuccessMessage: (state) => state.logingSuccess ? "Login successful!" : "",
         loginStatusMessage(state): string | null {
-            if (state.loginLoading) {
-                return 'Logging in...';
-            } else if (state.logingSuccess.token) {
+            if (state.logingSuccess.token) {
                 return 'Login successful!';
+            } else if (state.loginLoading) {
+                return 'Logging in...';
             } else if (state.loginFailure) {
                 return `Login failed: ${state.loginFailure}`;
             } else {
@@ -38,6 +29,10 @@ export const LoginStore = defineStore('LoginStore', {
         },
     },
     actions: {
+        reset() { // Call this when you're done using the store
+            this.$reset();
+        },
+
         async login(data: { email: string, password: string }) {
             this.loginLoading = true;
             const failureOrSucess = await authRepository.login(data);
@@ -54,11 +49,17 @@ export const LoginStore = defineStore('LoginStore', {
                     // # success state
                     this.logingSuccess.token = response.authenticationToken;
 
-                    const cookieAdapter = new AppCookie();
-                    cookieAdapter.setTokenCookie(this.logingSuccess.token);
+                    // const cookieAdapter = new AppCookie();
+                    // cookieAdapter.setTokenCookie(this.logingSuccess.token);
                     // console.log("success: ", this.logingSuccess.token);
-                    this.loginLoading = false;
+
+                    const authenticationStore = AuthenticationStore()
+                    authenticationStore.setToken(response.authenticationToken),
+
+
+                        this.loginLoading = false;
                     router.push({ name: 'place', replace: true, params: { id: "placesId" } });
+                    this.reset()
                 }
             )
 

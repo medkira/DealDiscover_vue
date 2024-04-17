@@ -1,6 +1,6 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { ref } from 'vue';
-import { LoginStore } from '../Store/LoginStore';
+// import { LoginStore } from '../Store/LoginStore';
 
 const username = ref('');
 const password = ref('');
@@ -11,7 +11,7 @@ const showPassword = ref(false);
 // };
 
 
-const authStore = LoginStore();
+// const authStore = LoginStore();
 
 
 const submitLogin = async () => {
@@ -39,12 +39,12 @@ const submitLogin = async () => {
                         <i class="fas fa-eye-slash"></i>
                         <i class="fas fa-eye"></i>
                     </span> -->
-                </div>
+</div>
 
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    </div>
+<button type="submit">Login</button>
+</form>
+</div>
+</div>
 </template>
 
 <style lang="scss" scoped>
@@ -139,4 +139,4 @@ input[type="password"]:focus+.toggle-password {
     color: #4CAF50;
     /* Green */
 }
-</style>
+</style> -->

@@ -36,6 +36,10 @@ export default class AppCookie {
     public getTokenCookie(): string | null {
         return this.getCookie('TokenCookie');
     }
+
+    public removeTokenCookie(): void {
+        this.setCookie('', { name: 'TokenCookie', expires: -1 }); // Set expiry to past date to delete
+    }
 }
 
 interface CookieOptions {

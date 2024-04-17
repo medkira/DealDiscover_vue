@@ -3,7 +3,7 @@ import './presentation/resources/assets/style.css'
 import PrimeVue from 'primevue/config';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import ToastService from 'primevue/toastservice';
 
 // @ts-ignore
 import Lara from '@/presentation/resources/persets/lara'
@@ -19,4 +19,5 @@ app.use(PrimeVue, {
     pt: Lara
 });
 
+app.use(ToastService);
 app.mount('#app')

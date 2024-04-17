@@ -5,67 +5,100 @@ import InputText from 'primevue/inputtext'
 import { ref } from "vue";
 import Dropdown from 'primevue/dropdown';
 import { LoginStore } from '@/presentation/stores/Auth/LoginStore';
-import GoogleLoginButton from '@/presentation/components/Buttons/GoogleLoginButton.vue'
+import GoogleAuthButton from './Buttons/GoogleAuthButton.vue';
+import { RegisterStore } from '../stores/Auth/RegisterStore';
+import { useToast } from "primevue/usetoast";
+import LoginButton from './Buttons/LoginButton.vue';
 
-const authStore = LoginStore();
 
 
 
+const logingStore = LoginStore();
+const registerStore = RegisterStore()
+
+const username = ref('');
 const email = ref('');
 const password = ref('');
 const selectedRole = ref('');
 const roleOptions = [
     { label: 'Owner', value: 'owner' },
-    { label: 'User', value: 'noramUser' }
+    { label: 'User', value: 'normal' }
 ];
 
 const visible = ref(false);
 const isLoginActive = ref(true);
 
 const submitLogin = async () => {
-    await authStore.login({ email: email.value, password: password.value });
-    if (authStore.isLoggedIn == true) {
+    await logingStore.login({ email: email.value, password: password.value });
+    if (logingStore.isLoggedIn == true) {
         visible.value = false;
     }
 
 };
 
 const submitRegister = async () => {
-
+    console.log(email.value)
+    await registerStore.register({ username: username.value, email: email.value, password: password.value, role: selectedRole.value });
+    if (registerStore.isLoggedIn == true) {
+        visible.value = false;
+    }
 }
+
+const resetValues = () => {
+    username.value = '';
+    email.value = '';
+    password.value = '';
+    selectedRole.value = '';
+
+};
+
+
+// UI TOAST TESTING
+
+const toast = useToast();
+const showSuccess = (msg: string) => { // i dont like this logic beeing handel here
+    if (logingStore.isLoggedIn || registerStore.isLoggedIn) {
+        toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
+    }
+};
 
 
 
 </script>
 
 <template>
-    <Button label="Login" @click="visible = true" class="p-10" />
+
+    <LoginButton label="Login" @click="[visible = true, resetValues()]" class=" text-[#f0f0f0] "
+        style="font-size: 1.5rem  " />
     <div class="card flex justify-center ">
 
-        <Dialog v-model:visible="visible" modal :pt="{
+        <Dialog :close-on-escape="true" v-model:visible="visible" modal :pt="{
         mask: {
             style: 'backdrop-filter: blur(2px)'
         }
     }">
             <template #container="{ closeCallback }">
-                <div class="flex flex-col px-10 py-7 gap-5 "
-                    style="border-radius: 12px; background-image: radial-gradient(circle at left top, rgb(var(--primary-400)), rgb(var(--primary-700)))">
+                <div class="flex flex-col px-10 py-7 gap-5 " style="border-radius: 12px;   background: #0575e6;
+background: #2980b9;
+  background: linear-gradient(to left, #d1d3d3, #5fbadb, #267db8);
+  background: linear-gradient(to left, #d1d3d3, #5fbadb, #267db8);">
 
                     <div class="flex items-center gap-4 mb-4">
-                        <Button label="Sign-In" @click="isLoginActive = true" v-model="isLoginActive" text
+                        <Button label="Sign-In" @click="[isLoginActive = true, resetValues()]" v-model="isLoginActive"
+                            text
                             class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10 text-white-600"
                             style="color: "></Button>
-                        <Button label="Register" @click="isLoginActive = !isLoginActive" text
+                        <Button label="Register" @click="[isLoginActive = !isLoginActive, resetValues()]" text
                             class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                     </div>
                     <template v-if="isLoginActive">
-                        <div v-if="authStore.loginStatusMessage"
+                        <div v-if="logingStore.loginStatusMessage"
                             class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50">
-                            {{ authStore.loginStatusMessage }}
+                            {{ logingStore.loginStatusMessage }}
                         </div>
                         <div class="inline-flex flex-col gap-2">
-                            <label for="username" class="text-primary-50 font-semibold">Username</label>
-                            <InputText v-model="email" id="username" class="bg-white/20 border-0 p-4 text-primary-50">
+                            <label for="email" class="text-primary-50 font-semibold">Email</label>
+                            <InputText v-model="email" id="email" class="bg-white/20 border-0 p-4 text-primary-50">
                             </InputText>
                         </div>
                         <div class="inline-flex flex-col gap-2">
@@ -75,33 +108,39 @@ const submitRegister = async () => {
                             </InputText>
                         </div>
                         <div class="flex items-center gap-2">
-                            <Button label="Sign-In" @click="submitLogin" text
+                            <Button label="Sign-In"
+                                @click="[submitLogin(), showSuccess(logingStore.getSuccessMessage as string)]" text
                                 class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                             <Button label="Cancel" @click="closeCallback" text
                                 class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                         </div>
 
 
-                        <div class="flex items-center justify-cente">
-                            <GoogleLoginButton />
-                        </div>
+                        <GoogleAuthButton buttonName="Sign In with google" />
 
                     </template>
 
                     <template v-else>
+                        <div v-if="registerStore.loginStatusMessage"
+                            class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50">
+                            {{ registerStore.loginStatusMessage }}
+                        </div>
                         <div class="inline-flex flex-col gap-2">
-                            <label for="name" class="text-primary-50 font-semibold">Name</label>
-                            <InputText id="name" class="bg-white/20 border-0 p-4 text-primary-50"></InputText>
+                            <label for="username" class="text-primary-50 font-semibold">Username</label>
+                            <InputText v-model="username" id="username"
+                                class="bg-white/20 border-0 p-4 text-primary-50">
+                            </InputText>
                         </div>
                         <div class="inline-flex flex-col gap-2">
                             <label for="email" class="text-primary-50 font-semibold">Email</label>
-                            <InputText id="email" class="bg-white/20 border-0 p-4 text-primary-50" type="email">
+                            <InputText v-model="email" id="email" class="bg-white/20 border-0 p-4 text-primary-50"
+                                type="email">
                             </InputText>
                         </div>
                         <div class="inline-flex flex-col gap-2">
                             <label for="registerPassword" class="text-primary-50 font-semibold">Password</label>
-                            <InputText id="registerPassword" class="bg-white/20 border-0 p-4 text-primary-50"
-                                type="password">
+                            <InputText v-model="password" id="registerPassword"
+                                class="bg-white/20 border-0 p-4 text-primary-50" type="password">
                             </InputText>
                         </div>
                         <div class="inline-flex flex-col gap-2">
@@ -111,12 +150,17 @@ const submitRegister = async () => {
                                 class="bg-white/20 border-0 p-4 text-primary-50">
                             </Dropdown>
                         </div>
+
                         <div class="flex items-center gap-2">
                             <Button label="Register" @click="submitRegister" text
                                 class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                             <Button label="Cancel" @click="closeCallback" text
                                 class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                         </div>
+
+                        <!-- <div class="flex items-center justify-cente"> -->
+                        <GoogleAuthButton buttonName=" Register with google" />
+                        <!-- </div> -->
                     </template>
                 </div>
 
@@ -125,6 +169,39 @@ const submitRegister = async () => {
     </div>
 </template>
 
+
+
+
+<!-- <template>
+    <div class="card flex justify-center">
+        <Toast position="top-left" group="tl" />
+        <Toast position="bottom-left" group="bl" />
+        <Toast position="bottom-right" group="br" />
+        
+        <div class="flex flex-wrap gap-2">
+            <Button label="Top Left" @click="showTopLeft" />
+            <Button label="Bottom Left" severity="warning" @click="showBottomLeft" />
+            <Button label="Bottom Right" severity="help" @click="showBottomRight" />
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { useToast } from "primevue/usetoast"
+const toast = useToast();
+
+const showTopLeft = () => {
+    toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', group: 'tl', life: 3000 });
+};
+
+const showBottomLeft = () => {
+    toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', group: 'bl', life: 3000 });
+};
+
+const showBottomRight = () => {
+    toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', group: 'br', life: 3000 });
+};
+</script> -->
 
 
 
@@ -137,3 +214,38 @@ const submitRegister = async () => {
               d="M30.69 4.21L24.37 4.81L22.57 0.69L22.86 0H26.48L30.69 4.21ZM23.75 5.67L22.66 3.08L18.05 14.24V17.14H19.7H20.03H20.16H20.2L24.1 15.7L30.11 5.19L23.75 5.67ZM4.21002 4.21L10.53 4.81L12.33 0.69L12.05 0H8.43002L4.22002 4.21H4.21002ZM21.9 17.4L20.6 18.2H14.3L13 17.4L12.4 18.2L12.42 18.23L17.45 26.8L22.48 18.23L22.5 18.2L21.9 17.4ZM4.79002 5.19L10.8 15.7L14.7 17.14H14.74H15.2H16.85V14.24L12.24 3.09L11.15 5.68L4.79002 5.2V5.19Z"
               fill="var(--primary-200)" />
           </svg> -->
+
+
+
+<!-- <template>
+    <div class="card flex justify-center">
+        <Toast />
+        <div class="flex flex-wrap gap-2">
+            <Button label="Success" severity="success" @click="showSuccess" />
+            <Button label="Info" severity="info" @click="showInfo" />
+            <Button label="Warn" severity="warning" @click="showWarn" />
+            <Button label="Error" severity="danger" @click="showError" />
+        </div>
+    </div>
+</template>
+
+<script setup>
+        import { useToast } from "primevue/usetoast";
+        const toast = useToast();
+        
+        const showSuccess = () => {
+            toast.add({ severity: 'success', summary: 'Success Message', detail: 'Message Content', life: 3000 });
+        };
+        
+        const showInfo = () => {
+            toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
+        };
+        
+        const showWarn = () => {
+            toast.add({ severity: 'warn', summary: 'Warn Message', detail: 'Message Content', life: 3000 });
+        };
+        
+        const showError = () => {
+            toast.add({ severity: 'error', summary: 'Error Message', detail: 'Message Content', life: 3000 });
+        };
+        </script> -->

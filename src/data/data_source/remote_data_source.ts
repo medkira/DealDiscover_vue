@@ -1,6 +1,7 @@
 import type { AxiosResponse } from "axios";
 import type { AppServiceClient } from "../network/app_api";
 import type { LoginRepository } from "@/domain/repository/authentication/SignInInterface";
+import type { SignUserRepository } from "@/domain/repository/authentication/SignUpUserInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
@@ -10,6 +11,10 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
 
     async login(loginRequest: LoginRepository.Request): Promise<AxiosResponse<{ authenticationToken: string }>> {
         return await this._appServiceClient.login({ email: loginRequest.email, password: loginRequest.password });
+    }
+
+    async register(registerRequest: SignUserRepository.Request): Promise<AxiosResponse<SignUserRepository.Response>> {
+        return await this._appServiceClient.registeUser({ username: registerRequest.username, email: registerRequest.email, password: registerRequest.password, role: registerRequest.role })
     }
 
 
@@ -31,7 +36,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
 
 export interface RemoteDataSource {
     login(loginRequest: { email: string, password: string }): Promise<AxiosResponse<{ authenticationToken: string }>>;
-    // register(registerRequest: RegisterRequest): Promise<AuthenticationResponse>;
+    register(registerRequest: SignUserRepository.Request): Promise<AxiosResponse<SignUserRepository.Response>>;
     // forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): Promise<ForgotPasswordResponse>;
 }
 

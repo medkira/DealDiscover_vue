@@ -1,13 +1,12 @@
-import { Owner, OwnerProps } from "@domain/entities/Owner";
-import { UseCase } from "../UseCase";
-import { EmailInUseError } from "@application/errors/EmailInUseError";
+import type { Failure } from "@/data/network/error_handler";
+import type { Either } from "@/domain/either/Either";
 
-export interface SignUpOwnerInterface extends UseCase<SignUpOwnerInterface.Request, SignUpOwnerInterface.Response> {
-    execute(userData: SignUpOwnerInterface.Request): Promise<SignUpOwnerInterface.Response>
+export interface SignUpOwnerInterface {
+    SignUpOwner(userData: SignUpOwnerInterface.Request): Promise<SignUpOwnerInterface.Response>
 }
 
 
 export namespace SignUpOwnerInterface {
-    export type Request = Omit<Owner, 'id' | 'createdAt' | 'updatedAt' | 'isEmailVerified'>;
-    export type Response = Pick<Owner, 'id'> | EmailInUseError;
+    export type Request = { email: string, password: string, role: string };
+    export type Response = Either<Failure, { authenticationToken: string }>;
 }
