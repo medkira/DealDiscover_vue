@@ -1,10 +1,74 @@
 <script setup lang="ts">
+import AutoComplete from 'primevue/autocomplete';
 // import TheWelcome from '@/presentation/components/TheWelcome.vue'
+import { toRaw, isProxy } from 'vue';
+
+import { ref, onMounted } from "vue";
+
+const handleSearch = async () => {
+};
+
+// onMounted(() => {
+//   CountryService.getCountries().then((data) => (countries.value = data));
+// });
+
+
+// fetched data in array ob object(image, name)
+const data = [{ imageUrl: "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg", name: "test 0" },
+{ imageUrl: "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg", name: "test 1" }]
+
+// const testImgUrl = "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg"
+const values = ref("");
+const items = ref<any[]>();
+
+
+
+// ? will take user input 
+// ? => will fetch data and map it in a arrayData of objects(imageUrl, name)
+
+const search = (event: any) => {
+  // api_service => data source => repository(evnt.query) : return data
+  console.log(event.query)
+
+
+  // items.value = [...Array(10).keys()].map((item) => event.query + '-' + item + 1);
+  // items.value.push([...Array(10).keys()].map((item) => event.query + '-' + item + 1))
+  items.value = data
+  console.log(toRaw(items.value))
+}
+
+
+
+
+const countries = ref();
+const selectedCountry = ref();
+const filteredCountries = ref();
+
+
+// const search = (event: any) => {
+//   setTimeout(() => {
+//     if (!event.query.trim().length) {
+//       filteredCountries.value = [...countries.value];
+//     } else {
+//       filteredCountries.value = countries.value.filter((country) => {
+//         return country.name.toLowerCase().startsWith(event.query.toLowerCase());
+//       });
+//     }
+//   }, 250);
+// }
+
 </script>
+
+
+
+
+
+
+
+
 
 <template>
   <main>
-
     <div class="titles">
       <div class="font">
         <h2 class="title">Time To <span class="highlight">Discover</span></h2>
@@ -13,32 +77,11 @@
     </div>
 
 
-
-    <!-- search -->
-    <!-- 
-    <div class="container">
-      <div class="search-container">
-        <input class="input" type="text">
-        <svg viewBox="0 0 24 24" class="search__icon">
-          <g>
-            <path
-              d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
-            </path>
-          </g>
-        </svg>
-      </div>
-    </div> -->
-
-
     <div class="search-container m-7 flex rounded-full  bg-gray-800 shadow-md py-3 px-3 w-full max-w-screen-md mx-auto">
-      <input type="search" name="search" id="search" class="px-4 focus:outline-none   w-full
+      <input @keyup.enter="search" type="search" name="search" id="search" class="px-4 focus:outline-none   w-full
         focus:ring-opacity-50  text-gray-300 bg-transparent
          placeholder-gray-500" placeholder="Search">
-      <!-- <button type="submit"
-        class="px-4 py-3 text-white font-medium bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white rounded-r-lg">
-        Search
-      </button> -->
-      <button class="btn"> <svg viewBox="0 0 24 24" class="search__icon">
+      <button @click="handleSearch" class="btn"> <svg viewBox="0 0 24 24" class="search__icon">
           <g>
             <path
               d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
@@ -46,6 +89,31 @@
           </g>
         </svg></button>
     </div>
+
+    <!-- <div class="card flex justify-content-center">
+      <AutoComplete v-model="values" :suggestions="items" @complete="search">
+        <template #option="slotProps">
+          <div class="flex align-options-center w-60">
+            <img :src="slotProps.option.imageUrl" alt="no image provided">
+          </div>
+          <div>{{ slotProps.option.name }}</div>
+        </template>
+</AutoComplete>
+</div> -->
+    <!-- 
+    <div class="card flex justify-content-center">
+      <AutoComplete v-model="selectedCountry" optionLabel="name" :suggestions="filteredCountries" @complete="search">
+        <template #option="slotProps">
+          <div class="flex align-options-center">
+            <img :alt="slotProps.option.name" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
+              :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 18px" />
+            <div>{{ slotProps.option.name }}</div>
+          </div>
+        </template>
+      </AutoComplete>
+    </div> -->
+
+
 
   </main>
 </template>
@@ -94,12 +162,7 @@ main {
   // border: 1px solid #ffffff80;
   transition: 0.40s ease;
   user-select: none;
-
-  // background: #008cff;
-
-  // box-shadow: 0 0 5px #008cff, 0 0 20px #008cff, 0 0 50px #008cff, 0 0 100px #008cff;
-  // color: #ffffff;
-
+  // transition: transform .3s ease-in-out;
 }
 
 .btn:hover,
@@ -110,6 +173,11 @@ main {
   text-shadow: 0 0 5px #ffffff, 0 0 10px #ffffff, 0 0 20px #ffffff;
   box-shadow: 0 0 5px #008cff, 0 0 20px #008cff, 0 0 50px #008cff,
     0 0 100px #008cff;
+}
+
+
+.btn:active {
+  transform: scale(0.95);
 }
 
 
@@ -163,40 +231,6 @@ main {
   max-width: 300px;
   margin: 0 10px;
 }
-
-// .search-container {
-//   position: relative;
-//   width: 100%;
-//   border-radius: 50px;
-//   background: linear-gradient(135deg, rgb(218, 232, 247) 0%, rgb(214, 229, 247) 100%);
-//   padding: 5px;
-//   display: flex;
-//   align-items: center;
-// }
-
-// .search-container::after,
-// .search-container::before {
-//   content: "";
-//   width: 100%;
-//   height: 100%;
-//   border-radius: inherit;
-//   position: absolute;
-// }
-
-// .search-container::before {
-//   top: -1px;
-//   left: -1px;
-//   background: linear-gradient(0deg, rgb(218, 232, 247) 0%, rgb(255, 255, 255) 100%);
-//   z-index: -1;
-// }
-
-// .search-container::after {
-//   bottom: -1px;
-//   right: -1px;
-//   background: linear-gradient(0deg, rgb(163, 206, 255) 0%, rgb(211, 232, 255) 100%);
-//   box-shadow: rgba(79, 156, 232, 0.7019607843) 3px 3px 5px 0px, rgba(79, 156, 232, 0.7019607843) 5px 5px 20px 0px;
-//   z-index: -2;
-// }
 
 .input {
   padding: 10px;

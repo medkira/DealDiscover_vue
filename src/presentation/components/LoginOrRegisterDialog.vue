@@ -103,8 +103,8 @@ background: #2980b9;
                         </div>
                         <div class="inline-flex flex-col gap-2">
                             <label for="password" class="text-primary-50 font-semibold">Password</label>
-                            <InputText v-model="password" id="password" class="bg-white/20 border-0 p-4 text-primary-50"
-                                type="password">
+                            <InputText @keyup.enter="submitLogin()" v-model="password" id="password"
+                                class="bg-white/20 border-0 p-4 text-primary-50" type="password">
                             </InputText>
                         </div>
                         <div class="flex items-center gap-2">
