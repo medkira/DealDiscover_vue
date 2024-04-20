@@ -8,7 +8,6 @@ export const LoginStore = defineStore('LoginStore', {
         loginFailure: "",
         loginLoading: false,
         logingSuccess: { token: "" },
-        tokenLOG: false
     }),
     getters: {
         isLoggedIn: (state) => state.logingSuccess.token !== "",
@@ -53,13 +52,13 @@ export const LoginStore = defineStore('LoginStore', {
                     // cookieAdapter.setTokenCookie(this.logingSuccess.token);
                     // console.log("success: ", this.logingSuccess.token);
 
-                    const authenticationStore = AuthenticationStore()
+                    const authenticationStore = AuthenticationStore();
                     authenticationStore.setToken(response.authenticationToken),
 
 
                         this.loginLoading = false;
                     router.push({ name: 'place', replace: true, params: { id: "placesId" } });
-                    this.reset()
+                    // this.reset();
                 }
             )
 

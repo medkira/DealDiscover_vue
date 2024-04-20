@@ -59,7 +59,7 @@ export const RegisterStore = defineStore('RegisterStore', {
                     // console.log("success: ", this.logingSuccess.token);
                     this.registerLoading = false;
                     router.push({ name: 'place', replace: true, params: { id: "placesId" } });
-                    this.reset()
+                    // this.reset()
 
                 }
             )

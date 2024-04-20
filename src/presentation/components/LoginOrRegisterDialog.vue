@@ -2,7 +2,7 @@
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import { ref } from "vue";
+import { onBeforeUnmount, ref } from "vue";
 import Dropdown from 'primevue/dropdown';
 import { LoginStore } from '@/presentation/stores/Auth/LoginStore';
 import GoogleAuthButton from './Buttons/GoogleAuthButton.vue';
@@ -30,17 +30,20 @@ const isLoginActive = ref(true);
 
 const submitLogin = async () => {
     await logingStore.login({ email: email.value, password: password.value });
-    if (logingStore.isLoggedIn == true) {
+    if (logingStore.isLoggedIn) {
         visible.value = false;
+        showSuccess(logingStore.getSuccessMessage as string)
+        logingStore.reset();
     }
 
 };
 
 const submitRegister = async () => {
-    console.log(email.value)
     await registerStore.register({ username: username.value, email: email.value, password: password.value, role: selectedRole.value });
-    if (registerStore.isLoggedIn == true) {
+    if (registerStore.isLoggedIn) {
         visible.value = false;
+        showSuccess(logingStore.getSuccessMessage as string)
+        registerStore.reset();
     }
 }
 
@@ -61,6 +64,8 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
         toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
     }
 };
+
+
 
 
 
@@ -108,8 +113,7 @@ background: #2980b9;
                             </InputText>
                         </div>
                         <div class="flex items-center gap-2">
-                            <Button label="Sign-In"
-                                @click="[submitLogin(), showSuccess(logingStore.getSuccessMessage as string)]" text
+                            <Button label="Sign-In" @click="[submitLogin()]" text
                                 class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                             <Button label="Cancel" @click="closeCallback" text
                                 class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
