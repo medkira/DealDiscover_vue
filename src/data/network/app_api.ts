@@ -10,21 +10,21 @@ export class AppServiceClient {
 
     //  ? Auth 
     async login(loginRequest: { email: string, password: string }): Promise<AxiosResponse<{ authenticationToken: string }>> {
-        return await this.http.post(`${NetworkConstants.BASE_API}/login`, loginRequest);
+        return await this.http.post(`/login`, loginRequest);
     }
 
     async registeUser(registerRequest: { username: string, email: string, password: string, role: string }): Promise<AxiosResponse<SignUserRepository.Response>> {
-        return await this.http.post(`${NetworkConstants.BASE_API}/register`, registerRequest);
+        return await this.http.post(`/register`, registerRequest);
     }
 
     // async registerOwner(registerRequest: { email: string, password: string, role: string }): Promise<AxiosResponse<{ authenticationToken: string }>> {
-    //     return await this.http.post(`${NetworkConstants.BASE_API}/register`, registerRequest);
+    //     return await this.http.post(`/register`, registerRequest);
     // }
 
 
     // ? Post
     async getLatestPost(reqQuery: { page?: string, type?: string, location?: string }) {
-        return await this.http.get(`${NetworkConstants.BASE_API}/place/page`, {
+        return await this.http.get(`/place/page`, {
             params: {
                 page: reqQuery.page,
                 type: reqQuery.type,

@@ -15,7 +15,7 @@ const props = defineProps<{
 const { buttonName } = props
 
 const loginGoogle = async () => {
-    window.location.href = `${NetworkConstants.BASE_API}/google`;
+    window.location.href = `${NetworkConstants.BASE_URL}/google`;
     // const res = await appServiceClientInstance.authGoogle()
     // console.log("data: ", res.data)
 }

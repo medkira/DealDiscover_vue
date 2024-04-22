@@ -18,6 +18,7 @@ export default class AxiosFactory {
     constructor() {
 
         this.axiosInstance = axios.create({
+
             baseURL: NetworkConstants.BASE_URL,
             timeout: 50000,
         });
