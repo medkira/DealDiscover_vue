@@ -4,8 +4,7 @@ import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDial
 import Avatar from 'primevue/avatar';
 import Toast from 'primevue/toast';
 import { AuthenticationStore } from '@/presentation/stores/Auth/AuthenticationStore';
-import OverlayPanel from 'primevue/overlaypanel';
-import Button from 'primevue/button';
+
 import Menu from 'primevue/menu';
 
 import { ref } from "vue";
@@ -54,56 +53,54 @@ const toggle = (event: any) => {
 </script>
 
 <template>
-
   <Toast position="top-left" group="tl" />
   <header>
-    <Avatar v-if="authenticationStore.isLoggedIn" @click="toggle" icon="user_image" class="mr-2" size="xlarge"
+
+
+    <Avatar v-if="authenticationStore.isLoggedIn" @click="toggle" icon="user_image" class=" Avatar mr-2" size="xlarge"
       shape="circle" />
     <LoginOrRegisterDialog v-else />
-
-
-
     <!-- <div class="card flex justify-center align-middle bg-white"> -->
     <Menu ref="menu" class="overlay_menu" :model="items" :popup="true" />
     <!-- </div> -->
   </header>
   <main>
+
     <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/places">places</RouterLink>
-      <RouterLink to="/foods">foods</RouterLink>
+      <div>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/places">places</RouterLink>
+        <RouterLink to="/foods">foods</RouterLink>
+
+      </div>
+      <!-- <a class="">
+        <Avatar v-if="authenticationStore.isLoggedIn" @click="toggle" icon="user_image" class="mr-2" size="xlarge"
+          shape="circle" />
+        <LoginOrRegisterDialog v-else />
+      </a> -->
+
+
     </nav>
 
     <RouterView />
-
   </main>
 </template>
 
 
-
-
-
-
-
-
-
-
-<style scoped>
+<style scoped lang="scss">
 header {
-  display: flex;
-  justify-content: end;
-  align-items: center;
+  z-index: 1;
+  position: fixed;
+  right: 11%;
+  top: 1.7%;
 }
 
 .test {
   background-color: red;
 }
 
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+
 
 .logo {
   display: block;
@@ -111,29 +108,42 @@ header {
 }
 
 nav {
-  width: 100%;
+  z-index: 1;
   font-size: 31px;
   text-align: center;
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 10%;
+
+
+
+  div {
+    padding: 5px 35px 5px 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  a {
+    margin: 5px;
+  }
+
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
 
-nav a {
+nav>* {
+
   display: inline-block;
   padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  font-size: x-large;
 }
 
-nav a:first-of-type {
-  border: 0;
-}
 
 
 .tooltip::before {
@@ -147,23 +157,35 @@ nav a:first-of-type {
   background-color: rgb(255, 255, 255);
 }
 
-/* @media (min-width: 1024px) {
+@media (min-width: 1024px) {
   header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    position: fixed;
+    right: 15%;
+    z-index: 2;
   }
 
-  .logo {
+
+  nav {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 2.1%;
+  }
+
+  nav>* {
+    font-size: xx-large;
+  }
+
+  /* .logo {
     margin: 0 2rem 0 0;
-  }
+  } */
 
-  header .wrapper {
+  /* header .wrapper {
     display: flex;
     place-items: flex-start;
     flex-wrap: wrap;
-  }
-
+  } */
+  /* 
   nav {
     text-align: left;
     margin-left: -1rem;
@@ -171,9 +193,32 @@ nav a:first-of-type {
 
     padding: 1rem 0;
     margin-top: 1rem;
-  }
-} */
+  } */
+}
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- 
     <div class="card flex justify-center">
       <Button label="Show" icon="pi pi-external-link" @click="visible = true" color="" />

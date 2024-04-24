@@ -5,6 +5,7 @@ import { toRaw, isProxy } from 'vue';
 
 import { ref, onMounted } from "vue";
 
+import SearchBar from '@/presentation/components/search-bar/SearchBar.vue';
 const handleSearch = async () => {
 };
 
@@ -76,7 +77,7 @@ const filteredCountries = ref();
       </div>
     </div>
 
-
+    <!-- 
     <div class="search-container m-7 flex rounded-full  bg-gray-800 shadow-md py-3 px-3 w-full max-w-screen-md mx-auto">
       <input @keyup.enter="search" type="search" name="search" id="search" class="px-4 focus:outline-none   w-full
         focus:ring-opacity-50  text-gray-300 bg-transparent
@@ -88,41 +89,68 @@ const filteredCountries = ref();
             </path>
           </g>
         </svg></button>
-    </div>
-
-    <!-- <div class="card flex justify-content-center">
-      <AutoComplete v-model="values" :suggestions="items" @complete="search">
-        <template #option="slotProps">
-          <div class="flex align-options-center w-60">
-            <img :src="slotProps.option.imageUrl" alt="no image provided">
-          </div>
-          <div>{{ slotProps.option.name }}</div>
-        </template>
-</AutoComplete>
-</div> -->
-    <!-- 
-    <div class="card flex justify-content-center">
-      <AutoComplete v-model="selectedCountry" optionLabel="name" :suggestions="filteredCountries" @complete="search">
-        <template #option="slotProps">
-          <div class="flex align-options-center">
-            <img :alt="slotProps.option.name" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-              :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 18px" />
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </AutoComplete>
     </div> -->
 
+    <search-bar />
+    <div class="image-container" data-aos="fade-up" data-aos-duration="2500" data-aos-once="true"
+      data-aos-anchor-placement="center-center" data-aos-easing="ease-out-cubic">
+      <h1 class="text">Thinking About Exploring El Jam!</h1>
+      <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
+
+    </div>
 
 
   </main>
 </template>
 
 <style scoped lang="scss">
+@media (max-width: 1024px) {
+  .titles {
+    margin-top: 20%;
+  }
+
+}
+
+img {
+
+  display: block;
+  // width: 100%;
+  // width: 2000px;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition:
+    transform 0.41s ease-in-out;
+}
+
+.image-container:hover img {
+  transform: scale(1.04);
+}
+
+.text {
+  z-index: 2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+
+  transition:
+    transform 0.41s ease-in-out;
+}
+
 main {
+  height: 1100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
+  // gap: 4px;
 }
 
 
@@ -193,6 +221,7 @@ main {
   align-items: center;
   justify-content: center;
   text-align: center;
+  padding-top: 7%;
 }
 
 .font {
@@ -266,3 +295,27 @@ main {
   fill: white;
 }
 </style>
+
+
+<!-- <div class="card flex justify-content-center">
+      <AutoComplete v-model="values" :suggestions="items" @complete="search">
+        <template #option="slotProps">
+          <div class="flex align-options-center w-60">
+            <img :src="slotProps.option.imageUrl" alt="no image provided">
+          </div>
+          <div>{{ slotProps.option.name }}</div>
+        </template>
+</AutoComplete>
+</div> -->
+<!-- 
+    <div class="card flex justify-content-center">
+      <AutoComplete v-model="selectedCountry" optionLabel="name" :suggestions="filteredCountries" @complete="search">
+        <template #option="slotProps">
+          <div class="flex align-options-center">
+            <img :alt="slotProps.option.name" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
+              :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 18px" />
+            <div>{{ slotProps.option.name }}</div>
+          </div>
+        </template>
+      </AutoComplete>
+    </div> -->

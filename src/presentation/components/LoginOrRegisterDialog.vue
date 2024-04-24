@@ -77,7 +77,7 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
         style="font-size: 1.5rem  " />
     <div class="card flex justify-center ">
 
-        <Dialog :close-on-escape="true" v-model:visible="visible" modal :pt="{
+        <Dialog :close-on-escape="true" :dismissable-mask="true" v-model:visible="visible" modal :pt="{
         mask: {
             style: 'backdrop-filter: blur(2px)'
         }

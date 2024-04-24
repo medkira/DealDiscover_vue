@@ -10,6 +10,9 @@ import Lara from '@/presentation/resources/persets/lara'
 import App from './app/App.vue'
 import router from './presentation/router'
 
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -18,6 +21,8 @@ app.use(PrimeVue, {
     unstyled: true,
     pt: Lara
 });
+
+app.use(AOS.init)
 
 app.use(ToastService);
 app.mount('#app')

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { ref } from "vue";
+import SearchBar from '@/presentation/components/search-bar/SearchBar.vue';
 
 const datas = ref<any>('');
 
@@ -15,7 +16,7 @@ console.log(id);
 
 <template>
     <main>
-        TEST
+        <!-- <SearchBar /> -->
         {{ datas }}
         <!-- <TheWelcome /> -->
         <!-- <router-view /> -->
