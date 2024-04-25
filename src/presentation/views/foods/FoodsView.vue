@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { ref } from "vue";
-import SearchBar from '@/presentation/components/search-bar/SearchBar.vue';
-
+// import SearchBar from '@/presentation/components/search-bar/SearchBar.vue';
 const datas = ref<any>('');
 
 const route = useRoute();
@@ -16,9 +15,18 @@ console.log(id);
 
 <template>
     <main>
-        <!-- <SearchBar /> -->
-        {{ datas }}
+        <!-- <SearchBar />
+        {{ datas }} -->
         <!-- <TheWelcome /> -->
         <!-- <router-view /> -->
+        <div class="test">TEST</div>
+
     </main>
 </template>
+
+<style scoped>
+.test {
+    background-color: red;
+    width: 100%;
+}
+</style>

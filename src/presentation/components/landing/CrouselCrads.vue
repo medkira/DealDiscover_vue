@@ -1,0 +1,129 @@
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+
+import Carousel from 'primevue/carousel';
+import Button from "primevue/button";
+
+
+defineProps<({
+    title: String,
+})>()
+
+// import { ProductService } from '@/service/ProductService';
+
+onMounted(() => {
+    // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
+})
+
+const products = ref([{ image: 'bizerteBeach.jpg' }, { image: 'MahdaiBeach.jpg' }, { image: 'DjerbaBeach.jpg' },
+{ image: 'bizerteBeach.jpg' }, { image: 'MahdaiBeach.jpg' }, { image: 'bizerteBeach.jpg' }, { image: 'bizerteBeach.jpg' },
+{ image: 'MahdaiBeach.jpg' }, { image: 'bizerteBeach.jpg' },
+{ image: 'bizerteBeach.jpg' }, { image: 'MahdaiBeach.jpg' }, { image: 'bizerteBeach.jpg' }
+]);
+console.log(products.value.length)
+const responsiveOptions = ref([
+    // {
+    //     breakpoint: '1400px',
+    //     numVisible: 4,
+    //     numScroll: 1
+    // },
+    // {
+    //     breakpoint: '1199px',
+    //     numVisible: 4,
+    //     numScroll: 1
+    // },
+    // {
+    //     breakpoint: '767px',
+    //     numVisible: 2,
+    //     numScroll: 1
+    // },
+    // {
+    //     breakpoint: '575px',
+    //     numVisible: 1,
+    //     numScroll: 1
+    // }
+]);
+
+const getSeverity = (status: any) => {
+    switch (status) {
+        case 'INSTOCK':
+            return 'success';
+
+        case 'LOWSTOCK':
+            return 'warning';
+
+        case 'OUTOFSTOCK':
+            return 'danger';
+
+        default:
+            return null;
+    }
+};
+
+</script>
+
+
+<template>
+    <h1> {{ title }}</h1>
+    <div class="card">
+        <Carousel :value="products" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions">
+            <template #item="slotProps">
+                <div class=" image-container m-2  w-50">
+                    <div class=" mb-3">
+
+                        <div class="relative mx-auto rounded-full h-full w-full ">
+
+                            <img :src="'src/presentation/resources/images/Beach/' + slotProps.data.image"
+                                :alt="slotProps.data.name" />
+
+
+                            <!-- <Tag :value="slotProps.data.inventoryStatus"
+                                :severity="getSeverity(slotProps.data.inventoryStatus)" class="absolute"
+                                style="left:5px; top: 5px" /> -->
+                        </div>
+
+                    </div>
+                    <div class="mb-3 font-medium">{{ slotProps.data.name }}</div>
+                    <div class="flex justify-content-between align-items-center">
+                        <!-- <div class="mt-0 font-semibold text-xl">${{ slotProps.data.price }}</div> -->
+                        <!-- <span>
+                            <Button icon="pi pi-heart" severity="secondary" outlined />
+                            <Button icon="pi pi-shopping-cart" class="ml-2" />
+                        </span> -->
+                    </div>
+                </div>
+            </template>
+        </Carousel>
+    </div>
+</template>
+
+
+<style scoped lang="scss">
+h1 {
+    font-size: 45px;
+    text-align: start;
+    // background-color: red;
+    width: 93%;
+    color: #f6f6f6;
+    margin-bottom: -15px;
+    font-weight: bolder;
+}
+
+.image-container {
+    img {
+        // width: 100%;
+        // height: 500%;
+        width: 600px;
+        height: 300px;
+        border-radius: 10px;
+        object-fit: cover;
+        cursor: pointer;
+        transition: opacity 0.47ms ease-in;
+        ;
+    }
+
+    img:hover {
+        opacity: 75%;
+    }
+}
+</style>

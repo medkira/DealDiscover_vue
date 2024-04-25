@@ -9,6 +9,7 @@ import Menu from 'primevue/menu';
 
 import { ref } from "vue";
 import router from '@/presentation/router';
+import FooterCard from '@/presentation/components/landing/footerCard.vue';
 
 const menu = ref();
 const authenticationStore = AuthenticationStore(); // this need to be singleton in di
@@ -84,6 +85,7 @@ const toggle = (event: any) => {
     </nav>
 
     <RouterView />
+    <FooterCard />
   </main>
 </template>
 

@@ -1,62 +1,10 @@
 <script setup lang="ts">
-import AutoComplete from 'primevue/autocomplete';
-// import TheWelcome from '@/presentation/components/TheWelcome.vue'
-import { toRaw, isProxy } from 'vue';
+import SearchBar from '@/presentation/components/landing/SearchBar.vue';
+import CrouselCards from '@/presentation/components/landing/CrouselCrads.vue'
+import { ref } from 'vue';
 
-import { ref, onMounted } from "vue";
-
-import SearchBar from '@/presentation/components/search-bar/SearchBar.vue';
-const handleSearch = async () => {
-};
-
-// onMounted(() => {
-//   CountryService.getCountries().then((data) => (countries.value = data));
-// });
-
-
-// fetched data in array ob object(image, name)
-const data = [{ imageUrl: "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg", name: "test 0" },
-{ imageUrl: "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg", name: "test 1" }]
-
-// const testImgUrl = "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg"
-const values = ref("");
-const items = ref<any[]>();
-
-
-
-// ? will take user input 
-// ? => will fetch data and map it in a arrayData of objects(imageUrl, name)
-
-const search = (event: any) => {
-  // api_service => data source => repository(evnt.query) : return data
-  console.log(event.query)
-
-
-  // items.value = [...Array(10).keys()].map((item) => event.query + '-' + item + 1);
-  // items.value.push([...Array(10).keys()].map((item) => event.query + '-' + item + 1))
-  items.value = data
-  console.log(toRaw(items.value))
-}
-
-
-
-
-const countries = ref();
-const selectedCountry = ref();
-const filteredCountries = ref();
-
-
-// const search = (event: any) => {
-//   setTimeout(() => {
-//     if (!event.query.trim().length) {
-//       filteredCountries.value = [...countries.value];
-//     } else {
-//       filteredCountries.value = countries.value.filter((country) => {
-//         return country.name.toLowerCase().startsWith(event.query.toLowerCase());
-//       });
-//     }
-//   }, 250);
-// }
+// const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }])
+const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }, { message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }])
 
 </script>
 
@@ -78,19 +26,56 @@ const filteredCountries = ref();
     </div>
 
 
-    <search-bar />
+    <SearchBar />
     <div class="image-container" data-aos="fade-up" data-aos-duration="2500" data-aos-once="true"
       data-aos-anchor-placement="center-center" data-aos-easing="ease-out-cubic">
       <h1 class="text">Thinking About Exploring El Jam!</h1>
       <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
-
     </div>
 
+    <CrouselCards title="Best Beaches" />
 
+    <h1>Best Restaurants</h1>
+    <div class="more-explore">
+
+      <div v-for="( item, index ) in  items   " :key="item">
+        {{ index }}
+
+      </div>
+    </div>
+    <CrouselCards title="Top Hotels for your next vacation" />
   </main>
 </template>
 
 <style scoped lang="scss">
+h1 {
+  font-size: 45px;
+  text-align: start;
+  // background-color: red;
+  width: 93%;
+  color: #f6f6f6;
+  margin-bottom: -15px;
+  font-weight: bolder;
+}
+
+.more-explore {
+  padding: 37px;
+  background-color: rgb(#f6f6f6, 0.17);
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+
+
+  div {
+    background-color: #243c54;
+    margin: 10px;
+    padding: 0 275px;
+    height: 300px;
+    border-radius: 20px;
+  }
+}
+
 @media (max-width: 1024px) {
   .titles {
     margin-top: 20%;
@@ -98,11 +83,20 @@ const filteredCountries = ref();
 
 }
 
-img {
+main {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
 
+img {
+  object-fit: cover;
   display: block;
   // width: 100%;
-  // width: 2000px;
+  width: 1140px;
+  height: 500px;
   border-radius: 20px;
   position: relative;
   cursor: pointer;
@@ -132,13 +126,6 @@ img {
     transform 0.41s ease-in-out;
 }
 
-main {
-  height: 1100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  // gap: 4px;
-}
 
 
 
@@ -166,7 +153,7 @@ main {
 
 .title {
   font-weight: bold;
-  color: #f0f0f0;
+  color: #f6f6f6;
   padding-right: 55px;
 }
 
@@ -204,27 +191,3 @@ main {
   background: linear-gradient(135deg, rgb(239, 247, 255) 0%, rgb(214, 229, 247) 100%);
 }
 </style>
-
-
-<!-- <div class="card flex justify-content-center">
-      <AutoComplete v-model="values" :suggestions="items" @complete="search">
-        <template #option="slotProps">
-          <div class="flex align-options-center w-60">
-            <img :src="slotProps.option.imageUrl" alt="no image provided">
-          </div>
-          <div>{{ slotProps.option.name }}</div>
-        </template>
-</AutoComplete>
-</div> -->
-<!-- 
-    <div class="card flex justify-content-center">
-      <AutoComplete v-model="selectedCountry" optionLabel="name" :suggestions="filteredCountries" @complete="search">
-        <template #option="slotProps">
-          <div class="flex align-options-center">
-            <img :alt="slotProps.option.name" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
-              :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 18px" />
-            <div>{{ slotProps.option.name }}</div>
-          </div>
-        </template>
-      </AutoComplete>
-    </div> -->
