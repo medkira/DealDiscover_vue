@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, toRaw } from "vue";
 import Rating from 'primevue/rating';
 import Avatar from 'primevue/avatar';
 import LookingEyes from '@/presentation/components/animation/LookingEyes.vue';
@@ -15,8 +15,9 @@ import VirtualScroller from 'primevue/virtualscroller';
 import Skeleton from 'primevue/skeleton';
 import Toast from 'primevue/toast';
 import { CreatePostStore } from "@/presentation/stores/Posts/CreatePostStore";
+import { GetLatestsPostsStore } from "@/presentation/stores/Posts/GetLatestPostsStore";
 import LoadingCube from "@/presentation/components/animation/LoadingCube.vue"
-
+import { Post } from "@/domain/entities/Post"
 
 const visibleAddPostDialog = ref(false);
 const visibleAddcomments = ref(false)
@@ -28,55 +29,36 @@ const content = ref('');
 const rate = ref(0);
 const image = ref();
 
-const postStore = CreatePostStore();
+const createPostStore = CreatePostStore();
 
 
 
 var selectedFile;
 const submitPostRate = async () => {
-    await postStore.CreatePost({ content: content.value, post_type: post_type.value, postImage: image.value });
+    await createPostStore.CreatePost({ content: content.value, post_type: post_type.value, postImage: image.value });
 
-    if (postStore.isCreatedPostSuccess) {
-        showSuccess(postStore.getSuccessMessage as string);
+    if (createPostStore.isCreatedPostSuccess) {
+        showSuccess(createPostStore.getSuccessMessage as string);
         visibleAddPostDialog.value = false;
-        postStore.reset();
+        createPostStore.reset();
+        image.value = "";
     }
 
 }
 
-// const onUpload = () => {
-//     console.log("image", image.value);
-//     toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
-// };
-
-
-
-
-
-
 
 
 const customUploader = async (event: any) => {
-
     selectedFile = event.target.files[0];
     image.value = selectedFile;
-
-
-
-    // SOLUTION 0 
-    // const selectedFile = event.target.files[0];
-    // const formData = new FormData();
-    // formData.append('postImage', selectedFile);
-    // formData.append('content', content.value);
-    // // formData.append('rate', rate.value);
-    // formData.append('post_type', postType.value);
-
-    // console.log(formData.getAll('postImage'));
-    // await postStore.CreatePost(formData)
+    toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
 
 };
 
 
+const cancelPost = () => {
+    image.value = "";
+}
 
 
 
@@ -86,33 +68,44 @@ const fileNameLabel = () => {
     return image.value ? `Selected: ${image.value.name}` : 'Choose a image';
 }
 
-
 const toast = useToast();
 const showSuccess = (msg: string) => { // i dont like this logic beeing handel here
-    if (postStore.isCreatedPostSuccess) {
+    if (createPostStore.isCreatedPostSuccess) {
         toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
     }
 };
 
 
 
+
+
+
+
+//************** FETCH POSTS  **************/
+const getLatestsPostsStore = GetLatestsPostsStore()
+
+
+const fetchData = async () => {
+    await getLatestsPostsStore.GetLatestPosts({ page: 1 })
+    const data = getLatestsPostsStore.GetLatestPostsSuccess
+    items.value = toRaw(data)
+    console.log(toRaw(data))
+};
+fetchData()
 //****************************************************************************** */
 
 
 // const datas = ref<any>('');
 // const route = useRoute();
 // const id = route.params.id as string;
-const fetchData = async () => {
 
-};
-fetchData()
 // console.log(id);
 
-const items = ref([{ post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 2 },
-{ post: 'Foo', user: "testUser", rate: 2 }, { post: 'Foo', user: "testUser", rate: 2 }, { post: 'Bar', user: "testUser", rate: 4 },
-{ post: 'Foo', user: "testUser", rate: 4 }, { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 4 },
-{ post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 3 },])
-
+// const items = ref([{ post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 2 },
+// { post: 'Foo', user: "testUser", rate: 2 }, { post: 'Foo', user: "testUser", rate: 2 }, { post: 'Bar', user: "testUser", rate: 4 },
+// { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 4 },
+// { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 3 },])
+const items = ref<Post[]>([])
 
 
 const comments = ref([
@@ -181,7 +174,6 @@ const comments = ref([
 
 
 
-
 </script>
 
 <template>
@@ -205,7 +197,7 @@ const comments = ref([
 
                 <template #container="{ closeCallback }">
                     <!-- LOADING VIEW -->
-                    <div v-if="postStore.CreatePostLoading"
+                    <div v-if="createPostStore.CreatePostLoading"
                         class="bg-[#2980b9] p-[200px] rounded-2xl flex flex-col items-center justify-between">
                         <LoadingCube />
                         <h1 class="font-bold text-3xl pt-32">Loading ....</h1>
@@ -268,7 +260,7 @@ const comments = ref([
                         <div class="flex items-center gap-2">
                             <Button @click="submitPostRate" label="Post Rate" text
                                 class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
-                            <Button label="Cancel" @click="closeCallback" text
+                            <Button label="Cancel" @click="[closeCallback(), cancelPost()]" text
                                 class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                         </div>
                     </div>
@@ -283,19 +275,23 @@ const comments = ref([
         <h1 class="title">Latest Post-Rates</h1>
         <div class="posts-container">
 
-            <div class="post-container" v-for="(  item  ) in    items   " :key="item.post">
+            <div class="post-container" v-for="(  item  ) in    items   " :key="item.id">
 
+                <!-- "/src/presentation/resources/images/Beach/bizerteBeach.jpg"  -->
+                <!-- <img clas="tes" :src=item.postImage[0] alt="post rate image" loading="lazy"> -->
                 <img clas="tes" src="/src/presentation/resources/images/Beach/bizerteBeach.jpg" alt="post rate image"
                     loading="lazy">
 
+
+
                 <div class="user-container">
                     <Avatar class=" Avatar " size="large" shape="circle" />
-                    <h1>{{ item.user }}</h1>
+                    <h1>{{ item.user_name }}</h1>
                 </div>
 
-                <h2 class="post-text">{{ item.post }} </h2>
+                <h2 class="post-text">{{ item.content }} </h2>
 
-                <Rating v-model="item.rate" :stars="7" :cancel="false" readonly />
+                <Rating v-model="item.likes" :stars="7" :cancel="false" readonly />
                 <div>
                     <PostButton @click="[visibleAddcomments = true]" />
                 </div>
@@ -339,7 +335,7 @@ const comments = ref([
                         <div>
                             <span class="font-bold block mb-2">Comments</span>
                             <VirtualScroller :items="comments" :itemSize="70" showLoader :delay="250"
-                                :class="[' w-[800px] h-[300px]  ']"
+                                :class="[' w-[60vh] h-[300px]  ']"
                                 class="custom-scroller border-1 surface-border border-round">
                                 <template v-slot:item="{ item }">
                                     <div class="flex align-items-center p-2" style="height: 70px">
@@ -606,4 +602,15 @@ main {
             </div>
             
         </div> -->
-@/presentation/stores/Posts/PostStore
+
+<!-- 
+    // SOLUTION 0 
+    // const selectedFile = event.target.files[0];
+    // const formData = new FormData();
+    // formData.append('postImage', selectedFile);
+    // formData.append('content', content.value);
+    // // formData.append('rate', rate.value);
+    // formData.append('post_type', postType.value);
+
+    // console.log(formData.getAll('postImage'));
+    // await createPostStore.CreatePost(formData) -->

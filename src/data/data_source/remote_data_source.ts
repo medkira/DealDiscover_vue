@@ -3,12 +3,14 @@ import type { AppServiceClient } from "../network/app_api";
 import type { LoginRepository } from "@/domain/repository/authentication/SignInInterface";
 import type { SignUserRepository } from "@/domain/repository/authentication/SignUpUserInterface";
 import type { CreatePostRepository } from "@/domain/repository/post/CreatePostInterface";
+import type { GetLatestPostsRepository } from "@/domain/repository/post/GetLatestPostsInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+
     /***** Auth  *****/
 
     async login(loginRequest: LoginRepository.Request): Promise<AxiosResponse<{ authenticationToken: string }>> {
@@ -44,15 +46,24 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     async createPost(createPostRequest: any): Promise<AxiosResponse<CreatePostRepository.Response>> {
         return await this._appServiceClient.createPost(createPostRequest);
     }
+
+
+    async getLatestPosts(getLatesPostsRequest: GetLatestPostsRepository.Request): Promise<AxiosResponse<GetLatestPostsRepository.Response>> {
+        return await this._appServiceClient.getLatestPosts(getLatesPostsRequest);
+    }
 }
 
 
 export interface RemoteDataSource {
+    //* Auth *//
     login(loginRequest: { email: string, password: string }): Promise<AxiosResponse<{ authenticationToken: string }>>;
     register(registerRequest: SignUserRepository.Request): Promise<AxiosResponse<SignUserRepository.Response>>;
-
-    createPost(createPostRequest: CreatePostRepository.Request): Promise<AxiosResponse<CreatePostRepository.Response>>
     // forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): Promise<ForgotPasswordResponse>;
+
+
+    //* Post *//
+    createPost(createPostRequest: CreatePostRepository.Request): Promise<AxiosResponse<CreatePostRepository.Response>>
+    getLatestPosts(getLatesPostsRequest: GetLatestPostsRepository.Request): Promise<AxiosResponse<GetLatestPostsRepository.Response>>;
 }
 
 

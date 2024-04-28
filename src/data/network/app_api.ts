@@ -1,6 +1,8 @@
 import { NetworkConstants } from "@/app/constants";
+import type { postType } from "@/domain/entities/Post";
 import type { SignUserRepository } from "@/domain/repository/authentication/SignUpUserInterface";
 import type { AxiosInstance, AxiosResponse } from "axios";
+import type { title } from "process";
 
 export class AppServiceClient {
     constructor(
@@ -23,12 +25,12 @@ export class AppServiceClient {
 
 
     // ? Post
-    async getLatestPost(reqQuery: { page?: string, type?: string, location?: string }) {
-        return await this.http.get(`/place/page`, {
+    async getLatestPosts(reqQuery: { page?: number, type?: postType, title: string }) {
+        return await this.http.get(`/post/page`, {
             params: {
                 page: reqQuery.page,
                 type: reqQuery.type,
-                location: reqQuery.location,
+                title: reqQuery.title,
             }
         });
     }
@@ -36,7 +38,9 @@ export class AppServiceClient {
     async createPost(createPostRequest: { post_type: string, content: string, postImage: File }): Promise<AxiosResponse<any>> {
         // console.log("hiiii")
         // console.log("from app api ", createPostRequest.postImage)
+        // console.log("From app api", this.http.post('/posts', createPostRequest));
         return await this.http.post('/posts', createPostRequest);
     }
+
 }
 

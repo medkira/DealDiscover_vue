@@ -4,6 +4,7 @@ import { appServiceClientInstance } from '@/app/factory/di';
 
 import { ref } from "vue";
 import TheWelcome from '@/presentation/components/TheWelcome.vue';
+import 'deep-chat';
 const datas = ref<any>('');
 
 const route = useRoute();
@@ -16,6 +17,14 @@ const fetchData = async () => {
 };
 fetchData()
 // console.log(id);
+
+const constinitialMessages = [
+    { role: 'user', text: 'Hey, how are you today?' },
+    { role: 'ai', text: 'I am doing very well!' },
+]
+
+
+
 </script>
 
 <template>
@@ -25,18 +34,21 @@ fetchData()
         </div> -->
         <!-- <TheWelcome />
         <TheWelcome /> -->
-        <div data-aos="fade-up" data-aos-duration="2800" data-aos-anchor-placement="center-center">
+        <!-- <div data-aos="fade-up" data-aos-duration="2800" data-aos-anchor-placement="center-center">
             <h1 class="text">Thinking About Exploring El Jams!</h1>
             <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
 
-        </div>
+        </div> -->
         <!-- <router-view /> -->
+
+        <deep-chat :demo="false" :textInput="{ placeholder: { text: 'Welcome to the demo!' } }"
+            :initialMessages="initialMessages" />
     </main>
 </template>
 
 <style scoped>
 main {
-    height: 9000px;
+    /* height: 9000px; */
 }
 
 

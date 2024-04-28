@@ -1,9 +1,10 @@
-
 export type PostProps = {
+  id: string;
   title: string;
   content: string;
   postImage: File[] | string[];
   userId: string;
+  user_name: string;
   likes: number;
   createdAt: Date;
   updatedAt: Date;
@@ -13,10 +14,12 @@ export type PostProps = {
 };
 
 export class Post {
+  public readonly id: string;
   public readonly title: string;
   public readonly content: string;
   public readonly postImage: File[] | string[];
   public readonly userId: string;
+  public readonly user_name: string;
   public readonly likes: number;
   public readonly createdAt: Date;
   public readonly updatedAt: Date;
@@ -25,10 +28,12 @@ export class Post {
   public readonly totalComments: number;
 
   constructor(props: PostProps) {
+    this.id = props.id;
     this.title = props.title;
     this.content = props.content;
     this.postImage = props.postImage;
     this.userId = props.userId;
+    this.user_name = props.user_name;
     this.likes = props.likes;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;

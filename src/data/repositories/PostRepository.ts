@@ -3,20 +3,35 @@ import type { RemoteDataSource } from "../data_source/remote_data_source";
 import type { AxiosResponse } from "axios";
 import { Either } from "@/domain/either/Either";
 import { ErrorHandler, type Failure } from "../network/error_handler";
+import type { GetLatestPostsRepository } from "@/domain/repository/post/GetLatestPostsInterface";
 
 
 
-export class PostRepository implements CreatePostRepository {
+export class PostRepository implements CreatePostRepository, GetLatestPostsRepository {
     constructor(
         public readonly remoteDataSource: RemoteDataSource
     ) { }
 
+    async getPosts(params: GetLatestPostsRepository.Request): Promise<GetLatestPostsRepository.Response> {
+        try {
+            // mapping happens here
+
+            const response: AxiosResponse = await this.remoteDataSource.getLatestPosts(params);
+
+            return Either.right(response.data);
+
+        } catch (error) {
+            const errorHandler = new ErrorHandler(error);
+            const failure: Failure = errorHandler.failure;
+
+
+            return Either.left(failure);
+        }
+    }
 
     async createPost(postData: CreatePostRepository.Request): Promise<CreatePostRepository.Response> {
 
         try {
-
-
             // mapping happens here
             const formData = new FormData();
             postData.postImage && formData.append('postImage', postData.postImage);

@@ -16,6 +16,7 @@
   "dependencies": {
     "aos": "^2.3.4",
     "axios": "^1.6.8",
+    "deep-chat": "^1.4.11",
     "pinia": "^2.1.7",
     "primeicons": "^7.0.0",
     "primevue": "^3.51.0",
