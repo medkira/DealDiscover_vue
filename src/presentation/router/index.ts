@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/presentation/views/home/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
+import AboutView from '../views/about/AboutView.vue'
 import PlacesView from '../views/places/PlacesView.vue';
 // import LoginView from '@/presentation/views/login/View/LoginView.vue'
 // import LandingView from '@/presentation/views/landing/LandingView.vue';
@@ -8,6 +8,7 @@ import PlacesView from '../views/places/PlacesView.vue';
 // import AppCookie from '@/app/storage/app_cookie'
 import RouterGuard from './Guard/routerGuards';
 import FoodsView from '../views/foods/FoodsView.vue';
+import PostView from '../views/posts/PostView.vue';
 // import LoginOrRegisterDialog from '../components/LoginOrRegisterDialog.vue';
 
 
@@ -30,6 +31,13 @@ const router = createRouter({
       path: '/foods',
       name: 'foods',
       component: FoodsView
+
+    },
+
+    {
+      path: '/posts',
+      name: 'posts',
+      component: PostView
 
     },
 

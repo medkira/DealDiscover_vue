@@ -12,6 +12,7 @@ import router from './presentation/router'
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import clickAway from 'vue3-click-away';
 
 const app = createApp(App)
 
@@ -23,6 +24,6 @@ app.use(PrimeVue, {
 });
 
 app.use(AOS.init)
-
+app.use(clickAway)
 app.use(ToastService);
 app.mount('#app')

@@ -32,7 +32,9 @@ export default class AxiosFactory {
                 const cookieAdapter = new AppCookie();
                 const token = cookieAdapter.getTokenCookie();
                 if (token) {
-                    config.headers['Authorization'] = `Bearer ${token}`;
+                    config.headers['Authorization'] = `${token}`;
+                    // config.headers['Authorization'] = `Bearer ${token}`;
+
                 }
                 return config;
             }

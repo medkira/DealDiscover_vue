@@ -4,6 +4,7 @@ import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDial
 import Avatar from 'primevue/avatar';
 import Toast from 'primevue/toast';
 import { AuthenticationStore } from '@/presentation/stores/Auth/AuthenticationStore';
+import SearchBar from '@/presentation/components/landing/SearchBar.vue';
 
 import Menu from 'primevue/menu';
 
@@ -70,27 +71,79 @@ const toggle = (event: any) => {
     <nav>
       <div>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-        <RouterLink to="/places">places</RouterLink>
-        <RouterLink to="/foods">foods</RouterLink>
+        <RouterLink to="/places">Places</RouterLink>
+        <RouterLink to="/foods">Foods</RouterLink>
+        <RouterLink to="/posts">Posts</RouterLink>
 
       </div>
-      <!-- <a class="">
-        <Avatar v-if="authenticationStore.isLoggedIn" @click="toggle" icon="user_image" class="mr-2" size="xlarge"
-          shape="circle" />
-        <LoginOrRegisterDialog v-else />
-      </a> -->
-
 
     </nav>
+    <div class="titles">
+      <div class="font">
+        <h2 class="title">Time To <span class="highlight">Discover</span></h2>
+        <h3 class="subtitle">Let The Chat <span class="highlight">Choose</span> For You</h3>
+      </div>
+    </div>
+    <SearchBar />
 
     <RouterView />
+
     <FooterCard />
   </main>
 </template>
 
 
 <style scoped lang="scss">
+.titles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 7%;
+}
+
+.font {
+  font-size: 60px;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.subtitle {
+  font-weight: bold;
+  color: #f6f6f6;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-weight: bold;
+  color: #f6f6f6;
+  padding-right: 55px;
+}
+
+.highlight {
+  color: #243c54;
+  font-weight: bold;
+}
+
+
+@media (max-width: 1024px) {
+  .titles {
+    margin-top: 26%;
+  }
+
+  .font {
+    font-size: 58px;
+  }
+
+}
+
+
+
+
+
+
+
+
 header {
   z-index: 1;
   position: fixed;

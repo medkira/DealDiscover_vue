@@ -10,7 +10,7 @@ export default {
       // 'max-h-[90vh]',
       // 'w-[30vw]',
       // 'max-w-[30vw]',
-      'w-[370px]',
+      // 'w-[370px]',
 
       'm-0',
 

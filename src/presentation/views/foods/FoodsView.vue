@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { ref } from "vue";
-// import SearchBar from '@/presentation/components/search-bar/SearchBar.vue';
+import CrouselCrads from '@/presentation/components/landing/CrouselCrads.vue';
+import SliderCards from '@/presentation/components/landing/SliderCards.vue';
 const datas = ref<any>('');
 
 const route = useRoute();
@@ -14,19 +15,24 @@ console.log(id);
 </script>
 
 <template>
+
+
     <main>
-        <!-- <SearchBar />
-        {{ datas }} -->
-        <!-- <TheWelcome /> -->
-        <!-- <router-view /> -->
-        <div class="test">TEST</div>
+        <SliderCards title="Foods for you" sub-title="Use ChatBot for Personalized Recommendations" :data=[] />
+
+        <CrouselCrads title="Best Foods Rated" sub-title="" :data=[] />
+        <CrouselCrads title="User favorites" sub-title="" :data=[] />
+
 
     </main>
 </template>
 
 <style scoped>
-.test {
-    background-color: red;
-    width: 100%;
+main {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
 }
 </style>

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import SearchBar from '@/presentation/components/landing/SearchBar.vue';
 import CrouselCards from '@/presentation/components/landing/CrouselCrads.vue'
+import SliderCards from '@/presentation/components/landing/SliderCards.vue';
 import { ref } from 'vue';
 
 // const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }])
-const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }, { message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }])
+// const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }, { message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }])
 
 </script>
 
@@ -18,68 +18,63 @@ const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }, {
 
 <template>
   <main>
-    <div class="titles">
+    <!-- <div class="titles">
       <div class="font">
         <h2 class="title">Time To <span class="highlight">Discover</span></h2>
         <h3 class="subtitle">Let The Chat <span class="highlight">Choose</span> For You</h3>
       </div>
-    </div>
+    </div> -->
 
-
-    <SearchBar />
+    <!-- data-aos-anchor-placement="center-center" -->
     <div class="image-container" data-aos="fade-up" data-aos-duration="2500" data-aos-once="true"
-      data-aos-anchor-placement="center-center" data-aos-easing="ease-out-cubic">
+      data-aos-easing="ease-out-cubic">
       <h1 class="text">Thinking About Exploring El Jam!</h1>
       <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
     </div>
 
-    <CrouselCards title="Best Beaches" />
+    <CrouselCards title="Best Beaches" sub-title="" :data=[] />
 
-    <h1>Best Restaurants</h1>
-    <div class="more-explore">
 
-      <div v-for="( item, index ) in  items   " :key="item">
-        {{ index }}
+    <SliderCards title="Best Restaurants" sub-title="" :data=[] />
 
-      </div>
-    </div>
-    <CrouselCards title="Top Hotels for your next vacation" />
+    <CrouselCards title="Top Hotels for your next vacation" sub-title="" :data=[] />
   </main>
 </template>
 
 <style scoped lang="scss">
-h1 {
-  font-size: 45px;
-  text-align: start;
-  // background-color: red;
-  width: 93%;
-  color: #f6f6f6;
-  margin-bottom: -15px;
-  font-weight: bolder;
-}
-
-.more-explore {
-  padding: 37px;
-  background-color: rgb(#f6f6f6, 0.17);
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  overflow: scroll;
+// .more-explore {
+//   padding: 37px;
+//   background-color: rgb(#f6f6f6, 0.17);
+//   width: 100%;
+//   display: flex;
+//   flex-direction: row;
+//   overflow: scroll;
 
 
-  div {
-    background-color: #243c54;
-    margin: 10px;
-    padding: 0 275px;
-    height: 300px;
-    border-radius: 20px;
-  }
-}
+//   div {
+//     background-color: #243c54;
+//     margin: 10px;
+//     padding: 0 275px;
+//     height: 300px;
+//     border-radius: 20px;
+//   }
+// }
+
+// @media (max-width: 1024px) {
+//   .more-explore {
+//     div {
+//       padding: 0 150px;
+//       height: 150px;
+//     }
+//   }
+// }
 
 @media (max-width: 1024px) {
   .titles {
     margin-top: 20%;
   }
+
+
 
 }
 
@@ -94,7 +89,6 @@ main {
 img {
   object-fit: cover;
   display: block;
-  // width: 100%;
   width: 1140px;
   height: 500px;
   border-radius: 20px;
@@ -104,8 +98,32 @@ img {
     transform 0.41s ease-in-out;
 }
 
+.image-container {
+  padding: 2rem;
+
+}
+
 .image-container:hover img {
   transform: scale(1.04);
+
+
+}
+
+@media (max-width: 600px) {
+
+  .image-container {
+    padding: 20px;
+
+    img {
+
+      width: 100%;
+      height: 100%;
+    }
+
+    .text {
+      font-size: x-large;
+    }
+  }
 }
 
 .text {

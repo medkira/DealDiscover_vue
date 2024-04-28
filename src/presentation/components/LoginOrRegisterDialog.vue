@@ -8,7 +8,7 @@ import { LoginStore } from '@/presentation/stores/Auth/LoginStore';
 import GoogleAuthButton from './Buttons/GoogleAuthButton.vue';
 import { RegisterStore } from '../stores/Auth/RegisterStore';
 import { useToast } from "primevue/usetoast";
-import LoginButton from './Buttons/LoginButton.vue';
+import PrimaryButton from './Buttons/PrimaryButton.vue';
 
 
 
@@ -26,6 +26,7 @@ const roleOptions = [
 ];
 
 const visible = ref(false);
+
 const isLoginActive = ref(true);
 
 const submitLogin = async () => {
@@ -73,11 +74,11 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
 
 <template>
 
-    <LoginButton label="Login" @click="[visible = true, resetValues()]" class=" text-[#f0f0f0] "
+    <PrimaryButton text="Login" label="Login" @click="[visible = true, resetValues()]" class=" text-[#f0f0f0] "
         style="font-size: 1.5rem  " />
     <div class="card flex justify-center ">
 
-        <Dialog :close-on-escape="true" :dismissable-mask="true" v-model:visible="visible" modal :pt="{
+        <Dialog :close-on-escape="true" class="'w-[370px]" :dismissable-mask="true" v-model:visible="visible" modal :pt="{
         mask: {
             style: 'backdrop-filter: blur(2px)'
         }
@@ -96,6 +97,7 @@ background: #2980b9;
                         <Button label="Register" @click="[isLoginActive = !isLoginActive, resetValues()]" text
                             class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                     </div>
+
                     <template v-if="isLoginActive">
                         <div v-if="logingStore.loginStatusMessage"
                             class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50">

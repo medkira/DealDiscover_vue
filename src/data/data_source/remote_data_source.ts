@@ -2,12 +2,14 @@ import type { AxiosResponse } from "axios";
 import type { AppServiceClient } from "../network/app_api";
 import type { LoginRepository } from "@/domain/repository/authentication/SignInInterface";
 import type { SignUserRepository } from "@/domain/repository/authentication/SignUpUserInterface";
+import type { CreatePostRepository } from "@/domain/repository/post/CreatePostInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+    /***** Auth  *****/
 
     async login(loginRequest: LoginRepository.Request): Promise<AxiosResponse<{ authenticationToken: string }>> {
         return await this._appServiceClient.login({ email: loginRequest.email, password: loginRequest.password });
@@ -31,12 +33,25 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     //         registerRequest.countryMobileCode
     //     );
     // }
+
+
+
+
+    /***** Post  *****/
+
+    // this  CreatePostRepository.Request suppose to be a form data with all the attributes inside of it.
+    // we change it for  now to (any)
+    async createPost(createPostRequest: any): Promise<AxiosResponse<CreatePostRepository.Response>> {
+        return await this._appServiceClient.createPost(createPostRequest);
+    }
 }
 
 
 export interface RemoteDataSource {
     login(loginRequest: { email: string, password: string }): Promise<AxiosResponse<{ authenticationToken: string }>>;
     register(registerRequest: SignUserRepository.Request): Promise<AxiosResponse<SignUserRepository.Response>>;
+
+    createPost(createPostRequest: CreatePostRepository.Request): Promise<AxiosResponse<CreatePostRepository.Response>>
     // forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): Promise<ForgotPasswordResponse>;
 }
 

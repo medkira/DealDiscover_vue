@@ -7,41 +7,52 @@ import Button from "primevue/button";
 
 defineProps<({
     title: String,
+    subTitle: String,
+    data: any[]
 })>()
 
-// import { ProductService } from '@/service/ProductService';
 
 onMounted(() => {
     // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
 })
 
-const products = ref([{ image: 'bizerteBeach.jpg' }, { image: 'MahdaiBeach.jpg' }, { image: 'DjerbaBeach.jpg' },
-{ image: 'bizerteBeach.jpg' }, { image: 'MahdaiBeach.jpg' }, { image: 'bizerteBeach.jpg' }, { image: 'bizerteBeach.jpg' },
-{ image: 'MahdaiBeach.jpg' }, { image: 'bizerteBeach.jpg' },
-{ image: 'bizerteBeach.jpg' }, { image: 'MahdaiBeach.jpg' }, { image: 'bizerteBeach.jpg' }
+const products = ref([
+    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+    { image: 'DjerbaBeach.jpg', subTitle: 'Djerba Beach' },
+    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' }
 ]);
-console.log(products.value.length)
+
+// console.log(products.value.length)
 const responsiveOptions = ref([
-    // {
-    //     breakpoint: '1400px',
-    //     numVisible: 4,
-    //     numScroll: 1
-    // },
-    // {
-    //     breakpoint: '1199px',
-    //     numVisible: 4,
-    //     numScroll: 1
-    // },
-    // {
-    //     breakpoint: '767px',
-    //     numVisible: 2,
-    //     numScroll: 1
-    // },
-    // {
-    //     breakpoint: '575px',
-    //     numVisible: 1,
-    //     numScroll: 1
-    // }
+    {
+        breakpoint: '1400px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '1199px',
+        numVisible: 3,
+        numScroll: 3
+    },
+    {
+        breakpoint: '767px',
+        numVisible: 2,
+        numScroll: 1
+    },
+    {
+        breakpoint: '575px',
+        numVisible: 2,
+        numScroll: 4
+    }
 ]);
 
 const getSeverity = (status: any) => {
@@ -68,7 +79,7 @@ const getSeverity = (status: any) => {
     <div class="card">
         <Carousel :value="products" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions">
             <template #item="slotProps">
-                <div class=" image-container m-2  w-50">
+                <div class=" image-container m-3  w-50">
                     <div class=" mb-3">
 
                         <div class="relative mx-auto rounded-full h-full w-full ">
@@ -85,6 +96,7 @@ const getSeverity = (status: any) => {
                     </div>
                     <div class="mb-3 font-medium">{{ slotProps.data.name }}</div>
                     <div class="flex justify-content-between align-items-center">
+                        <p class="sub-title">{{ slotProps.data.subTitle }}</p>
                         <!-- <div class="mt-0 font-semibold text-xl">${{ slotProps.data.price }}</div> -->
                         <!-- <span>
                             <Button icon="pi pi-heart" severity="secondary" outlined />
@@ -99,6 +111,10 @@ const getSeverity = (status: any) => {
 
 
 <style scoped lang="scss">
+.card {
+    width: 100%;
+}
+
 h1 {
     font-size: 45px;
     text-align: start;
@@ -109,17 +125,27 @@ h1 {
     font-weight: bolder;
 }
 
+.sub-title {
+    color: #f6f6f6;
+    font-size: 25px;
+
+}
+
 .image-container {
     img {
         // width: 100%;
         // height: 500%;
         width: 600px;
         height: 300px;
-        border-radius: 10px;
+
+        // width: 200px;
+        // height: 100px;
+        border-radius: 20px;
         object-fit: cover;
         cursor: pointer;
         transition: opacity 0.47ms ease-in;
         ;
+        // overflow: scroll;
     }
 
     img:hover {

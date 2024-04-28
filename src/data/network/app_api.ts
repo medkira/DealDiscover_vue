@@ -32,5 +32,11 @@ export class AppServiceClient {
             }
         });
     }
+
+    async createPost(createPostRequest: { post_type: string, content: string, postImage: File }): Promise<AxiosResponse<any>> {
+        // console.log("hiiii")
+        // console.log("from app api ", createPostRequest.postImage)
+        return await this.http.post('/posts', createPostRequest);
+    }
 }
 
