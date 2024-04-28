@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDialog.vue'
+import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDialog.vue';
 import Avatar from 'primevue/avatar';
 import Toast from 'primevue/toast';
 import { AuthenticationStore } from '@/presentation/stores/Auth/AuthenticationStore';
@@ -55,20 +55,18 @@ const toggle = (event: any) => {
 </script>
 
 <template>
-  <Toast position="top-left" group="tl" />
+  <!-- <Toast position="top-left" group="tl" />
   <header>
 
 
     <Avatar v-if="authenticationStore.isLoggedIn" @click="toggle" icon="user_image" class=" Avatar mr-2" size="xlarge"
       shape="circle" />
     <LoginOrRegisterDialog v-else />
-    <!-- <div class="card flex justify-center align-middle bg-white"> -->
     <Menu ref="menu" class="overlay_menu" :model="items" :popup="true" />
-    <!-- </div> -->
-  </header>
+  </header> -->
   <main>
 
-    <nav>
+    <!-- <nav>
       <div>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/places">Places</RouterLink>
@@ -77,7 +75,7 @@ const toggle = (event: any) => {
 
       </div>
 
-    </nav>
+    </nav> -->
     <div class="titles">
       <div class="font">
         <h2 class="title">Time To <span class="highlight">Discover</span></h2>
@@ -86,7 +84,8 @@ const toggle = (event: any) => {
     </div>
     <SearchBar />
 
-    <RouterView />
+    <!-- <RouterView /> -->
+    <slot />
 
     <FooterCard />
   </main>
@@ -144,16 +143,7 @@ const toggle = (event: any) => {
 
 
 
-header {
-  z-index: 1;
-  position: fixed;
-  right: 11%;
-  top: 1.7%;
-}
 
-.test {
-  background-color: red;
-}
 
 
 
@@ -162,42 +152,6 @@ header {
   margin: 0 auto 2rem;
 }
 
-nav {
-  z-index: 1;
-  font-size: 31px;
-  text-align: center;
-  /* margin-top: 2rem; */
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 10%;
-
-
-
-  div {
-    padding: 5px 35px 5px 40px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  a {
-    margin: 5px;
-  }
-
-}
-
-
-
-nav>* {
-
-  display: inline-block;
-  padding: 0 1rem;
-  font-size: x-large;
-}
 
 
 
@@ -212,45 +166,92 @@ nav>* {
   background-color: rgb(255, 255, 255);
 }
 
-@media (min-width: 1024px) {
-  header {
-    position: fixed;
-    right: 15%;
-    z-index: 2;
-  }
 
 
-  nav {
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    top: 2.1%;
-  }
 
-  nav>* {
-    font-size: xx-large;
-  }
+// header {
+//   z-index: 1;
+//   position: fixed;
+//   right: 11%;
+//   top: 1.7%;
+// }
 
-  /* .logo {
-    margin: 0 2rem 0 0;
-  } */
+// nav {
+//   z-index: 1;
+//   font-size: 31px;
+//   text-align: center;
+//   /* margin-top: 2rem; */
+//   position: fixed;
+//   left: 0;
+//   right: 0;
+//   top: 10%;
 
-  /* header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  } */
-  /* 
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
 
-    padding: 1rem 0;
-    margin-top: 1rem;
-  } */
-}
-</style>
+
+//   div {
+//     padding: 5px 35px 5px 40px;
+//     background: rgba(255, 255, 255, 0.2);
+//     border-radius: 50px;
+//     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+//     backdrop-filter: blur(5px);
+//     -webkit-backdrop-filter: blur(5px);
+//     border: 1px solid rgba(255, 255, 255, 0.3);
+//   }
+
+//   a {
+//     margin: 5px;
+//   }
+
+// }
+
+
+
+// nav>* {
+
+//   display: inline-block;
+//   padding: 0 1rem;
+//   font-size: x-large;
+// }
+
+
+// @media (min-width: 1024px) {
+//   header {
+//     position: fixed;
+//     right: 15%;
+//     z-index: 2;
+//   }
+
+
+//   nav {
+//     position: fixed;
+//     left: 0px;
+//     right: 0px;
+//     top: 2.1%;
+//   }
+
+//   nav>* {
+//     font-size: xx-large;
+//   }
+
+//   /* .logo {
+//     margin: 0 2rem 0 0;
+//   } */
+
+//   /* header .wrapper {
+//     display: flex;
+//     place-items: flex-start;
+//     flex-wrap: wrap;
+//   } */
+//   /* 
+//   nav {
+//     text-align: left;
+//     margin-left: -1rem;
+//     font-size: 1rem;
+
+//     padding: 1rem 0;
+//     margin-top: 1rem;
+//   } */
+// }</style>
 
 
 

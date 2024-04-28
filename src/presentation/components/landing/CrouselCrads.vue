@@ -1,34 +1,40 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-
 import Carousel from 'primevue/carousel';
-import Button from "primevue/button";
+import router from '@/presentation/router';
 
 
 defineProps<({
     title: String,
     subTitle: String,
-    data: any[]
+    data: Array<{ id: String, image: String, title: String }>
 })>()
 
+
+
+const navigateTo = (id: string) => {
+    router.push({ name: 'place', replace: true, params: { id } });
+    console.log(id)
+
+}
 
 onMounted(() => {
     // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
 })
-
+// this data need to be mounted in onMounted
 const products = ref([
-    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { image: 'DjerbaBeach.jpg', subTitle: 'Djerba Beach' },
-    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' }
+    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+    { id: "54254", image: 'DjerbaBeach.jpg', subTitle: 'Djerba Beach' },
+    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' }
 ]);
 
 // console.log(products.value.length)
@@ -55,21 +61,7 @@ const responsiveOptions = ref([
     }
 ]);
 
-const getSeverity = (status: any) => {
-    switch (status) {
-        case 'INSTOCK':
-            return 'success';
 
-        case 'LOWSTOCK':
-            return 'warning';
-
-        case 'OUTOFSTOCK':
-            return 'danger';
-
-        default:
-            return null;
-    }
-};
 
 </script>
 
@@ -79,7 +71,7 @@ const getSeverity = (status: any) => {
     <div class="card">
         <Carousel :value="products" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions">
             <template #item="slotProps">
-                <div class=" image-container m-3  w-50">
+                <div @click="navigateTo(slotProps.data.id)" class=" image-container m-3  w-50">
                     <div class=" mb-3">
 
                         <div class="relative mx-auto rounded-full h-full w-full ">

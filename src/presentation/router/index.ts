@@ -3,12 +3,14 @@ import HomeView from '@/presentation/views/home/HomeView.vue'
 import AboutView from '../views/about/AboutView.vue'
 import PlacesView from '../views/places/PlacesView.vue';
 // import LoginView from '@/presentation/views/login/View/LoginView.vue'
-// import LandingView from '@/presentation/views/landing/LandingView.vue';
+// import LandingLayout from '@/presentation/views/landing/LandingLayout.vue';
 
 // import AppCookie from '@/app/storage/app_cookie'
 import RouterGuard from './Guard/routerGuards';
 import FoodsView from '../views/foods/FoodsView.vue';
 import PostView from '../views/posts/PostView.vue';
+import CommunView from '../views/communViews/CommunView.vue';
+import LandingLayout from '../layouts/landing/LandingLayout.vue'; '../views/landing/LandingLayout.vue';
 // import LoginOrRegisterDialog from '../components/LoginOrRegisterDialog.vue';
 
 
@@ -25,63 +27,49 @@ const router = createRouter({
     {
       path: '/places',
       name: 'places',
-      component: PlacesView
+      component: PlacesView,
+      meta: { layout: LandingLayout }
+
+      // children: [
+      //   {
+      //     path: 'place/:id',
+      //     name: 'place',
+      //     component: CommunView,
+      //   }
+      // ]
+
     },
     {
       path: '/foods',
       name: 'foods',
-      component: FoodsView
+      component: FoodsView,
+      meta: { layout: LandingLayout }
 
     },
 
     {
       path: '/posts',
       name: 'posts',
-      component: PostView
+      component: PostView,
+      meta: { layout: LandingLayout }
 
     },
 
 
-    // {
-    //   path: '/auth',
-    //   name: 'auth',
-    //   // component: HomeView,
-    //   children: [
-    //     {
-    //       path: 'login',
-    //       name: 'login',
-    //       component: LoginOrRegisterDialog
-    //     },
-    //     {
-    //       path: 'register',
-    //       name: 'register',
-    //       component: AboutView
-    //     },
-    //   ]
-    // },
+
     {
       path: '/place/:id',
       name: 'place',
-      component: PlacesView
+      component: CommunView
     },
     {
       path: '/',
       name: 'home',
       component: HomeView,
       alias: '/home',
-      // children: [
-      //   {
-      //     path: 'places',
-      //     name: 'places',
-      //     component: PlacesView,
-      //   },
 
-      //   {
-      //     path: 'foods',
-      //     name: 'foods',
-      //     component: FoodsView,
-      //   }
-      // ]
+      meta: { layout: LandingLayout }
+
     },
   ]
 });
@@ -118,3 +106,35 @@ new RouterGuard();
 //   // which is lazy-loaded when the route is visited.
 //   component: () => import('../views/AboutView.vue')
 // }
+
+// {
+//   path: '/auth',
+//   name: 'auth',
+//   // component: HomeView,
+//   children: [
+//     {
+//       path: 'login',
+//       name: 'login',
+//       component: LoginOrRegisterDialog
+//     },
+//     {
+//       path: 'register',
+//       name: 'register',
+//       component: AboutView
+//     },
+//   ]
+// },
+
+// children: [
+//   {
+//     path: 'places',
+//     name: 'places',
+//     component: PlacesView,
+//   },
+
+//   {
+//     path: 'foods',
+//     name: 'foods',
+//     component: FoodsView,
+//   }
+// ]
