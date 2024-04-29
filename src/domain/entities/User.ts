@@ -1,5 +1,4 @@
 // entities/User.ts
-import { File } from "@domain/entities/File";
 
 export type UserProps = {
   id: string;

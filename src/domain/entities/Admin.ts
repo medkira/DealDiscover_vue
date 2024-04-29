@@ -1,4 +1,4 @@
-import { UserProps, UserRole } from "./User";
+import { UserRole, type UserProps } from "./User";
 
 export type AdminProps = UserProps;
 

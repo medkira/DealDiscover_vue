@@ -1,5 +1,5 @@
-import { UserProps, UserRole } from "./User";
-import { File } from "@domain/entities/File";
+import type { UserProps, UserRole } from "./User";
+
 
 export type NormalUserProps = UserProps & {
   gender: boolean;

@@ -24,7 +24,7 @@ const visibleAddcomments = ref(false)
 
 
 
-const post_type = ref("");
+const post_type = ref<any>();
 const content = ref('');
 const rate = ref(0);
 const image = ref();

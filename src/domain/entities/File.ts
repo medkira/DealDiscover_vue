@@ -4,7 +4,7 @@ export type FileProps = {
   size: number;
   type: string;
   extension: string;
-  buffer: Buffer;
+  buffer: any;
 };
 
 export class File {
@@ -13,7 +13,7 @@ export class File {
   public readonly size: number;
   public readonly type: string;
   public readonly extension: string;
-  public readonly buffer: Buffer;
+  public readonly buffer: any;
 
   constructor(props: FileProps) {
     this.fieldname = props.fieldname;

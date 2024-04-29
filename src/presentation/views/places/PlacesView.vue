@@ -5,17 +5,18 @@ import { appServiceClientInstance } from '@/app/factory/di';
 import { ref } from "vue";
 import TheWelcome from '@/presentation/components/TheWelcome.vue';
 import 'deep-chat';
+import type { RequestInterceptor, ResponseInterceptor } from 'deep-chat/dist/types/interceptors';
 const datas = ref<any>('');
 
 const route = useRoute();
 const id = route.params.id as string;
-const fetchData = async () => {
-    const res = await appServiceClientInstance.getLatestPost({ page: id });
-    // console.log(res);
-    datas.value = res.data.data;
-    return res;
-};
-fetchData()
+// const fetchData = async () => {
+//     // const res = await appServiceClientInstance.getLatestPost({ page: id });
+//     // console.log(res);
+//     datas.value = res.data.data;
+//     return res;
+// };
+// fetchData()
 // console.log(id);
 
 const constinitialMessages = [
@@ -23,6 +24,19 @@ const constinitialMessages = [
     { role: 'ai', text: 'I am doing very well!' },
 ]
 
+const requestInterceptor: RequestInterceptor = (details) => {
+    details.body = {
+        message: details.body.messages[0].text
+    }
+    // console.log(details)
+    return details;
+}
+
+const responseInterceptor: ResponseInterceptor = (details) => {
+    console.log("Response ", details[0].text)
+    return { text: details[0].text }
+    // return details
+}
 
 
 </script>
@@ -41,14 +55,27 @@ const constinitialMessages = [
         </div> -->
         <!-- <router-view /> -->
 
-        <deep-chat :demo="false" :textInput="{ placeholder: { text: 'Welcome to the demo!' } }"
-            :initialMessages="initialMessages" />
+        <deep-chat :request="{
+            url: 'http://0.0.0.0:5005/webhooks/rest/webhook',
+            method: 'POST',
+        }" :requestInterceptor="requestInterceptor" :responseInterceptor="responseInterceptor" class="deep-chat"
+            :demo="false" :introMessage="{ text: 'Hi I am your recommendation assistant, ask me anything!' }" />
+
+
     </main>
 </template>
 
 <style scoped>
 main {
     /* height: 9000px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .deep-chat {
+        border-radius: 20px;
+        background-color: aqua;
+    }
 }
 
 

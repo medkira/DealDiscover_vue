@@ -1,8 +1,7 @@
-import { NetworkConstants } from "@/app/constants";
 import type { postType } from "@/domain/entities/Post";
 import type { SignUserRepository } from "@/domain/repository/authentication/SignUpUserInterface";
+import type { GetLatestPostsRepository } from "@/domain/repository/post/GetLatestPostsInterface";
 import type { AxiosInstance, AxiosResponse } from "axios";
-import type { title } from "process";
 
 export class AppServiceClient {
     constructor(
@@ -25,7 +24,7 @@ export class AppServiceClient {
 
 
     // ? Post
-    async getLatestPosts(reqQuery: { page?: number, type?: postType, title: string }) {
+    async getLatestPosts(reqQuery: GetLatestPostsRepository.Request) {
         return await this.http.get(`/post/page`, {
             params: {
                 page: reqQuery.page,

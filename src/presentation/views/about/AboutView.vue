@@ -6,9 +6,9 @@ function isAxiosResponse<T>(response: any): response is AxiosResponse<T> {
   return response && typeof response === 'object' && 'status' in response && 'data' in response;
 }
 const fetchData = async () => {
-  const res = await appServiceClientInstance.getLatestPost({ page: "5" });
-  console.log(res);
-  return res;
+  // const res = await appServiceClientInstance.getLatestPost({ page: "5" });
+  // console.log(res);
+  // return res;
 };
 
 
@@ -21,9 +21,9 @@ const fetchData = async () => {
   <div class="about">
     <h1>This is an about page</h1>
   </div>
-  <button @click="fetchData" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+  <!-- <button @click="fetchData" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
     Fetch Data
-  </button>
+  </button> -->
 </template>
 
 <style>

@@ -1,6 +1,7 @@
 import { File } from "./File";
-import { Place, PlaceProps } from "./Place";
-import { UserProps, UserRole } from "./User";
+import type { Place, PlaceProps } from "./Place";
+import type { UserProps, UserRole } from "./User";
+
 export type OwnerProps = UserProps & {
   places: PlaceProps[];
 };
@@ -10,7 +11,7 @@ export class Owner {
   public readonly id: string;
   public readonly name: string;
   public readonly username: string;
-  public readonly image: File[] | string; // ! need to fix this.
+  public readonly image: any;
   public readonly email: string;
   public readonly phoneNumber: string;
   public readonly password: string;
