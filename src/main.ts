@@ -4,7 +4,6 @@ import PrimeVue from 'primevue/config';
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import ToastService from 'primevue/toastservice';
-
 // @ts-ignore
 import Lara from '@/presentation/resources/persets/lara'
 import App from './app/App.vue'
@@ -14,6 +13,7 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import clickAway from 'vue3-click-away';
 
+// @ts-ignore
 const app = createApp(App)
 
 app.use(createPinia())
@@ -26,4 +26,6 @@ app.use(PrimeVue, {
 app.use(AOS.init)
 app.use(clickAway)
 app.use(ToastService);
+
+
 app.mount('#app')

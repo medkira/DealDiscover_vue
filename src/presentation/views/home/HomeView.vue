@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import RobotDiscover from '@/presentation/components/animation/RobotDiscover.vue';
 import CrouselCards from '@/presentation/components/landing/CrouselCrads.vue'
 import SliderCards from '@/presentation/components/landing/SliderCards.vue';
 import { ref } from 'vue';
@@ -28,10 +29,15 @@ import { ref } from 'vue';
     <!-- data-aos-anchor-placement="center-center" -->
     <div class="image-container" data-aos="fade-up" data-aos-duration="2500" data-aos-once="true"
       data-aos-easing="ease-out-cubic">
-      <h1 class="text">Thinking About Exploring El Jam!</h1>
-      <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
-    </div>
+      <!-- <h1 class="text">Thinking About Exploring El Jam!</h1> -->
+      <div class="images-container">
+        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
+        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
+        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
+      </div>
 
+      <RobotDiscover class="robot" />
+    </div>
     <CrouselCards title="Best Beaches" sub-title="" :data=[] />
 
 
@@ -42,33 +48,6 @@ import { ref } from 'vue';
 </template>
 
 <style scoped lang="scss">
-// .more-explore {
-//   padding: 37px;
-//   background-color: rgb(#f6f6f6, 0.17);
-//   width: 100%;
-//   display: flex;
-//   flex-direction: row;
-//   overflow: scroll;
-
-
-//   div {
-//     background-color: #243c54;
-//     margin: 10px;
-//     padding: 0 275px;
-//     height: 300px;
-//     border-radius: 20px;
-//   }
-// }
-
-// @media (max-width: 1024px) {
-//   .more-explore {
-//     div {
-//       padding: 0 150px;
-//       height: 150px;
-//     }
-//   }
-// }
-
 @media (max-width: 1024px) {
   .titles {
     margin-top: 20%;
@@ -84,13 +63,26 @@ main {
   align-items: center;
   flex-direction: column;
   gap: 30px;
+  overflow: hidden;
+}
+
+.robot {
+  // background-color: #243c54;
+  // width: 1140px;
+  height: 300px;
+  position: absolute;
+  top: 6%;
+  left: 19%;
+  right: 0;
+  bottom: 0px;
+  transform: scale(1.3);
 }
 
 img {
   object-fit: cover;
   display: block;
-  width: 1140px;
-  height: 500px;
+  // width: 1140px;
+  // height: 500px;
   border-radius: 20px;
   position: relative;
   cursor: pointer;
@@ -98,8 +90,46 @@ img {
     transform 0.41s ease-in-out;
 }
 
+.images-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  img:nth-child(1) {
+    width: 500px;
+    position: absolute;
+    right: 13%;
+    top: 8%;
+    rotate: 10deg;
+  }
+
+  img:nth-child(2) {
+
+    width: 500px;
+    position: absolute;
+    right: 22%;
+    top: 49%;
+    rotate: -5deg;
+  }
+
+  img:nth-child(3) {
+
+    width: 500px;
+    position: absolute;
+    // right: 24%;
+    left: 26%;
+    top: 15%;
+    rotate: -3deg;
+  }
+}
+
 .image-container {
-  padding: 2rem;
+  // padding: 2rem;
+  // position: relative;
+  // background-color: #88a2bb;
+  height: 700px;
+  width: 100%;
+
 
 }
 
@@ -209,3 +239,31 @@ img {
   background: linear-gradient(135deg, rgb(239, 247, 255) 0%, rgb(214, 229, 247) 100%);
 }
 </style>
+
+<!-- 
+// .more-explore {
+// padding: 37px;
+// background-color: rgb(#f6f6f6, 0.17);
+// width: 100%;
+// display: flex;
+// flex-direction: row;
+// overflow: scroll;
+
+
+// div {
+// background-color: #243c54;
+// margin: 10px;
+// padding: 0 275px;
+// height: 300px;
+// border-radius: 20px;
+// }
+// }
+
+// @media (max-width: 1024px) {
+// .more-explore {
+// div {
+// padding: 0 150px;
+// height: 150px;
+// }
+// }
+// } -->

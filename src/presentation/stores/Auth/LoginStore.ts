@@ -44,21 +44,22 @@ export const LoginStore = defineStore('LoginStore', {
                     this.loginLoading = false;
                 },
                 (response) => {
-                    // ? right -> data (success)
-                    // # success state
-                    this.logingSuccess.token = response.authenticationToken;
+                    // ! this just in developement
+                    setTimeout(() => {
+                        // ? right -> data (success)
+                        // # success state
+                        this.logingSuccess.token = response.authenticationToken;
 
-                    // const cookieAdapter = new AppCookie();
-                    // cookieAdapter.setTokenCookie(this.logingSuccess.token);
-                    // console.log("success: ", this.logingSuccess.token);
 
-                    const authenticationStore = AuthenticationStore();
-                    authenticationStore.setToken(response.authenticationToken),
 
+                        const authenticationStore = AuthenticationStore();
+                        authenticationStore.setToken(response.authenticationToken);
 
                         this.loginLoading = false;
-                    router.push({ name: 'place', replace: true, params: { id: "placesId" } });
-                    // this.reset();
+                        router.push({ name: 'home', replace: true, params: { id: "placesId" } });
+                        this.reset();
+                    }, 2500);
+
                 }
             )
 

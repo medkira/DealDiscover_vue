@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { authRepository } from '@/app/factory/di';
-import AppCookie from '@/app/storage/app_cookie';
 import router from '@/presentation/router';
+import { AuthenticationStore } from './AuthenticationStore';
 // import { useUserStore } from './user'
 
 export const RegisterStore = defineStore('RegisterStore', {
@@ -50,17 +50,19 @@ export const RegisterStore = defineStore('RegisterStore', {
                     this.registerLoading = false;
                 },
                 (response) => {
-                    // ? right -> data (success)
-                    // # success state
-                    this.registerSuccess.token = response.authenticationToken;
+                    // ! this just in developement
+                    setTimeout(() => {
+                        // ? right -> data (success)
+                        // # success state
+                        this.registerSuccess.token = response.authenticationToken;
 
-                    const cookieAdapter = new AppCookie();
-                    cookieAdapter.setTokenCookie(this.registerSuccess.token);
-                    // console.log("success: ", this.logingSuccess.token);
-                    this.registerLoading = false;
-                    router.push({ name: 'place', replace: true, params: { id: "placesId" } });
-                    // this.reset()
+                        const authenticationStore = AuthenticationStore();
+                        authenticationStore.setToken(response.authenticationToken),
 
+                            this.registerLoading = false;
+                        router.push({ name: 'home', replace: true, params: { id: "placesId" } });
+                        this.reset()
+                    }, 2500);
                 }
             )
 

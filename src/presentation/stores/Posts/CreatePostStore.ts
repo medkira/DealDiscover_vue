@@ -52,7 +52,7 @@ export const CreatePostStore = defineStore('CreatePostStore', {
                     setTimeout(() => {
 
                         this.CreatePostLoading = false;
-                    }, 2500)
+                    }, 2500);
                     // this.reset();
                 }
             )

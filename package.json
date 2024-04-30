@@ -14,6 +14,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@splidejs/vue-splide": "^0.6.12",
     "aos": "^2.3.4",
     "axios": "^1.6.8",
     "deep-chat": "^1.4.11",

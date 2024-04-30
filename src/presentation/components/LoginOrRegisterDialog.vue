@@ -9,7 +9,7 @@ import GoogleAuthButton from './Buttons/GoogleAuthButton.vue';
 import { RegisterStore } from '../stores/Auth/RegisterStore';
 import { useToast } from "primevue/usetoast";
 import PrimaryButton from './Buttons/PrimaryButton.vue';
-
+import LoadingCube from './animation/LoadingCube.vue';
 
 
 
@@ -84,7 +84,13 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
         }
     }">
             <template #container="{ closeCallback }">
-                <div class="flex flex-col px-10 py-7 gap-5 " style="border-radius: 12px;   background: #0575e6;
+                <!-- LOADING VIEW -->
+                <div v-if="logingStore.loginLoading"
+                    class="bg-[#2980b9] p-[200px] rounded-2xl flex flex-col items-center justify-between">
+                    <LoadingCube />
+                    <h1 class="font-bold text-3xl pt-32">Loading ....</h1>
+                </div>
+                <div v-else class="flex flex-col px-10 py-7 gap-5 " style="border-radius: 12px;   background: #0575e6;
 background: #2980b9;
   background: linear-gradient(to left, #d1d3d3, #5fbadb, #267db8);
   background: linear-gradient(to left, #d1d3d3, #5fbadb, #267db8);">

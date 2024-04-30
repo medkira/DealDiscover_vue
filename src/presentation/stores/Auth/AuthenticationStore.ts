@@ -36,6 +36,23 @@ export const AuthenticationStore = defineStore('AuthenticationStore', {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // {
 //     // console.log("i am working")
 //     const cookieToken = new AppCookie().getTokenCookie();

@@ -82,7 +82,7 @@ const toggle = (event: any) => {
         <h3 class="subtitle">Let The Chat <span class="highlight">Choose</span> For You</h3>
       </div>
     </div>
-    <SearchBar />
+    <!-- <SearchBar /> -->
 
     <!-- <RouterView /> -->
     <slot />

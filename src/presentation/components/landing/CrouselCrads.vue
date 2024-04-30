@@ -2,8 +2,10 @@
 import { ref, onMounted } from "vue";
 import Carousel from 'primevue/carousel';
 import router from '@/presentation/router';
-
-
+// @ts-ignore
+import { Splide, SplideSlide } from '@splidejs/vue-splide';
+// Default theme
+import '@splidejs/splide/css';
 defineProps<({
     title: String,
     subTitle: String,
@@ -15,14 +17,14 @@ defineProps<({
 const navigateTo = (id: string) => {
     router.push({ name: 'place', replace: true, params: { id } });
     console.log(id)
-
+    console.log(id)
 }
 
 onMounted(() => {
     // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
 })
 // this data need to be mounted in onMounted
-const products = ref([
+const elements = ref([
     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
     { id: "54254", image: 'DjerbaBeach.jpg', subTitle: 'Djerba Beach' },
@@ -37,29 +39,6 @@ const products = ref([
     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' }
 ]);
 
-// console.log(products.value.length)
-const responsiveOptions = ref([
-    {
-        breakpoint: '1400px',
-        numVisible: 2,
-        numScroll: 1
-    },
-    {
-        breakpoint: '1199px',
-        numVisible: 3,
-        numScroll: 3
-    },
-    {
-        breakpoint: '767px',
-        numVisible: 2,
-        numScroll: 1
-    },
-    {
-        breakpoint: '575px',
-        numVisible: 2,
-        numScroll: 4
-    }
-]);
 
 
 
@@ -68,41 +47,33 @@ const responsiveOptions = ref([
 
 <template>
     <h1> {{ title }}</h1>
-    <div class="card">
-        <Carousel :value="products" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions">
-            <template #item="slotProps">
-                <div @click="navigateTo(slotProps.data.id)" class=" image-container m-3  w-50">
-                    <div class=" mb-3">
-
-                        <div class="relative mx-auto rounded-full h-full w-full ">
-
-                            <img :src="'src/presentation/resources/images/Beach/' + slotProps.data.image"
-                                :alt="slotProps.data.name" />
-
-
-                            <!-- <Tag :value="slotProps.data.inventoryStatus"
-                                :severity="getSeverity(slotProps.data.inventoryStatus)" class="absolute"
-                                style="left:5px; top: 5px" /> -->
-                        </div>
-
-                    </div>
-                    <div class="mb-3 font-medium">{{ slotProps.data.name }}</div>
-                    <div class="flex justify-content-between align-items-center">
-                        <p class="sub-title">{{ slotProps.data.subTitle }}</p>
-                        <!-- <div class="mt-0 font-semibold text-xl">${{ slotProps.data.price }}</div> -->
-                        <!-- <span>
-                            <Button icon="pi pi-heart" severity="secondary" outlined />
-                            <Button icon="pi pi-shopping-cart" class="ml-2" />
-                        </span> -->
-                    </div>
+    <div class="main-container">
+        <Splide :options="{
+        rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
+    }" aria-label="Select a slide to show">
+            <SplideSlide v-for=" element in elements" :key="element.id">
+                <div class="image-container">
+                    <img @click=" navigateTo(element.id)"
+                        :src="`./src/presentation/resources/images/Beach/${element.image}`" />
+                    <div class="sub-title">{{ element.subTitle }}</div>
                 </div>
-            </template>
-        </Carousel>
+
+            </SplideSlide>
+
+        </Splide>
     </div>
+
 </template>
 
 
 <style scoped lang="scss">
+.main-container {
+    // background-color: rebeccapurple;
+    // margin-left: 50px;
+    // margin-right: 50px;
+    width: 100%;
+}
+
 .card {
     width: 100%;
 }
@@ -119,21 +90,31 @@ h1 {
 
 .sub-title {
     color: #f6f6f6;
-    font-size: 25px;
+    font-size: 26px;
+    padding: 10px;
+    width: 80%;
 
 }
 
-.image-container {
-    img {
-        // width: 100%;
-        // height: 500%;
-        width: 600px;
-        height: 300px;
 
-        // width: 200px;
-        // height: 100px;
-        border-radius: 20px;
+
+.image-container {
+    height: 450px;
+    // margin: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 20px;
+
+    img {
         object-fit: cover;
+        width: 90%;
+        // width: 300px;
+        height: 85%;
+        // padding-left: 10px;
+
+        border-radius: 20px;
         cursor: pointer;
         transition: opacity 0.47ms ease-in;
         ;
@@ -144,4 +125,44 @@ h1 {
         opacity: 75%;
     }
 }
+
+@media (max-width: 1024px) {
+    .image-container {
+
+
+        img {
+            width: 90%;
+            height: 40%;
+        }
+    }
+
+    .sub-title {
+        font-size: 15px
+    }
+}
 </style>
+
+<!-- <div class="card">
+    <Carousel :value="products" :numVisible="3" :numScroll="3" :responsiveOptions="responsiveOptions">
+        <template #item="slotProps">
+            <div @click="navigateTo(slotProps.data.id)" class=" image-container m-3  w-50">
+                <div class=" mb-3">
+
+                    <div class="relative mx-auto rounded-full h-full w-full ">
+
+                        <img :src="'src/presentation/resources/images/Beach/' + slotProps.data.image"
+                            :alt="slotProps.data.name" />
+
+
+</div>
+
+</div>
+<div class="mb-3 font-medium">{{ slotProps.data.name }}</div>
+<div class="flex justify-content-between align-items-center">
+                    <p class="sub-title">{{ slotProps.data.subTitle }}</p>
+
+</div>
+</div>
+</template>
+</Carousel>
+</div> -->
