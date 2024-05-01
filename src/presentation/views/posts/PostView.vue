@@ -104,7 +104,7 @@ fetchData()
 // { post: 'Foo', user: "testUser", rate: 2 }, { post: 'Foo', user: "testUser", rate: 2 }, { post: 'Bar', user: "testUser", rate: 4 },
 // { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 4 },
 // { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 3 },])
-const items = ref<Post[]>([])
+const items = ref<Post[]>([]);
 
 
 const comments = ref([

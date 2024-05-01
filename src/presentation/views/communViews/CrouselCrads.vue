@@ -4,7 +4,6 @@ import { ref, onMounted } from "vue";
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // Default theme
 import '@splidejs/splide/css';
-import router from "@/presentation/router";
 defineProps<({
     title: String,
     subTitle: String,
@@ -13,10 +12,7 @@ defineProps<({
 
 
 
-const navigateTo = (id: string) => {
-    router.push({ name: 'place', replace: true, params: { id: "placesId" } });
-    console.log(id)
-}
+
 
 onMounted(() => {
     // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
@@ -49,10 +45,10 @@ const elements = ref([
         <Splide :options="{
         rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
     }" aria-label="Select a slide to show">
-            <SplideSlide v-for=" element in elements" :key="element.id" @click="navigateTo(element.id)">
+            <SplideSlide v-for=" element in elements" :key="element.id">
                 <div class="image-container">
                     <img :src="`/src/presentation/resources/images/Beach/${element.image}`" />
-                    <div class="sub-title">{{ element.subTitle }}</div>
+                    <!-- <div class="sub-title">{{ element.subTitle }}</div> -->
                 </div>
 
             </SplideSlide>

@@ -4,9 +4,9 @@ import { useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Paginator from 'primevue/paginator';
 import Avatar from 'primevue/avatar';
-
-import Galleria from 'primevue/galleria';
 import GallariaImages from '@/presentation/components/image-container/GallariaImages.vue';
+import WriteReview from './WriteReview.vue';
+import CrouselCards from '@/presentation/views/communViews/CrouselCrads.vue'
 
 const route = useRoute();
 const id = route.params.id as string;
@@ -44,10 +44,10 @@ const images = ref();
 
 //********* developement test  ************/
 
-const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'Bar', user_name: "testUser", rate: 2 },
-{ content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in. I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite  I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite ", user_name: "testUser", rate: 2 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 2 }, { content: 'Bar', user_name: "testUser", rate: 4 },
-{ content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: 'Bar', user_name: "testUser", rate: 4 },
-{ content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'Bar', user_name: "testUser", rate: 3 },])
+const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 2 },
+{ content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in. I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite  I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite ", user_name: "testUser", rate: 2 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 2 }, { content: 'TEST', user_name: "testUser", rate: 4 },
+{ content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 4 },
+{ content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 3 },])
 
 </script>
 
@@ -55,6 +55,7 @@ const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content
 
 <template>
     <main>
+
         <header>
             <section>
                 <h1>The The Temple Restaurant</h1>
@@ -66,7 +67,7 @@ const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content
             </div>
         </header>
         <div class="galleria">
-            <GallariaImages />
+            <CrouselCards title="" sub-title="" :data=[] />
         </div>
         <div class="content">
             <div class="images-container">
@@ -76,9 +77,7 @@ const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content
                 <h1>Contribute</h1>
 
                 <div class="contribute-buttons">
-                    <button>
-                        Write a review
-                    </button>
+                    <WriteReview text="Write a review" />
 
                     <button>
                         upload a photo
@@ -94,7 +93,7 @@ const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content
             <div class="reviews-qa">
                 <div class="posts-container">
 
-                    <div class="post-container" v-for="(  item  ) in    items   " :key="item.rate">
+                    <div class="post-container" v-for="(   item   ) in     items    " :key="item.rate">
 
                         <div class="user-container">
                             <Avatar class=" Avatar " size="large" shape="circle" />
@@ -134,19 +133,23 @@ const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content
 }
 
 main {
-    // padding-top: 10%;
-    // height: 100%;
-    // display: flex;
-    // align-items: center;
-    // flex-direction: column;
-    // gap: 30px;
-    // overflow: hidden;
+    padding-top: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 30px;
+    overflow: hidden;
+    padding: 70px;
+
 }
 
 header {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 30px;
+    padding-top: 5%;
 
     div {
         display: flex;
@@ -159,21 +162,22 @@ header {
             font-weight: bold;
         }
     }
+
+}
+
+@media (max-width: 1024px) {
+    header {
+        // background-color: #29413f;
+        padding-top: 40%;
+    }
 }
 
 .galleria {
-    // width: 100%;
+    width: 100%;
+    border-radius: 20px;
 
-    // padding: 37px;
+    background-color: rgb(#f6f6f6, 0.17);
 
-    // div {
-    //     border-radius: 20px;
-
-    //     background-color: rgb(#f6f6f6, 0.17);
-    // }
-    @media (max-width: 624px) {
-        // transform: scale(0.5);
-    }
 
 }
 
@@ -202,7 +206,7 @@ section {
 }
 
 .content {
-    padding: 37px;
+    // padding: 37px;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -228,8 +232,10 @@ section {
     .contribute-buttons {
         display: flex;
         gap: 15px;
+        flex-wrap: wrap;
 
         button:nth-child(1) {
+
             background: #3db3dd;
             border-radius: 50px;
             font-size: large;
@@ -238,7 +244,9 @@ section {
 
         }
 
+
         button {
+
             background-color: rgb(#f6f6f6, 0.5);
             border-radius: 50px;
             padding: 15px 20px 15px 20px;

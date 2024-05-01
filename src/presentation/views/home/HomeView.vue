@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import RobotDiscover from '@/presentation/components/animation/RobotDiscover.vue';
+import GallariaImages from '@/presentation/components/image-container/GallariaImages.vue';
 import CrouselCards from '@/presentation/components/landing/CrouselCrads.vue'
 import SliderCards from '@/presentation/components/landing/SliderCards.vue';
 import { ref } from 'vue';
@@ -33,18 +34,18 @@ import { ref } from 'vue';
       <!-- <h1 class="text">Thinking About Exploring El Jam!</h1> -->
       <div class="images-container">
 
-        <img
+        <GallariaImages />
+        <!-- <img
           src="https://images.unsplash.com/photo-1527915676329-fd5ec8a12d4b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
           alt="" />
 
         <img
           src="https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
           alt="" />
-        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
+        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" /> -->
 
       </div>
 
-      <RobotDiscover class=" robot" />
     </div>
     <CrouselCards title="Best Beaches" sub-title="" :data=[] />
 
@@ -65,6 +66,8 @@ import { ref } from 'vue';
 
 }
 
+
+
 main {
   height: 100%;
   display: flex;
@@ -74,17 +77,7 @@ main {
   overflow: hidden;
 }
 
-.robot {
-  // background-color: #243c54;
-  // width: 1140px;
-  height: 300px;
-  position: absolute;
-  top: 6%;
-  left: 19%;
-  right: 0;
-  bottom: 0px;
-  transform: scale(1.3);
-}
+
 
 img {
   object-fit: cover;
@@ -96,40 +89,44 @@ img {
   cursor: pointer;
   transition:
     transform 0.41s ease-in-out;
+
 }
 
-.images-container {
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
 
-  img:nth-child(1) {
-    width: 500px;
-    position: absolute;
-    right: 13%;
-    top: 8%;
-    rotate: 10deg;
-  }
 
-  img:nth-child(2) {
+// .images-container {
+//   display: flex;
+//   flex-direction: column;
+//   overflow: hidden;
 
-    width: 500px;
-    position: absolute;
-    right: 22%;
-    top: 49%;
-    rotate: -5deg;
-  }
+//   img:nth-child(1) {
+//     width: 500px;
+//     position: absolute;
+//     right: 13%;
+//     top: 8%;
+//     rotate: 10deg;
 
-  img:nth-child(3) {
+//   }
 
-    width: 500px;
-    position: absolute;
-    // right: 24%;
-    left: 26%;
-    top: 15%;
-    rotate: -3deg;
-  }
-}
+//   img:nth-child(2) {
+
+//     width: 500px;
+//     position: absolute;
+//     right: 22%;
+//     top: 49%;
+//     rotate: -5deg;
+//   }
+
+//   img:nth-child(3) {
+
+//     width: 500px;
+//     position: absolute;
+//     // right: 24%;
+//     left: 26%;
+//     top: 15%;
+//     rotate: -3deg;
+//   }
+// }
 
 .image-container {
   // padding: 2rem;

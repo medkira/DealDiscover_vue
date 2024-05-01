@@ -5,7 +5,7 @@ import Avatar from 'primevue/avatar';
 import Toast from 'primevue/toast';
 import { AuthenticationStore } from '@/presentation/stores/Auth/AuthenticationStore';
 import SearchBar from '@/presentation/components/landing/SearchBar.vue';
-
+import RobotDiscover from '@/presentation/components/animation/RobotDiscover.vue';
 import Menu from 'primevue/menu';
 
 import { ref } from "vue";
@@ -87,12 +87,38 @@ const toggle = (event: any) => {
     <!-- <RouterView /> -->
     <slot />
 
+    <RobotDiscover class=" robot" />
     <FooterCard />
   </main>
 </template>
 
 
 <style scoped lang="scss">
+.robot {
+  // background-color: #243c54;
+  // width: 1140px;
+  height: 300px;
+  position: fixed;
+  bottom: 0%;
+  left: 0%;
+
+  transform: scale(0.9);
+}
+
+@media (max-width: 1024px) {
+  .robot {
+    // background-color: #243c54;
+    // width: 1140px;
+    // height: 100%;
+
+    position: fixed;
+    bottom: -9%;
+    left: -29%;
+    // background-color: red;
+    transform: scale(0.5);
+  }
+}
+
 .titles {
   display: flex;
   align-items: center;
