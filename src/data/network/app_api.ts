@@ -2,7 +2,7 @@ import type { postType } from "@/domain/entities/Post";
 import type { SignUserRepository } from "@/domain/repository/authentication/SignUpUserInterface";
 import type { GetLatestPostsRepository } from "@/domain/repository/post/GetLatestPostsInterface";
 import type { AxiosInstance, AxiosResponse } from "axios";
-
+import type { GetLatesPlacesRepository } from "@/domain/repository/places/GetlatestPlacesInterface"
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -23,7 +23,7 @@ export class AppServiceClient {
     // }
 
 
-    // ? Post
+    // ? P O S T
     async getLatestPosts(reqQuery: GetLatestPostsRepository.Request) {
         return await this.http.get(`/post/page`, {
             params: {
@@ -39,6 +39,19 @@ export class AppServiceClient {
         // console.log("from app api ", createPostRequest.postImage)
         // console.log("From app api", this.http.post('/posts', createPostRequest));
         return await this.http.post('/posts', createPostRequest);
+    }
+
+    // ? P L A C E S
+
+    async getPlacesQuery(reqQuery: GetLatesPlacesRepository.Request) {
+        return await this.http.get('/place/page', {
+            params: {
+                page: reqQuery.page,
+                type: reqQuery.type,
+                location: reqQuery.location
+            }
+        })
+
     }
 
 }

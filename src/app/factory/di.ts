@@ -4,6 +4,7 @@ import AxiosFactory from "@/data/network/axios_factory";
 import { AuthRepository } from "@/data/repositories/AuthRepository";
 import AppCookie from "../storage/app_cookie";
 import { PostRepository } from "@/data/repositories/PostRepository";
+import { PlaceRepository } from "@/data/repositories/PlaceRepository";
 
 
 
@@ -16,6 +17,7 @@ const remoteDataSourceInstance = new RemoteDataSourceImpl(appServiceClientInstan
 
 export const authRepository = new AuthRepository(remoteDataSourceInstance);
 export const postRepository = new PostRepository(remoteDataSourceInstance);
+export const placeRepository = new PlaceRepository(remoteDataSourceInstance);
 
 
 // cookie factory

@@ -37,8 +37,8 @@ const cities = [
 </script>
 <template>
 
-    <body>
-        <section>
+    <div class="main">
+        <section class="test">
             <!-- <div>
                 <div v-for="(city, index) in cities" :key="index" class="card">
                     <div class="card__img">
@@ -145,7 +145,7 @@ const cities = [
             </div>
 
         </section>
-    </body>
+    </div>
 
 </template>
 
@@ -159,7 +159,13 @@ const cities = [
 
 }
 
-body {
+@media (max-width: 1024px) {
+    section {
+        height: 500px !important
+    }
+}
+
+.main {
     // width: min(90%, 100rem);
     margin: 10px auto;
     padding-left: 7%;
@@ -169,10 +175,15 @@ body {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     letter-spacing: 0.5px;
-    margin-bottom: -10rem;
-    margin-top: -4rem;
+    // margin-bottom: -10rem;
+    // margin-top: -4rem;
 
 }
+
+// .test {
+//     background-color: red;
+//     margin-top: -500px;
+// }
 
 img {
     width: 100%;
@@ -192,10 +203,11 @@ section {
     grid-template-columns: 25% 30% 15% 25%;
     gap: 15px;
     place-content: center;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 40% 50%;
     height: 80vh;
     min-height: 460px;
-    padding: max(2vh, 1.5rem);
+    // padding: max(2vh, 1.5rem);
+    // background-color: red;
 }
 
 @media screen and (max-width: 690px) {

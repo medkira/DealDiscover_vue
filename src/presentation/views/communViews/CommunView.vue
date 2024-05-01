@@ -205,6 +205,21 @@ section {
 
 }
 
+@media (max-width: 1024px) {
+    section {
+        min-width: 0px;
+        margin-left: -50px;
+
+        h1 {
+            padding-right: 50%;
+
+            // background-color: red;
+            font-size: 20px;
+        }
+    }
+
+}
+
 .content {
     // padding: 37px;
     width: 100%;

@@ -5,15 +5,15 @@ import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // Default theme
 import '@splidejs/splide/css';
 import router from "@/presentation/router";
-defineProps<({
+const props = defineProps<({
     title: String,
     subTitle: String,
-    data: Array<{ id: String, image: String, title: String }>
+    data: Array<{ id: String, placeImage: any, title: String, name: String }>
 })>()
 
+console.log("from Crousel data", props.data)
 
-
-const navigateTo = (id: string) => {
+const navigateTo = (id: String) => {
     router.push({ name: 'place', replace: true, params: { id: "placesId" } });
     console.log(id)
 }
@@ -22,20 +22,20 @@ onMounted(() => {
     // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
 })
 // this data need to be mounted in onMounted
-const elements = ref([
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { id: "54254", image: 'DjerbaBeach.jpg', subTitle: 'Djerba Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' }
-]);
+// const elements = ref([
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
+//     { id: "54254", image: 'DjerbaBeach.jpg', name: 'Djerba Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' }
+// ]);
 
 
 
@@ -49,10 +49,14 @@ const elements = ref([
         <Splide :options="{
         rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
     }" aria-label="Select a slide to show">
-            <SplideSlide v-for=" element in elements" :key="element.id" @click="navigateTo(element.id)">
+            <SplideSlide v-for=" element in props.data" :key="element.id" @click="navigateTo(element.id)">
                 <div class="image-container">
-                    <img :src="`/src/presentation/resources/images/Beach/${element.image}`" />
-                    <div class="sub-title">{{ element.subTitle }}</div>
+                    <!-- <img :src="`/src/presentation/resources/images/Beach/${element.image}`" /> -->
+
+                    <img :src=element.placeImage />
+
+
+                    <div class="sub-title">{{ element.name }}</div>
                 </div>
 
             </SplideSlide>

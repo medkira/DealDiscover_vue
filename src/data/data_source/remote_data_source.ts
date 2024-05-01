@@ -4,12 +4,14 @@ import type { LoginRepository } from "@/domain/repository/authentication/SignInI
 import type { SignUserRepository } from "@/domain/repository/authentication/SignUpUserInterface";
 import type { CreatePostRepository } from "@/domain/repository/post/CreatePostInterface";
 import type { GetLatestPostsRepository } from "@/domain/repository/post/GetLatestPostsInterface";
+import type { GetLatesPlacesRepository } from "@/domain/repository/places/GetlatestPlacesInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+
 
     /***** Auth  *****/
 
@@ -51,6 +53,15 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     async getLatestPosts(getLatesPostsRequest: GetLatestPostsRepository.Request): Promise<AxiosResponse<GetLatestPostsRepository.Response>> {
         return await this._appServiceClient.getLatestPosts(getLatesPostsRequest);
     }
+
+
+    /***********Place ****************/
+
+    async getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response, any>> {
+        return await this._appServiceClient.getPlacesQuery(getLatestPlacesRequest);
+    }
+
+
 }
 
 
@@ -64,6 +75,11 @@ export interface RemoteDataSource {
     //* Post *//
     createPost(createPostRequest: CreatePostRepository.Request): Promise<AxiosResponse<CreatePostRepository.Response>>
     getLatestPosts(getLatesPostsRequest: GetLatestPostsRepository.Request): Promise<AxiosResponse<GetLatestPostsRepository.Response>>;
+
+
+    //* Place *//
+    getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;
+
 }
 
 

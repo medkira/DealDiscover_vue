@@ -28,27 +28,31 @@ import { ref } from 'vue';
     </div> -->
 
     <!-- data-aos-anchor-placement="center-center" -->
+
     <div class="image-container" data-aos="fade-up" data-aos-duration="2500" data-aos-once="true"
       data-aos-easing="ease-out-cubic">
+      <GallariaImages />
+    </div>
 
-      <!-- <h1 class="text">Thinking About Exploring El Jam!</h1> -->
+    <!-- <div class="image-container" data-aos="fade-up" data-aos-duration="2500" data-aos-once="true"
+      data-aos-easing="ease-out-cubic">
+
       <div class="images-container">
 
-        <GallariaImages />
-        <!-- <img
+        <img
           src="https://images.unsplash.com/photo-1527915676329-fd5ec8a12d4b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
           alt="" />
 
         <img
           src="https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
           alt="" />
-        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" /> -->
+        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
 
       </div>
 
-    </div>
+    </div> -->
+    <div style=" width: 100%; height: 50px"></div>
     <CrouselCards title="Best Beaches" sub-title="" :data=[] />
-
 
     <SliderCards title="Best Restaurants" sub-title="" :data=[] />
 
@@ -73,8 +77,8 @@ main {
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 30px;
-  overflow: hidden;
+  gap: 25px;
+  overflow: visible;
 }
 
 
@@ -92,6 +96,11 @@ img {
 
 }
 
+// @media (max-width: 1024px) {
+//   .images-container {
+//     height: 50;
+//   }
+// }
 
 
 // .images-container {
@@ -134,20 +143,25 @@ img {
   // background-color: #88a2bb;
   height: 700px;
   width: 100%;
-
-
 }
+
+
 
 .image-container:hover img {
   transform: scale(1.04);
+}
 
+@media (min-width: 1024px) {
+  .image-container {
+    margin-bottom: 60px;
 
+  }
 }
 
 @media (max-width: 600px) {
 
   .image-container {
-    padding: 20px;
+    // padding: 20px;
 
     img {
 
