@@ -21,7 +21,7 @@ defineProps<({
 button {
     cursor: pointer;
     font-weight: 700;
-    font-family: Helvetica, "sans-serif";
+    /* font-family: Helvetica, "sans-serif"; */
     transition: all .2s;
     padding: 10px 20px;
     border-radius: 100px;

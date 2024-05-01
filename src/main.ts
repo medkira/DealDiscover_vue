@@ -8,7 +8,6 @@ import ToastService from 'primevue/toastservice';
 import Lara from '@/presentation/resources/persets/lara'
 import App from './app/App.vue'
 import router from './presentation/router'
-
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import clickAway from 'vue3-click-away';

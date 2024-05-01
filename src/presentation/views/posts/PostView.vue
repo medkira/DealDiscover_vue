@@ -7,7 +7,6 @@ import Dialog from 'primevue/dialog';
 import PrimaryButton from '@/presentation/components/Buttons/PrimaryButton.vue';
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
-import FileUpload from 'primevue/fileupload';
 import Textarea from 'primevue/textarea';
 import PostButton from '@/presentation/components/animation/PostButton.vue';
 import { useToast } from "primevue/usetoast";

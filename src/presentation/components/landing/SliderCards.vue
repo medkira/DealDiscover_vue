@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import router from '@/presentation/router';
 import { ref } from 'vue';
 
 const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }, { message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }])
@@ -8,11 +9,19 @@ defineProps<({
     data: any[]
 })>()
 
+
+
+const navigateTo = (id: string) => {
+    router.push({ name: 'place', replace: true, params: { id: "placesId" } });
+    console.log(id)
+}
 </script>
 
 
 <template>
     <h1>{{ title }}</h1>
+    <!-- <Button @click="navigateTo('1')">HI</Button> -->
+
     <h2 class="subtitle">{{ subTitle }}</h2>
     <div class="more-explore">
 

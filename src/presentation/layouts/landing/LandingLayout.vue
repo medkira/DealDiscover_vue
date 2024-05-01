@@ -82,7 +82,7 @@ const toggle = (event: any) => {
         <h3 class="subtitle">Let The Chat <span class="highlight">Choose</span> For You</h3>
       </div>
     </div>
-    <!-- <SearchBar /> -->
+    <SearchBar />
 
     <!-- <RouterView /> -->
     <slot />
@@ -99,6 +99,7 @@ const toggle = (event: any) => {
   justify-content: center;
   text-align: center;
   padding-top: 7%;
+  z-index: 1;
 }
 
 .font {

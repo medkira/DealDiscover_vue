@@ -9,7 +9,7 @@ import type { RequestInterceptor, ResponseInterceptor } from 'deep-chat/dist/typ
 const datas = ref<any>('');
 
 const route = useRoute();
-const id = route.params.id as string;
+// const id = route.params.id as string;
 // const fetchData = async () => {
 //     // const res = await appServiceClientInstance.getLatestPost({ page: id });
 //     // console.log(res);

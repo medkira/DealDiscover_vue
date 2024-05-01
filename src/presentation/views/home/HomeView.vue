@@ -29,14 +29,22 @@ import { ref } from 'vue';
     <!-- data-aos-anchor-placement="center-center" -->
     <div class="image-container" data-aos="fade-up" data-aos-duration="2500" data-aos-once="true"
       data-aos-easing="ease-out-cubic">
+
       <!-- <h1 class="text">Thinking About Exploring El Jam!</h1> -->
       <div class="images-container">
+
+        <img
+          src="https://images.unsplash.com/photo-1527915676329-fd5ec8a12d4b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+          alt="" />
+
+        <img
+          src="https://images.unsplash.com/photo-1486299267070-83823f5448dd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+          alt="" />
         <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
-        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
-        <img src="/src/presentation/resources/images/photoElJam.jpg" alt="" />
+
       </div>
 
-      <RobotDiscover class="robot" />
+      <RobotDiscover class=" robot" />
     </div>
     <CrouselCards title="Best Beaches" sub-title="" :data=[] />
 
@@ -82,7 +90,7 @@ img {
   object-fit: cover;
   display: block;
   // width: 1140px;
-  // height: 500px;
+  width: 500px !important;
   border-radius: 20px;
   position: relative;
   cursor: pointer;
@@ -240,7 +248,7 @@ img {
 }
 </style>
 
-<!-- 
+<!--
 // .more-explore {
 // padding: 37px;
 // background-color: rgb(#f6f6f6, 0.17);

@@ -11,7 +11,7 @@ export default class RouterGuard {
             const cookieAdapter = new AppCookie();
             const isAuthenticated = cookieAdapter.getTokenCookie();
             // console.log("TO RESULT, ", to)
-            const publicRoutes = ['home', 'places', 'foods'];
+            const publicRoutes = ['home', 'places', 'foods', 'place'];
             if (!isAuthenticated && !publicRoutes.includes(to.name as string)) {
                 // if (!isAuthenticated && to.name !== 'home') {
 

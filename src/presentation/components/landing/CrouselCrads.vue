@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import Carousel from 'primevue/carousel';
-import router from '@/presentation/router';
 // @ts-ignore
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // Default theme
 import '@splidejs/splide/css';
+import router from "@/presentation/router";
 defineProps<({
     title: String,
     subTitle: String,
@@ -15,8 +14,7 @@ defineProps<({
 
 
 const navigateTo = (id: string) => {
-    router.push({ name: 'place', replace: true, params: { id } });
-    console.log(id)
+    router.push({ name: 'place', replace: true, params: { id: "placesId" } });
     console.log(id)
 }
 
@@ -51,10 +49,9 @@ const elements = ref([
         <Splide :options="{
         rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
     }" aria-label="Select a slide to show">
-            <SplideSlide v-for=" element in elements" :key="element.id">
+            <SplideSlide v-for=" element in elements" :key="element.id" @click="navigateTo(element.id)">
                 <div class="image-container">
-                    <img @click=" navigateTo(element.id)"
-                        :src="`./src/presentation/resources/images/Beach/${element.image}`" />
+                    <img :src="`./src/presentation/resources/images/Beach/${element.image}`" />
                     <div class="sub-title">{{ element.subTitle }}</div>
                 </div>
 
