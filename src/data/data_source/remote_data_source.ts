@@ -55,7 +55,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
 
-    /***********Place ****************/
+    /***********Place *****************/
 
     async getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response, any>> {
         return await this._appServiceClient.getPlacesQuery(getLatestPlacesRequest);
