@@ -5,13 +5,17 @@ import SliderCards from '@/presentation/components/landing/SliderCards.vue';
 import { GetLatestsPlacesStore } from '@/presentation/stores/Places/GetLatestPlacesStore';
 import { toRaw, isProxy, ref } from 'vue';
 
-const data = ref();
+const dataHotel = ref();
+const dataRestaurants = ref();
 // let data: any;
 const getPlacesStore = GetLatestsPlacesStore();
 
 const fetchData = async () => {
     await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.hotel })
-    data.value = toRaw(getPlacesStore.GetLatestPlacesSuccess)
+    dataHotel.value = toRaw(getPlacesStore.GetLatestPlacesSuccess);
+
+    await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.restaurant })
+    dataRestaurants.value = toRaw(getPlacesStore.GetLatestPlacesSuccess);
     // console.log(data);
 };
 fetchData();
@@ -32,8 +36,8 @@ fetchData();
             :demo="false" :introMessage="{ text: 'Hi I am your recommendation assistant, ask me anything!' }" /> -->
         <SliderCards title="Foods for you" sub-title="Use ChatBot for Personalized Recommendations" :data=[] />
 
-        <CrouselCrads title="Best Foods Rated" sub-title="" :data=data />
-        <CrouselCrads title="User favorites" sub-title="" :data=data />
+        <CrouselCrads title="Best Hotels Rated" sub-title="" :data=dataHotel />
+        <CrouselCrads title="User favorites" sub-title="" :data=dataRestaurants />
 
 
 

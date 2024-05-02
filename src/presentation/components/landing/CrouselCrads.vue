@@ -8,14 +8,13 @@ import router from "@/presentation/router";
 const props = defineProps<({
     title: String,
     subTitle: String,
-    data: Array<{ id: String, placeImage: any, title: String, name: String }>
+    data: Array<{ id: string, placeImage: any, title: String, name: String }>
 })>()
 
-console.log("from Crousel data", props.data)
+// console.log("from Crousel data", props.data)
 
-const navigateTo = (id: String) => {
-    router.push({ name: 'place', replace: true, params: { id: "placesId" } });
-    console.log(id)
+const navigateTo = (id: string) => {
+    router.push({ name: 'place', replace: true, params: { id: id } });
 }
 
 onMounted(() => {

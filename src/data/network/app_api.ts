@@ -3,6 +3,8 @@ import type { SignUserRepository } from "@/domain/repository/authentication/Sign
 import type { GetLatestPostsRepository } from "@/domain/repository/post/GetLatestPostsInterface";
 import type { AxiosInstance, AxiosResponse } from "axios";
 import type { GetLatesPlacesRepository } from "@/domain/repository/places/GetlatestPlacesInterface"
+import type { CreateRateRepository } from "@/domain/repository/rates/CreateRateInterface";
+import type { GetLatestRatesRepository } from "@/domain/repository/rates/GetLatestRatesInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -49,6 +51,25 @@ export class AppServiceClient {
                 page: reqQuery.page,
                 type: reqQuery.type,
                 location: reqQuery.location
+            }
+        })
+
+    }
+
+
+
+
+    // ? R A T E S
+
+    async createRate(createRateRequest: CreateRateRepository.Request) {
+        return await this.http.post('rates', createRateRequest)
+    }
+
+    async getRatesQuery(reqQuery: GetLatestRatesRepository.Request) {
+        return await this.http.get('/rates/page', {
+            params: {
+                page: reqQuery.page,
+                rated_id: reqQuery.rated_id
             }
         })
 

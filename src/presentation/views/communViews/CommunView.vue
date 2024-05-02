@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
 import { useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Paginator from 'primevue/paginator';
 import Avatar from 'primevue/avatar';
-import GallariaImages from '@/presentation/components/image-container/GallariaImages.vue';
 import WriteReview from './WriteReview.vue';
 import CrouselCards from '@/presentation/views/communViews/CrouselCrads.vue'
-
+import { GetLatestsRatesStore } from '@/presentation/stores/Rates/GetLatestRatesStore';
+import type { Rate } from '@/domain/entities/Rates';
+import { onBeforeUnmount } from 'vue';
+import Button from 'primevue/button';
+import PaginatorPages from '@/presentation/components/paginator/PaginatorPages.vue';
 const route = useRoute();
-const id = route.params.id as string;
-
+const ratedId = ref()
+ratedId.value = route.params.id as string;
 
 const rate = ref(6);
 const nReviews = ref(166);
@@ -18,24 +21,39 @@ const nReviews = ref(166);
 
 
 
+//************** FETCH Reviews  **************//
+// const reviews = ref<Rate[]>([]);
+const getLatestsRatesStore = GetLatestsRatesStore()
+const currentPage = ref(1);
+const fetchData = async (page: number = 1) => {
+    await getLatestsRatesStore.GetLatestRates({ page, rated_id: ratedId.value })
 
 
+    // no need  for this now we get the state from pinia directelys
+    // reviews.value = toRaw(getLatestsRatesStore.GetLatestRatesSuccess)
+    // console.log(reviews.value)
+};
 
 
+fetchData();
+//*********************************************//
 
+const nextPage = () => {
+    getLatestsRatesStore.$reset;
+    currentPage.value = currentPage.value + 1;
+    fetchData(currentPage.value)
+}
 
+const previousPage = () => {
+    // getLatestsRatesStore.$reset;
+    currentPage.value = currentPage.value - 1;
+    fetchData(currentPage.value)
+}
 
-const images = ref();
-// const responsiveOptions = ref([
-//     {
-//         breakpoint: '1300px',
-//         numVisible: 4
-//     },
-//     {
-//         breakpoint: '575px',
-//         numVisible: 1
-//     }
-// ]);
+onBeforeUnmount(() => {
+    getLatestsRatesStore.$reset;
+})
+
 
 
 
@@ -44,10 +62,10 @@ const images = ref();
 
 //********* developement test  ************/
 
-const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 2 },
-{ content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in. I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite  I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite ", user_name: "testUser", rate: 2 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 2 }, { content: 'TEST', user_name: "testUser", rate: 4 },
-{ content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 4 },
-{ content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 3 },])
+// const reviews = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 2 },
+// { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in. I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite  I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite ", user_name: "testUser", rate: 2 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 2 }, { content: 'TEST', user_name: "testUser", rate: 4 },
+// { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 4 },
+// { content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 3 },])
 
 </script>
 
@@ -77,7 +95,7 @@ const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content
                 <h1>Contribute</h1>
 
                 <div class="contribute-buttons">
-                    <WriteReview text="Write a review" />
+                    <WriteReview text="Write a review" :rated_id=ratedId />
 
                     <button>
                         upload a photo
@@ -93,27 +111,24 @@ const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content
             <div class="reviews-qa">
                 <div class="posts-container">
 
-                    <div class="post-container" v-for="(   item   ) in     items    " :key="item.rate">
+                    <div class="post-container" v-for="(   item   ) in     getLatestsRatesStore.getReviews"
+                        :key="item.rate">
 
                         <div class="user-container">
                             <Avatar class=" Avatar " size="large" shape="circle" />
                             <h1>{{ item.user_name }}</h1>
                         </div>
 
-                        <h2 class="post-text">{{ item.content }} </h2>
+                        <h2 class="post-text">{{ item.review }} </h2>
 
                         <Rating v-model="item.rate" :stars="7" :cancel="false" readonly />
 
                     </div>
 
-
-
                 </div>
 
-
                 <div class="card">
-                    <Paginator :rows="1" :totalRecords="2">
-                    </Paginator>
+                    <PaginatorPages @next="nextPage" @previous="previousPage" :pages="4" :current-page="currentPage" />
                 </div>
 
             </div>
@@ -129,7 +144,10 @@ const items = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content
 .card {
     margin-top: 15px;
     background-color: rgb(#f6f6f6, 0.17);
+    // background-color: red;
     border-radius: 20px;
+    padding: 1px;
+    padding-bottom: 20px;
 }
 
 main {

@@ -5,12 +5,16 @@ import type { SignUserRepository } from "@/domain/repository/authentication/Sign
 import type { CreatePostRepository } from "@/domain/repository/post/CreatePostInterface";
 import type { GetLatestPostsRepository } from "@/domain/repository/post/GetLatestPostsInterface";
 import type { GetLatesPlacesRepository } from "@/domain/repository/places/GetlatestPlacesInterface";
+import type { CreateRateRepository } from "@/domain/repository/rates/CreateRateInterface";
+import type { GetLatestRatesRepository } from "@/domain/repository/rates/GetLatestRatesInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+
+
 
 
     /***** Auth  *****/
@@ -41,7 +45,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
 
 
 
-    /***** Post  *****/
+    //***** Post  *****/
 
     // this  CreatePostRepository.Request suppose to be a form data with all the attributes inside of it.
     // we change it for  now to (any)
@@ -55,12 +59,26 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
 
-    /***********Place *****************/
+    //***********Place *****************/
 
     async getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response, any>> {
         return await this._appServiceClient.getPlacesQuery(getLatestPlacesRequest);
     }
 
+
+    //**** Rate  *****/
+
+    async createRate(createRateRequest: CreateRateRepository.Request): Promise<AxiosResponse<CreateRateRepository.Response>> {
+        // console.log("from remote daat source: ", createRateRequest)
+
+        return await this._appServiceClient.createRate(createRateRequest);
+    }
+
+
+    async getLatestRates(getLatesRatesRequest: GetLatestRatesRepository.Request): Promise<AxiosResponse<GetLatestRatesRepository.Response>> {
+        console.log("from remote daat source: ", await this._appServiceClient.getRatesQuery(getLatesRatesRequest))
+        return await this._appServiceClient.getRatesQuery(getLatesRatesRequest);
+    }
 
 }
 
@@ -79,6 +97,11 @@ export interface RemoteDataSource {
 
     //* Place *//
     getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;
+
+
+    // * Rate *//
+    createRate(createRateRequest: CreateRateRepository.Request): Promise<AxiosResponse<CreateRateRepository.Response>>
+    getLatestRates(getLatesRatesRequest: GetLatestRatesRepository.Request): Promise<AxiosResponse<GetLatestRatesRepository.Response>>;
 
 }
 

@@ -5,6 +5,7 @@ import { AuthRepository } from "@/data/repositories/AuthRepository";
 import AppCookie from "../storage/app_cookie";
 import { PostRepository } from "@/data/repositories/PostRepository";
 import { PlaceRepository } from "@/data/repositories/PlaceRepository";
+import { RateRepository } from "@/data/repositories/RateRepository";
 
 
 
@@ -18,7 +19,7 @@ const remoteDataSourceInstance = new RemoteDataSourceImpl(appServiceClientInstan
 export const authRepository = new AuthRepository(remoteDataSourceInstance);
 export const postRepository = new PostRepository(remoteDataSourceInstance);
 export const placeRepository = new PlaceRepository(remoteDataSourceInstance);
-
+export const rateRepository = new RateRepository(remoteDataSourceInstance);
 
 // cookie factory
 export const cookieAdapter = new AppCookie();

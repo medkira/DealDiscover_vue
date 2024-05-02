@@ -8,41 +8,42 @@ import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea';
 import { useToast } from "primevue/usetoast";
 import Toast from 'primevue/toast';
-import { CreatePostStore } from "@/presentation/stores/Posts/CreatePostStore";
-import { GetLatestsPostsStore } from "@/presentation/stores/Posts/GetLatestPostsStore";
-import LoadingCube from "@/presentation/components/animation/LoadingCube.vue"
-import { Post } from "@/domain/entities/Post"
 
+import { Rate, rated_name } from "@/domain/entities/Rates";
+import { CreateRateStore } from "@/presentation/stores/Rates/CreateRateStore";
+import { GetLatestsRatesStore } from "@/presentation/stores/Rates/GetLatestRatesStore";
+import LoadingCube from "@/presentation/components/animation/LoadingCube.vue";
 
-defineProps<({
+const props = defineProps<({
     text: String,
-
+    rated_id: any
 })>()
 
-const visibleAddPostDialog = ref(false);
+const visibleAddRateDialog = ref(false);
 const post_type = ref<any>();
 const content = ref('');
 const rate = ref(0);
 const image = ref();
 
 
-const createPostStore = CreatePostStore();
+const createRateStore = CreateRateStore();
 
 
-const submitPostRate = async () => {
-    await createPostStore.CreatePost({ content: content.value, post_type: post_type.value, postImage: image.value });
+const submitRateRate = async () => {
+    console.log("from write review", props.rated_id)
+    await createRateStore.CreateRate({ rate: rate.value, rated_id: props.rated_id, rated_name: rated_name.PLACE, review: content.value, });
 
-    if (createPostStore.isCreatedPostSuccess) {
-        showSuccess(createPostStore.getSuccessMessage as string);
-        visibleAddPostDialog.value = false;
-        createPostStore.reset();
+    if (createRateStore.isCreatedRateSuccess) {
+        showSuccess(createRateStore.getSuccessMessage as string);
+        visibleAddRateDialog.value = false;
+        createRateStore.reset();
         image.value = "";
     }
 
 }
 const toast = useToast();
 const showSuccess = (msg: string) => { // i dont like this logic beeing handel here
-    if (createPostStore.isCreatedPostSuccess) {
+    if (createRateStore.isCreatedRateSuccess) {
         toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
     }
 };
@@ -50,23 +51,23 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
 
 
 //************** FETCH Reviews  **************/
-const items = ref<Post[]>([]);
+// const items = ref<Rate[]>([]);
 
-const getLatestsPostsStore = GetLatestsPostsStore()
+// const getLatestsRatesStore = GetLatestsRatesStore()
 
 
-const fetchData = async () => {
-    await getLatestsPostsStore.GetLatestPosts({ page: 1 })
-    const data = getLatestsPostsStore.GetLatestPostsSuccess
-    items.value = toRaw(data)
-    console.log(toRaw(data))
-};
-fetchData()
+// const fetchData = async () => {
+//     await getLatestsRatesStore.GetLatestRates({ page: 1, reted_id: props.rated_id })
+//     const data = getLatestsRatesStore.GetLatestRatesSuccess
+//     items.value = toRaw(data)
+//     // console.log(toRaw(data))
+// };
+// fetchData()
 //****************************************************************************** */
 </script>
 <template>
-    <button @click="[visibleAddPostDialog = true]" class="primary-button">{{ text }}</button>
-    <Dialog :close-on-escape="true" :dismissable-mask="true" v-model:visible="visibleAddPostDialog" modal :pt="{
+    <button @click="[visibleAddRateDialog = true]" class="primary-button">{{ text }}</button>
+    <Dialog :close-on-escape="true" :dismissable-mask="true" v-model:visible="visibleAddRateDialog" modal :pt="{
         mask: {
             style: 'backdrop-filter: blur(2px)'
         }
@@ -75,21 +76,21 @@ fetchData()
 
         <template #container="{ closeCallback }">
             <!-- LOADING VIEW -->
-            <div v-if="createPostStore.CreatePostLoading"
+            <div v-if="createRateStore.CreateRateLoading"
                 class="bg-[#2980b9] p-[200px] rounded-2xl flex flex-col items-center justify-between">
                 <LoadingCube />
                 <h1 class="font-bold text-3xl pt-32">Loading ....</h1>
             </div>
 
 
-            <!-- CREATE POST FORM -->
+            <!-- CREATE Rate FORM -->
             <div v-else class="flex flex-col px-10 py-7 gap-5 " style="border-radius: 12px; background: #2980b9;">
                 <!-- <div v-if="logingStore.loginStatusMessage"
                                 class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50">
                                 {{ logingStore.loginStatusMessage }}
                             </div> -->
                 <!-- <div class="inline-flex flex-col gap-2">
-                    <label for="post type" class="text-primary-50 font-semibold">Post type</label>
+                    <label for="post type" class="text-primary-50 font-semibold">Rate type</label>
                     <InputText v-model="post_type" id="post type" class="bg-white/20 border-0 p-4 text-primary-50"
                         type="post type">
                     </InputText>
@@ -116,7 +117,7 @@ fetchData()
 
 
                 <div class="flex items-center gap-2">
-                    <Button @click="submitPostRate" label="Post Rate" text
+                    <Button @click="submitRateRate" label="Rate Rate" text
                         class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                     <Button label="Cancel" @click="[closeCallback()]" text
                         class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
