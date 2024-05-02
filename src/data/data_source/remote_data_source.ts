@@ -7,15 +7,13 @@ import type { GetLatestPostsRepository } from "@/domain/repository/post/GetLates
 import type { GetLatesPlacesRepository } from "@/domain/repository/places/GetlatestPlacesInterface";
 import type { CreateRateRepository } from "@/domain/repository/rates/CreateRateInterface";
 import type { GetLatestRatesRepository } from "@/domain/repository/rates/GetLatestRatesInterface";
+import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlaceByIdInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
-
-
-
 
     /***** Auth  *****/
 
@@ -61,9 +59,15 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
 
     //***********Place *****************/
 
-    async getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response, any>> {
+    async getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>> {
         return await this._appServiceClient.getPlacesQuery(getLatestPlacesRequest);
     }
+    async getPlaceById(id: string): Promise<AxiosResponse<GetLatesPlacesRepository.Response>> {
+        return await this._appServiceClient.getPlaceById(id);
+    }
+
+
+
 
 
     //**** Rate  *****/
@@ -76,7 +80,6 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
 
 
     async getLatestRates(getLatesRatesRequest: GetLatestRatesRepository.Request): Promise<AxiosResponse<GetLatestRatesRepository.Response>> {
-        console.log("from remote daat source: ", await this._appServiceClient.getRatesQuery(getLatesRatesRequest))
         return await this._appServiceClient.getRatesQuery(getLatesRatesRequest);
     }
 
@@ -97,6 +100,7 @@ export interface RemoteDataSource {
 
     //* Place *//
     getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;
+    getPlaceById(id: GetPlaceByIdRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;
 
 
     // * Rate *//

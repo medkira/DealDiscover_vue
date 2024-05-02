@@ -66,6 +66,7 @@ const toggle = (event: any) => {
   </header>
 
   <nav>
+
     <div>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/places">Places</RouterLink>
@@ -101,7 +102,7 @@ nav {
   right: 0;
   top: 10%;
 
-
+  pointer-events: none;
 
   div {
     padding: 5px 35px 5px 40px;
@@ -111,6 +112,8 @@ nav {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+    pointer-events: all;
+
   }
 
   a {

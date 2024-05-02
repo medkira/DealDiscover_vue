@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { ref, toRaw } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
-import Paginator from 'primevue/paginator';
 import Avatar from 'primevue/avatar';
 import WriteReview from './WriteReview.vue';
 import CrouselCards from '@/presentation/views/communViews/CrouselCrads.vue'
 import { GetLatestsRatesStore } from '@/presentation/stores/Rates/GetLatestRatesStore';
-import type { Rate } from '@/domain/entities/Rates';
 import { onBeforeUnmount } from 'vue';
-import Button from 'primevue/button';
 import PaginatorPages from '@/presentation/components/paginator/PaginatorPages.vue';
+import { GetPlaceByIdStore } from '@/presentation/stores/Places/GetPlaceByIdStore';
 const route = useRoute();
 const ratedId = ref()
 ratedId.value = route.params.id as string;
@@ -24,9 +22,17 @@ const nReviews = ref(166);
 //************** FETCH Reviews  **************//
 // const reviews = ref<Rate[]>([]);
 const getLatestsRatesStore = GetLatestsRatesStore()
+const getPlaceByIdStrore = GetPlaceByIdStore()
+
 const currentPage = ref(1);
 const fetchData = async (page: number = 1) => {
     await getLatestsRatesStore.GetLatestRates({ page, rated_id: ratedId.value })
+
+    await getPlaceByIdStrore.GetPlaceById(ratedId.value);
+
+    const place = getPlaceByIdStrore.placeData
+
+    console.log("FROM communview data", place)
 
 
     // no need  for this now we get the state from pinia directelys
@@ -76,7 +82,7 @@ onBeforeUnmount(() => {
 
         <header>
             <section>
-                <h1>The The Temple Restaurant</h1>
+                <h1>{{ getPlaceByIdStrore.placeData.name }}</h1>
                 <div class="pi pi-heart " style="font-size: 3rem"></div>
             </section>
             <div>
@@ -85,10 +91,22 @@ onBeforeUnmount(() => {
             </div>
         </header>
         <div class="galleria">
-            <CrouselCards title="" sub-title="" :data=[] />
+            <CrouselCards title="" sub-title="" :data=getPlaceByIdStrore.placeData />
         </div>
         <div class="content">
             <div class="images-container">
+
+            </div>
+            <div class="description">
+                <h1>Description</h1>
+
+                <p>{{ getPlaceByIdStrore.placeData.description }}</p>
+
+            </div>
+            <div class="description">
+                <h1>Location</h1>
+
+                <p>{{ getPlaceByIdStrore.placeData.location }}</p>
 
             </div>
             <div class="contribute">
@@ -109,8 +127,8 @@ onBeforeUnmount(() => {
 
             </div>
             <div class="reviews-qa">
+                <h1>Reviews</h1>
                 <div class="posts-container">
-
                     <div class="post-container" v-for="(   item   ) in     getLatestsRatesStore.getReviews"
                         :key="item.rate">
 
@@ -121,7 +139,7 @@ onBeforeUnmount(() => {
 
                         <h2 class="post-text">{{ item.review }} </h2>
 
-                        <Rating v-model="item.rate" :stars="7" :cancel="false" readonly />
+                        <Rating v-model="item.rate" :stars="5" :cancel="false" readonly />
 
                     </div>
 
@@ -248,11 +266,11 @@ section {
     gap: 16px;
 }
 
-.contribute {
+.contribute,
+.description {
     width: 100%;
     border-radius: 20px;
     padding: 37px;
-
     background-color: rgb(#f6f6f6, 0.17);
 
     h1 {
@@ -260,6 +278,13 @@ section {
         font-size: 35px;
         margin-bottom: 15px;
 
+    }
+
+    p {
+        color: #f6f6f6;
+        font-size: 25px;
+        margin-bottom: 15px;
+        font-weight: 400
     }
 
     .contribute-buttons {
@@ -303,18 +328,31 @@ section {
     }
 }
 
+.reviews-qa {
+    border-radius: 20px;
+    background-color: rgb(#f6f6f6, 0.17);
+    padding: 50px;
+
+    h1 {
+        color: #f6f6f6;
+        font-size: 38px;
+        margin-bottom: 35px;
+        text-align: start;
+
+    }
+}
 
 
 .posts-container {
-    border-radius: 20px;
 
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
-    padding: 50px;
     justify-content: center;
-    background-color: rgb(#f6f6f6, 0.17);
     flex-direction: row;
+
+
+
 
     .post-container {
         display: flex;

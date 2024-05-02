@@ -4,7 +4,7 @@ const prop = defineProps<({
     currentPage: any
 })>()
 
-console.log("CURRENT ", prop.currentPage)
+// console.log("CURRENT ", prop.currentPage)
 
 const emit = defineEmits(['Previous', 'Next']);
 // emit('Previous'); 

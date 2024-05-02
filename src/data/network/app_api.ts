@@ -5,6 +5,7 @@ import type { AxiosInstance, AxiosResponse } from "axios";
 import type { GetLatesPlacesRepository } from "@/domain/repository/places/GetlatestPlacesInterface"
 import type { CreateRateRepository } from "@/domain/repository/rates/CreateRateInterface";
 import type { GetLatestRatesRepository } from "@/domain/repository/rates/GetLatestRatesInterface";
+import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlaceByIdInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -54,6 +55,10 @@ export class AppServiceClient {
             }
         })
 
+    }
+
+    async getPlaceById(id: GetPlaceByIdRepository.Request) {
+        return await this.http.get(`place/${id}`);
     }
 
 

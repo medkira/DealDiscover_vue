@@ -1,16 +1,12 @@
-// import { Place } from "@domain/entities/Place";
-// import { UseCase } from "../UseCase";
-// import { PlaceNotFoundError } from "@application/errors/PlaceNotFoundError";
+import type { Failure } from "@/data/network/error_handler";
+import type { Either } from "@/domain/either/Either";
+import type { Place } from "@/domain/entities/Place";
 
-// export interface GetPlaceByIdInterface
-//   extends UseCase<
-//     GetPlaceByIdInterface.Request,
-//     GetPlaceByIdInterface.Response
-//   > {
-//   execute(placeId: GetPlaceByIdInterface.Request): Promise<GetPlaceByIdInterface.Response>;
-// }
+export interface GetPlaceByIdRepository {
+    getPlaceById(placeId: GetPlaceByIdRepository.Request): Promise<GetPlaceByIdRepository.Response>;
+}
 
-// export namespace GetPlaceByIdInterface {
-//   export type Request = string;
-//   export type Response = Place | PlaceNotFoundError;
-// }
+export namespace GetPlaceByIdRepository {
+    export type Request = string;
+    export type Response = Either<Failure, Place>
+}

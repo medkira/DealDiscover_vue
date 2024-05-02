@@ -4,10 +4,11 @@ import { ref, onMounted } from "vue";
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // Default theme
 import '@splidejs/splide/css';
-defineProps<({
+import type { Place } from "@/domain/entities/Place";
+const props = defineProps<({
     title: String,
     subTitle: String,
-    data: Array<{ id: String, image: String, title: String }>
+    data: Place
 })>()
 
 
@@ -40,20 +41,27 @@ const elements = ref([
 
 
 <template>
-    <h1> {{ title }}</h1>
+    <!-- <h1> {{ props.data.name }}</h1> -->
     <div class="main-container">
         <Splide :options="{
-        rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
-    }" aria-label="Select a slide to show">
-            <SplideSlide v-for=" element in elements" :key="element.id">
+            rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
+        }" aria-label="Select a slide to show">
+            <SplideSlide
+                v-for=" element in [props.data.placeImage, props.data.placeImage, 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png']"
+                :key="element">
                 <div class="image-container">
-                    <img :src="`/src/presentation/resources/images/Beach/${element.image}`" />
+                    <!-- <img :src="`/src/presentation/resources/images/Beach/${element.image}`" /> -->
+                    <img :src=element />
+
+
                     <!-- <div class="sub-title">{{ element.subTitle }}</div> -->
                 </div>
 
             </SplideSlide>
 
         </Splide>
+
+        <!-- <img :src=props.data.placeImage alt=""> -->
     </div>
 
 </template>
