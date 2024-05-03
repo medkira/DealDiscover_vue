@@ -20,17 +20,17 @@ const props = defineProps<({
 })>()
 
 const visibleAddRateDialog = ref(false);
-const post_type = ref<any>();
+// const post_type = ref<any>();
 const content = ref('');
 const rate = ref(0);
-const image = ref();
+// const image = ref();
 
 
 const createRateStore = CreateRateStore();
 
 
 const submitRateRate = async () => {
-    console.log("from write review", props.rated_id)
+    // console.log("from write review", props.rated_id)
     await createRateStore.CreateRate({ rate: rate.value, rated_id: props.rated_id, rated_name: rated_name.PLACE, review: content.value, });
 
     if (createRateStore.isCreatedRateSuccess) {
@@ -40,8 +40,8 @@ const submitRateRate = async () => {
         // image.value = "";
         //! CURRENT solition need to be fixed
         const getLatestsRatesStore = GetLatestsRatesStore();
-        getLatestsRatesStore.$reset;
-
+        getLatestsRatesStore.$reset();
+        content.value = '';
     }
 
 }

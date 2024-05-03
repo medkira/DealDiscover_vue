@@ -8,34 +8,14 @@ import router from "@/presentation/router";
 const props = defineProps<({
     title: String,
     subTitle: String,
-    data: Array<{ id: string, placeImage: any, title: String, name: String }>
+    data: Array<{ id: string, placeImage: any, title: String, name: String }> | undefined;
 })>()
 
 // console.log("from Crousel data", props.data)
 
 const navigateTo = (id: string) => {
-    router.push({ name: 'place', replace: true, params: { id: id } });
+    router.push({ name: 'place', params: { id: id } });
 }
-
-onMounted(() => {
-    // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
-})
-// this data need to be mounted in onMounted
-// const elements = ref([
-//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
-//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
-//     { id: "54254", image: 'DjerbaBeach.jpg', name: 'Djerba Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
-//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
-//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
-//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' }
-// ]);
-
 
 
 
@@ -166,3 +146,19 @@ h1 {
 </template>
 </Carousel>
 </div> -->
+
+<!-- // this data need to be mounted in onMounted
+// const elements = ref([
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
+//     { id: "54254", image: 'DjerbaBeach.jpg', name: 'Djerba Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', name: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', name: 'Bizerte Beach' }
+// ]); -->

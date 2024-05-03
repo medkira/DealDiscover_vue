@@ -4,13 +4,33 @@ import { Either } from "@/domain/either/Either";
 import { ErrorHandler, type Failure } from "../network/error_handler";
 import type { GetLatesPlacesRepository } from "@/domain/repository/places/GetlatestPlacesInterface";
 import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlaceByIdInterface";
+import type { GetFavouritePlacesRepository } from "@/domain/repository/places/favourites/GetFavouritePlacesByIdInterface";
 
 
 
-export class PlaceRepository implements GetLatesPlacesRepository, GetPlaceByIdRepository {
+export class PlaceRepository implements GetLatesPlacesRepository, GetPlaceByIdRepository, GetFavouritePlacesRepository {
     constructor(
         public readonly remoteDataSource: RemoteDataSource
     ) { }
+
+
+
+    async getFavouritePlaces(): Promise<GetFavouritePlacesRepository.Response> {
+        try {
+            // mapping happens here
+            const response: AxiosResponse = await this.remoteDataSource.getFavouritePlaces();
+
+            return Either.right(response.data);
+
+        } catch (error) {
+            const errorHandler = new ErrorHandler(error);
+            const failure: Failure = errorHandler.failure;
+
+
+            return Either.left(failure);
+        }
+    }
+
 
 
     async getPlaces(params: GetLatesPlacesRepository.Request): Promise<GetLatesPlacesRepository.Response> {

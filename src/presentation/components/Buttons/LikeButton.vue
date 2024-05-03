@@ -1,18 +1,31 @@
 <script setup lang="ts">
+
 import { ref } from 'vue';
 const props = defineProps<({
     isChecked: any
-})>()
-const checked = ref(props.isChecked);
 
+})>()
+// const checked = ref(props.isChecked);
+// console.log(props.isChecked)
+const emit = defineEmits(['Add', 'Remove']);
 const check = () => {
-    checked.value = checked.value!
+    if (props.isChecked == true) {
+        emit('Remove');
+    } else {
+
+        emit('Add')
+    }
 }
+
+
+
+
+// getFavouritesPlaces();
 </script>
 <template>
     <div>
         <label class="container">
-            <input :checked="checked" type="checkbox" @click="check">
+            <input :checked="props.isChecked" type="checkbox" @click="check">
             <div class="checkmark">
                 <svg viewBox="0 0 256 256">
                     <rect fill="none" height="256" width="256"></rect>

@@ -3,6 +3,8 @@ import { placeTypes } from '@/domain/entities/Place';
 import CrouselCrads from '@/presentation/components/landing/CrouselCrads.vue';
 import SliderCards from '@/presentation/components/landing/SliderCards.vue';
 import { GetLatestsPlacesStore } from '@/presentation/stores/Places/GetLatestPlacesStore';
+import { onMounted } from 'vue';
+import { onBeforeMount } from 'vue';
 import { toRaw, isProxy, ref } from 'vue';
 
 const dataHotel = ref();
@@ -16,10 +18,9 @@ const fetchData = async () => {
 
     await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.restaurant })
     dataRestaurants.value = toRaw(getPlacesStore.GetLatestPlacesSuccess);
-    // console.log(data);
+    // console.log("from place ", toRaw(getPlacesStore.GetLatestPlacesSuccess));
 };
 fetchData();
-
 
 
 

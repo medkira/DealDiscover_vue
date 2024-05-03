@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type { Place, placeTypes } from '@/domain/entities/Place';
 import { placeRepository } from '@/app/factory/di';
+import { toRaw } from 'vue';
 
 export const GetLatestsPlacesStore = defineStore('GetLatestsPlacesStore', {
     state: () => ({
@@ -9,7 +10,7 @@ export const GetLatestsPlacesStore = defineStore('GetLatestsPlacesStore', {
         GetLatestPlacesSuccess: [] as Place[],
     }),
     getters: {
-        isCreatedPlaceSuccess: (state) => state.GetLatestPlacesSuccess !== null,
+        isCreatedPlaceSuccess: (state) => toRaw(state.GetLatestPlacesSuccess),
 
 
         getFailureMessage: (state) => state.GetLatestPlacesFailure,

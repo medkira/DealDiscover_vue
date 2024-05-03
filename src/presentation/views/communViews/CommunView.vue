@@ -10,12 +10,40 @@ import { onBeforeUnmount } from 'vue';
 import PaginatorPages from '@/presentation/components/paginator/PaginatorPages.vue';
 import { GetPlaceByIdStore } from '@/presentation/stores/Places/GetPlaceByIdStore';
 import LikeButton from '@/presentation/components/Buttons/LikeButton.vue';
+import { appServiceClientInstance } from '@/app/factory/di';
+import type { Place } from '@/domain/entities/Place';
+import { GetLatestsPlacesStore } from '@/presentation/stores/Places/GetLatestPlacesStore';
+import { GetFavouritePlaceStore } from '@/presentation/stores/Places/GetFavouritePlacesStore';
+import { toRaw } from 'vue';
 const route = useRoute();
-const ratedId = ref()
-ratedId.value = route.params.id as string;
-
+const placeId = ref()
+placeId.value = route.params.id as string;
 const rate = ref(6);
 const nReviews = ref(166);
+
+
+// ************** Add/Remove PLace Favourites ****************//
+
+const addToFavourites = async () => {
+    await appServiceClientInstance.addPlaceFavourites({ placeId: placeId.value });
+}
+const removeFromFavourites = async () => {
+    await appServiceClientInstance.removePlaceFavourites({ placeId: placeId.value });
+
+}
+/**********************************/
+const isChecked = ref(false);
+const getFavouritePlace = GetFavouritePlaceStore();
+const getFavouritesPlaces = async () => {
+    await getFavouritePlace.GetFavouritePlaces(placeId.value);
+    // console.log(getFavouritePlace.isLiked);
+    isChecked.value = getFavouritePlace.isLiked
+}
+
+getFavouritesPlaces();
+//*********************************************//
+
+
 
 
 
@@ -23,17 +51,16 @@ const nReviews = ref(166);
 //************** FETCH Reviews  **************//
 // const reviews = ref<Rate[]>([]);
 const getLatestsRatesStore = GetLatestsRatesStore();
-const getPlaceByIdStrore = GetPlaceByIdStore()
+const getPlaceByIdStore = GetPlaceByIdStore()
 
 const currentPage = ref(1);
 const fetchData = async (page: number = 1) => {
-    await getLatestsRatesStore.GetLatestRates({ page, rated_id: ratedId.value })
+    await getLatestsRatesStore.GetLatestRates({ page, rated_id: placeId.value })
+    await getPlaceByIdStore.GetPlaceById(placeId.value);
 
-    await getPlaceByIdStrore.GetPlaceById(ratedId.value);
+    // const place = getPlaceByIdStore.placeData
 
-    const place = getPlaceByIdStrore.placeData
-
-    // console.log("FROM communview data", place)
+    // // console.log("FROM communview data", place)
 
 
     // no need  for this now we get the state from pinia directelys
@@ -58,21 +85,11 @@ const previousPage = () => {
 }
 
 onBeforeUnmount(() => {
-    getLatestsRatesStore.$reset;
+    getLatestsRatesStore.$reset();
+    getFavouritePlace.$reset();
 })
 
 
-
-
-
-
-
-//********* developement test  ************/
-
-// const reviews = ref([{ content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 2 },
-// { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in. I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite  I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite ", user_name: "testUser", rate: 2 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 2 }, { content: 'TEST', user_name: "testUser", rate: 4 },
-// { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: "I 'v been in that restaurant with my wife in Dec. 2013, they have a delicious seafood , I like it so much, quite , clean, service is good, near by hotel instate in.", user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 4 },
-// { content: 'Foo', user_name: "testUser", rate: 4 }, { content: 'TEST', user_name: "testUser", rate: 3 },])
 
 </script>
 
@@ -83,9 +100,14 @@ onBeforeUnmount(() => {
 
         <header>
             <section>
-                <h1>{{ getPlaceByIdStrore.placeData.name }}</h1>
+                <h1>{{ getPlaceByIdStore.placeData.name }}</h1>
                 <!-- <div class="pi pi-heart-fill" style="font-size: 3rem"></div> -->
-                <LikeButton :is-checked="true" />
+                <div>
+                    <p style="text-align: center;">Add favourite</p>
+
+                    <LikeButton :is-checked=isChecked @add="addToFavourites" @remove="removeFromFavourites" />
+                </div>
+
             </section>
             <div>
                 <Rating v-model="rate" :stars="7" :cancel="false" :disabled="true" />
@@ -93,7 +115,7 @@ onBeforeUnmount(() => {
             </div>
         </header>
         <div class="galleria">
-            <CrouselCards title="" sub-title="" :data=getPlaceByIdStrore.placeData />
+            <CrouselCards title="" sub-title="" :data=getPlaceByIdStore.placeData />
         </div>
         <div class="content">
             <div class="images-container">
@@ -102,20 +124,20 @@ onBeforeUnmount(() => {
             <div class="description">
                 <h1>Description</h1>
 
-                <p>{{ getPlaceByIdStrore.placeData.description }}</p>
+                <p>{{ getPlaceByIdStore.placeData.description }}</p>
 
             </div>
             <div class="description">
                 <h1>Location</h1>
 
-                <p>{{ getPlaceByIdStrore.placeData.location }}</p>
+                <p>{{ getPlaceByIdStore.placeData.location }}</p>
 
             </div>
             <div class="contribute">
                 <h1>Contribute</h1>
 
                 <div class="contribute-buttons">
-                    <WriteReview text="Write a review" :rated_id=ratedId />
+                    <WriteReview text="Write a review" :rated_id=placeId />
 
                     <button>
                         upload a photo
@@ -147,10 +169,9 @@ onBeforeUnmount(() => {
 
                 </div>
 
-                <div class="card">
+                <div class="pagination-container">
                     <PaginatorPages @next="nextPage" @previous="previousPage" :pages="4" :current-page="currentPage" />
                 </div>
-
             </div>
         </div>
     </main>
@@ -161,14 +182,17 @@ onBeforeUnmount(() => {
 
 
 <style scoped lang="scss">
-.card {
+.pagination-container {
     margin-top: 15px;
     background-color: rgb(#f6f6f6, 0.17);
     // background-color: red;
     border-radius: 20px;
     padding: 1px;
     padding-bottom: 20px;
+
 }
+
+
 
 main {
     padding-top: 10%;
@@ -181,6 +205,8 @@ main {
     padding: 70px;
 
 }
+
+
 
 header {
     width: 100%;
@@ -223,9 +249,11 @@ header {
 section {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    // background-color: #29413f;
     width: 100%;
     min-width: 1250px;
+    padding-right: 30px;
 
 
     h1 {
@@ -335,6 +363,7 @@ section {
     background-color: rgb(#f6f6f6, 0.17);
     padding: 50px;
 
+
     h1:nth-child(1) {
         color: #f6f6f6;
         font-size: 38px;
@@ -431,6 +460,35 @@ section {
         }
     }
 
+}
+
+// * for paginatipn container
+@media (max-width: 1024px) {
+    main {
+        padding: 10px;
+        // background-color: #29413f;
+    }
+
+    .pagination-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 200px
+    }
+
+    .reviews-qa {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .posts-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 /* div {

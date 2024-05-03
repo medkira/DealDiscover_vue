@@ -8,12 +8,14 @@ import type { GetLatesPlacesRepository } from "@/domain/repository/places/Getlat
 import type { CreateRateRepository } from "@/domain/repository/rates/CreateRateInterface";
 import type { GetLatestRatesRepository } from "@/domain/repository/rates/GetLatestRatesInterface";
 import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlaceByIdInterface";
+import type { GetFavouritePlacesRepository } from "@/domain/repository/places/favourites/GetFavouritePlacesByIdInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+
 
     /***** Auth  *****/
 
@@ -68,6 +70,12 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
 
 
 
+    async getFavouritePlaces(): Promise<AxiosResponse<GetFavouritePlacesRepository.Response>> {
+
+        return await this._appServiceClient.getFavouritePlaces();
+    }
+
+
 
 
     //**** Rate  *****/
@@ -82,6 +90,7 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     async getLatestRates(getLatesRatesRequest: GetLatestRatesRepository.Request): Promise<AxiosResponse<GetLatestRatesRepository.Response>> {
         return await this._appServiceClient.getRatesQuery(getLatesRatesRequest);
     }
+
 
 }
 
@@ -106,6 +115,11 @@ export interface RemoteDataSource {
     // * Rate *//
     createRate(createRateRequest: CreateRateRepository.Request): Promise<AxiosResponse<CreateRateRepository.Response>>
     getLatestRates(getLatesRatesRequest: GetLatestRatesRepository.Request): Promise<AxiosResponse<GetLatestRatesRepository.Response>>;
+
+
+    // * Favourites  * //
+    getFavouritePlaces(): Promise<AxiosResponse<GetFavouritePlacesRepository.Response>>;
+
 
 }
 

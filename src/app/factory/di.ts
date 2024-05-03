@@ -6,6 +6,7 @@ import AppCookie from "../storage/app_cookie";
 import { PostRepository } from "@/data/repositories/PostRepository";
 import { PlaceRepository } from "@/data/repositories/PlaceRepository";
 import { RateRepository } from "@/data/repositories/RateRepository";
+import { GetFavouritePlaceStore } from "@/presentation/stores/Places/GetFavouritePlacesStore";
 
 
 
@@ -23,6 +24,9 @@ export const rateRepository = new RateRepository(remoteDataSourceInstance);
 
 // cookie factory
 export const cookieAdapter = new AppCookie();
+
+
+
 
 
 // can decalre stores factory here 

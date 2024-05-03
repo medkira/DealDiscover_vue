@@ -1,3 +1,4 @@
+import type { Place } from "./Place";
 import type { UserProps, UserRole } from "./User";
 
 
@@ -11,6 +12,10 @@ export type NormalUserProps = UserProps & {
   salary: number;
   socialStatus: string;
   parent: boolean;
+  isItOwner: boolean;
+  favouritePlaces: string[];
+
+
 };
 
 export class NormalUser {
@@ -34,6 +39,7 @@ export class NormalUser {
   public readonly salary: number;
   public readonly socialStatus: string;
   public readonly parent: boolean;
+  public readonly favouritePlaces: string[];
 
   constructor(props: NormalUserProps) {
     this.role = props.role;
@@ -56,5 +62,6 @@ export class NormalUser {
     this.salary = props.salary;
     this.socialStatus = props.socialStatus;
     this.parent = props.parent;
+    this.favouritePlaces = props.favouritePlaces;
   }
 }

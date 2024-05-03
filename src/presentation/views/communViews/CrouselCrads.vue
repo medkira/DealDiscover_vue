@@ -47,7 +47,7 @@ const elements = ref([
             rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
         }" aria-label="Select a slide to show">
             <SplideSlide
-                v-for=" element in [props.data.placeImage, props.data.placeImage, 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png']"
+                v-for=" element in [props.data.placeImage, 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png', 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png']"
                 :key="element">
                 <div class="image-container">
                     <!-- <img :src="`/src/presentation/resources/images/Beach/${element.image}`" /> -->

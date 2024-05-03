@@ -41,7 +41,8 @@ const emit = defineEmits(['Previous', 'Next']);
             </button>
         </div>
         <!-- On mobile version -->
-        <div class="flex items-center justify-between text-sm text-gray-600 font-medium sm:hidden">
+        <div
+            class="mobile-pagination-container flex items-center justify-between text-sm text-gray-600 font-medium sm:hidden">
             <a @click="emit('Previous')" class=" px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50">Previous</a>
             <div class="font-medium">
                 Page {{ currentPage }}
@@ -52,6 +53,16 @@ const emit = defineEmits(['Previous', 'Next']);
 </template>
 
 <style scoped lang="scss">
+// .mobile-pagination-container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     gap: 15px;
+//     background-color: #a9bac0;
+// }
+
+
+
 /* Base styles for all list items */
 .flex li div {
     font-size: medium;

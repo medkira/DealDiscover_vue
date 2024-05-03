@@ -143,6 +143,9 @@ img {
   // background-color: #88a2bb;
   height: 700px;
   width: 100%;
+
+  margin-top: 50px;
+
 }
 
 

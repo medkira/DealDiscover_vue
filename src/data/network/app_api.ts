@@ -80,5 +80,21 @@ export class AppServiceClient {
 
     }
 
+    // ? Favourites
+
+    async addPlaceFavourites(req: { placeId: string }) {
+        return await this.http.patch('place/favorites/add', req)
+    }
+
+
+    async removePlaceFavourites(req: { placeId: string }) {
+        return await this.http.patch('place/favorites/remove', req)
+    }
+
+    async getFavouritePlaces() {
+        return await this.http.get('place/favorites/get');
+
+    }
+
 }
 

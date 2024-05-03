@@ -87,7 +87,7 @@ const toggle = (event: any) => {
     <!-- <RouterView /> -->
     <slot />
 
-    <!-- <RobotDiscover class=" robot" /> -->
+    <RobotDiscover class=" robot" />
     <FooterCard />
   </main>
 </template>
