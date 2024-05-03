@@ -9,6 +9,7 @@ import { GetLatestsRatesStore } from '@/presentation/stores/Rates/GetLatestRates
 import { onBeforeUnmount } from 'vue';
 import PaginatorPages from '@/presentation/components/paginator/PaginatorPages.vue';
 import { GetPlaceByIdStore } from '@/presentation/stores/Places/GetPlaceByIdStore';
+import LikeButton from '@/presentation/components/Buttons/LikeButton.vue';
 const route = useRoute();
 const ratedId = ref()
 ratedId.value = route.params.id as string;
@@ -83,7 +84,8 @@ onBeforeUnmount(() => {
         <header>
             <section>
                 <h1>{{ getPlaceByIdStrore.placeData.name }}</h1>
-                <div class="pi pi-heart " style="font-size: 3rem"></div>
+                <!-- <div class="pi pi-heart-fill" style="font-size: 3rem"></div> -->
+                <LikeButton :is-checked="true" />
             </section>
             <div>
                 <Rating v-model="rate" :stars="7" :cancel="false" :disabled="true" />
