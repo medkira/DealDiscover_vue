@@ -22,7 +22,7 @@ const nReviews = ref(166);
 
 //************** FETCH Reviews  **************//
 // const reviews = ref<Rate[]>([]);
-const getLatestsRatesStore = GetLatestsRatesStore()
+const getLatestsRatesStore = GetLatestsRatesStore();
 const getPlaceByIdStrore = GetPlaceByIdStore()
 
 const currentPage = ref(1);
@@ -33,7 +33,7 @@ const fetchData = async (page: number = 1) => {
 
     const place = getPlaceByIdStrore.placeData
 
-    console.log("FROM communview data", place)
+    // console.log("FROM communview data", place)
 
 
     // no need  for this now we get the state from pinia directelys
@@ -335,7 +335,7 @@ section {
     background-color: rgb(#f6f6f6, 0.17);
     padding: 50px;
 
-    h1 {
+    h1:nth-child(1) {
         color: #f6f6f6;
         font-size: 38px;
         margin-bottom: 35px;
@@ -386,12 +386,14 @@ section {
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: start;
         gap: 20px;
         padding: 11px;
 
         h1 {
             color: #f6f6f6;
             font-size: 23px;
+            padding-bottom: 10px;
         }
     }
 

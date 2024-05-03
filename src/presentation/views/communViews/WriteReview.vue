@@ -36,8 +36,12 @@ const submitRateRate = async () => {
     if (createRateStore.isCreatedRateSuccess) {
         showSuccess(createRateStore.getSuccessMessage as string);
         visibleAddRateDialog.value = false;
-        createRateStore.reset();
-        image.value = "";
+        createRateStore.$reset
+        // image.value = "";
+        //! CURRENT solition need to be fixed
+        const getLatestsRatesStore = GetLatestsRatesStore();
+        getLatestsRatesStore.$reset;
+
     }
 
 }
