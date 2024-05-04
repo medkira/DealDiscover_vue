@@ -45,20 +45,19 @@ export const LoginStore = defineStore('LoginStore', {
                 },
                 (response) => {
                     // ! this just in developement
-                    setTimeout(() => {
-                        // ? right -> data (success)
-                        // # success state
-                        this.logingSuccess.token = response.authenticationToken;
+                    // ? right -> data (success)
+                    // # success state
+                    this.logingSuccess.token = response.authenticationToken;
 
 
 
-                        const authenticationStore = AuthenticationStore();
-                        authenticationStore.setToken(response.authenticationToken);
+                    const authenticationStore = AuthenticationStore();
+                    authenticationStore.setToken(response.authenticationToken);
+                    this.loginLoading = false;
 
-                        this.loginLoading = false;
-                        router.push({ name: 'home', replace: true, params: { id: "placesId" } });
-                        this.reset();
-                    }, 2500);
+                    router.push({ name: 'home', replace: true, params: { id: "placesId" } });
+                    // this.reset();
+                    console.log("done")
 
                 }
             )

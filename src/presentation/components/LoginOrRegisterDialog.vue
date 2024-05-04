@@ -32,8 +32,8 @@ const isLoginActive = ref(true);
 const submitLogin = async () => {
     await logingStore.login({ email: email.value, password: password.value });
     if (logingStore.isLoggedIn) {
-        visible.value = false;
         showSuccess(logingStore.getSuccessMessage as string)
+        visible.value = false;
         logingStore.reset();
     }
 
@@ -61,9 +61,7 @@ const resetValues = () => {
 
 const toast = useToast();
 const showSuccess = (msg: string) => { // i dont like this logic beeing handel here
-    if (logingStore.isLoggedIn || registerStore.isLoggedIn) {
-        toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
-    }
+    toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
 };
 
 
@@ -73,7 +71,6 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
 </script>
 
 <template>
-
     <PrimaryButton text="Login" label="Login" @click="[visible = true, resetValues()]" class=" text-[#f0f0f0] "
         style="font-size: 1.5rem  " />
     <div class="card flex justify-center ">

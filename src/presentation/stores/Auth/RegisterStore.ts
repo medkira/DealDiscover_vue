@@ -51,18 +51,15 @@ export const RegisterStore = defineStore('RegisterStore', {
                 },
                 (response) => {
                     // ! this just in developement
-                    setTimeout(() => {
-                        // ? right -> data (success)
-                        // # success state
-                        this.registerSuccess.token = response.authenticationToken;
+                    // ? right -> data (success)
+                    // # success state
+                    this.registerSuccess.token = response.authenticationToken;
 
-                        const authenticationStore = AuthenticationStore();
-                        authenticationStore.setToken(response.authenticationToken),
+                    const authenticationStore = AuthenticationStore();
+                    authenticationStore.setToken(response.authenticationToken),
 
-                            this.registerLoading = false;
-                        router.push({ name: 'home', replace: true, params: { id: "placesId" } });
-                        this.reset()
-                    }, 2500);
+                        this.registerLoading = false;
+                    router.push({ name: 'home', replace: true, params: { id: "placesId" } });
                 }
             )
 

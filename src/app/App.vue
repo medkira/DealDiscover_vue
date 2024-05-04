@@ -6,6 +6,7 @@ import Menu from 'primevue/menu';
 import Toast from 'primevue/toast';
 import Avatar from 'primevue/avatar';
 import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDialog.vue';
+import { useToast } from 'primevue/usetoast';
 
 const authenticationStore = AuthenticationStore(); // this need to be singleton in di
 const menu = ref();
@@ -48,6 +49,10 @@ const toggle = (event: any) => {
   menu.value.toggle(event);
 };
 
+// const toast = useToast();
+// const showSuccess = (msg: string) => { // i dont like this logic beeing handel here
+//         toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
+// };
 
 
 </script>
