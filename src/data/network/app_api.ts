@@ -51,6 +51,7 @@ export class AppServiceClient {
     async getPlacesQuery(reqQuery: GetLatesPlacesRepository.Request) {
         return await this.http.get('/place/page', {
             params: {
+                is_verified: reqQuery.is_verified,
                 page: reqQuery.page,
                 type: reqQuery.type,
                 location: reqQuery.location
@@ -68,7 +69,13 @@ export class AppServiceClient {
         return await this.http.post('/place', createPlaceRequest);
     }
 
-    // async acceptPlaceById
+    async acceptPlaceById(placeId: string): Promise<AxiosResponse<any>> {
+        return await this.http.post(`/place/validate/${placeId}`)
+    }
+
+    async refusePlaceById(placeId: string): Promise<AxiosResponse<any>> {
+        return await this.http.delete(`/place/refuse/${placeId}`)
+    }
 
     // ? R A T E S
 

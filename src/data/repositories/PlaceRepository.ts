@@ -6,13 +6,17 @@ import type { GetLatesPlacesRepository } from "@/domain/repository/places/Getlat
 import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlaceByIdInterface";
 import type { GetFavouritePlacesRepository } from "@/domain/repository/places/favourites/GetFavouritePlacesByIdInterface";
 import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePlaceInterface";
+import type { DeletePlaceRepository } from "@/domain/repository/places/DeletePlaceInterface";
+import type { ValidationPlaceContributionByIdRepository } from "@/domain/repository/places/ValidationPlaceContributionByIdInterface";
 
 
 
-export class PlaceRepository implements GetLatesPlacesRepository, GetPlaceByIdRepository, GetFavouritePlacesRepository, CreatePlaceRepository {
+export class PlaceRepository implements GetLatesPlacesRepository, GetPlaceByIdRepository,
+    GetFavouritePlacesRepository, CreatePlaceRepository, DeletePlaceRepository, ValidationPlaceContributionByIdRepository {
     constructor(
         public readonly remoteDataSource: RemoteDataSource
     ) { }
+
     async createPlace(placeData: CreatePlaceRepository.Request): Promise<CreatePlaceRepository.Response> {
         try {
             console.log(placeData)
@@ -96,6 +100,55 @@ export class PlaceRepository implements GetLatesPlacesRepository, GetPlaceByIdRe
             return Either.left(failure);
         }
     }
+
+    async validatePlace(placeId: string): Promise<ValidationPlaceContributionByIdRepository.Response> {
+        try {
+            // mapping happens here
+
+            const response: AxiosResponse = await this.remoteDataSource.acceptPlace(placeId);
+
+            return Either.right(response.data);
+
+        } catch (error) {
+            const errorHandler = new ErrorHandler(error);
+            const failure: Failure = errorHandler.failure;
+
+
+            return Either.left(failure);
+        }
+    }
+    async deleteplace(placeId: string): Promise<DeletePlaceRepository.Response> {
+        try {
+            // mapping happens here
+
+            const response: AxiosResponse = await this.remoteDataSource.deletePlace(placeId);
+
+            return Either.right(response.data);
+
+        } catch (error) {
+            const errorHandler = new ErrorHandler(error);
+            const failure: Failure = errorHandler.failure;
+
+
+            return Either.left(failure);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // async createPlace(placeData: CreatePlaceRepository.Request): Promise<CreatePlaceRepository.Response> {
 

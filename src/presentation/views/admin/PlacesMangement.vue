@@ -1,7 +1,7 @@
 <template>
     <main>
         <div class="container-failure" v-if="getLatestsPlacesStore.GetLatestPlacesFailure">
-            <h1>No Image Contributions </h1>
+            <h1>No Place Contributions </h1>
             <button @click=" fetchData()" class="btn-class-name">
                 <span class="back"></span>
                 <span class="front"></span>
@@ -21,10 +21,10 @@
 
                 <div class="main-section">
                     <!-- <Button label="Show"/> -->
-                    <p class="imageDialog" @click="[visible = true, visibleImage(index)]">Image</p>
+                    <p class="imageDialog" @click="[visible = true, visiblePlace(index)]">Place</p>
                     <div class="buttons-container">
-                        <button @click="acceptImage(item.id)">Accept</button>
-                        <button @click="refuseImage(item.id)">Refuse</button>
+                        <button @click="acceptPlace(item.id)">Accept</button>
+                        <button @click="refusePlace(item.id)">Refuse</button>
                     </div>
                 </div>
             </section>
@@ -33,8 +33,8 @@
         </div>
     </main>
 
-    <Dialog :visible="refuseImageContributionStore.RefuseImageContributionByIdLoading
-            || acceptImageContributionStore.AcceptImageContributionByIdLoading
+    <Dialog :visible="refusePlaceContributionStore.RefusePlaceContributionByIdLoading
+            || acceptPlaceContributionStore.AcceptPlaceContributionByIdLoading
             " modal :style="{ width: '40rem' }" close-icon=false>
         <div class="bg-[#2980b9] p-[1rem] rounded-2xl flex flex-col items-center justify-center">
             <LoadingCube />
@@ -43,9 +43,9 @@
     </Dialog>
 
 
-    <Dialog v-model:visible="visible" modal header="Image Contribution" :style="{ width: '50rem' }"
+    <Dialog v-model:visible="visible" modal header="Place Contribution" :style="{ width: '50rem' }"
         :dismissable-mask=true>
-        <img class="rounded-md" :src=imgUrl alt="no Image">
+        <img class="rounded-md" :src=imgUrl alt="no Place">
     </Dialog>
 </template>
 
@@ -53,17 +53,16 @@
 import Dialog from 'primevue/dialog';
 import Avatar from 'primevue/avatar';
 // import Button from 'primevue/button';
-import { ref } from 'vue';
-import { GetImageContributionsStoreStore } from '@/presentation/stores/ImageContributions/GetImageContributionsStore';
-import { onMounted } from 'vue';
-import { AcceptImageContributionStore } from '@/presentation/stores/ImageContributions/AcceptImageContributionStore';
-import { RefuseImageContributionStore } from '@/presentation/stores/ImageContributions/RefuseImageContributionStore';
+import { onMounted, ref } from 'vue';
+
 import LoadingCube from '@/presentation/components/animation/LoadingCube.vue';
 import { GetLatestsPlacesStore } from '@/presentation/stores/Places/GetLatestPlacesStore';
+import { RefusePlaceContributionStore } from '@/presentation/stores/Places/RefusePlaceSotre';
+import { AcceptPlaceContributionStore } from '@/presentation/stores/Places/AcceptPlaceStore';
 const visible = ref(false);
 
 const imgUrl = ref();
-const visibleImage = (index: number) => {
+const visiblePlace = (index: number) => {
     // console.log(index);
 
     imgUrl.value = getLatestsPlacesStore.GetLatestPlacesSuccess[index].placeImage[0];
@@ -71,27 +70,27 @@ const visibleImage = (index: number) => {
 
 
 //**** accept & refuse **********************/
-const acceptImageContributionStore = AcceptImageContributionStore();
-const refuseImageContributionStore = RefuseImageContributionStore()
+const acceptPlaceContributionStore = AcceptPlaceContributionStore();
+const refusePlaceContributionStore = RefusePlaceContributionStore()
 
-const acceptImage = (id: string) => {
-    acceptImageContributionStore.AcceptImageContributionById(id);
+const acceptPlace = (id: string) => {
+    acceptPlaceContributionStore.AcceptPlaceContributionById(id);
 
     fetchData();
 }
 
-const refuseImage = async (id: string) => {
+const refusePlace = async (id: string) => {
     // visibleLoadingDialog.value = true;
 
-    await refuseImageContributionStore.RefuseImageContributionById(id);
-    // if (refuseImageContributionStore.RefuseImageContributionByIdSuccess) {
+    await refusePlaceContributionStore.RefusePlaceContributionById(id);
+    // if (refusePlaceContributionStore.RefusePlaceContributionByIdSuccess) {
     //     visibleLoadingDialog.value = false;
 
     // } else {
     //     visibleLoadingDialog.value = false;
 
     // }
-    // getImageContributionsStore.$reset()
+    // getPlaceContributionsStore.$reset()
     fetchData();
 
 }
@@ -105,8 +104,8 @@ const getLatestsPlacesStore = GetLatestsPlacesStore();
 
 const fetchData = async (page: number = 1) => {
     getLatestsPlacesStore.$reset();
-    await getLatestsPlacesStore.GetLatestPlaces({ page: page, is_verified: true });
-    // fetchedData = getImageContributionsStore.imageContributionsData
+    await getLatestsPlacesStore.GetLatestPlaces({ page: page, is_verified: false });
+    // fetchedData = getPlaceContributionsStore.imageContributionsData
     // console.log("DATA IMAGE contributions: ", fetchedData)
 }
 

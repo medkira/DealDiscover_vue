@@ -1,8 +1,11 @@
-export interface ValidationPlaceContributionByIdInterface {
-    validatePlace(placeId: ValidationPlaceContributionByIdInterface.Request): Promise<ValidationPlaceContributionByIdInterface.Response>;
+import type { Failure } from "@/data/network/error_handler";
+import type { Either } from "@/domain/either/Either";
+
+export interface ValidationPlaceContributionByIdRepository {
+    validatePlace(placeId: ValidationPlaceContributionByIdRepository.Request): Promise<ValidationPlaceContributionByIdRepository.Response>;
 }
 
-export namespace ValidationPlaceContributionByIdInterface {
+export namespace ValidationPlaceContributionByIdRepository {
     export type Request = string;
     export type Response = Either<Failure, void>;
 }

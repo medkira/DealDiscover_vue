@@ -14,14 +14,14 @@ import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePla
 import type { GetLatestImageContributionRepository } from "@/domain/repository/imageContribution/GetLatestImageContributionInterface";
 import type { ValidateImageContributionByIdIRepository } from "@/domain/repository/imageContribution/ValidateImageContributionByIdInterface";
 import type { RefuseImageContributionByIdRepostiory } from "@/domain/repository/imageContribution/RefuseImageContributionByIdInterface";
+import type { DeletePlaceRepository } from "@/domain/repository/places/DeletePlaceInterface";
+import type { ValidationPlaceContributionByIdRepository } from "@/domain/repository/places/ValidationPlaceContributionByIdInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
-
-
 
 
     /***** Auth  *****/
@@ -88,6 +88,17 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
 
 
 
+    async acceptPlace(id: string): Promise<AxiosResponse<ValidationPlaceContributionByIdRepository.Response, any>> {
+        return await this._appServiceClient.acceptPlaceById(id);
+    }
+
+    async deletePlace(id: string): Promise<AxiosResponse<DeletePlaceRepository.Response, any>> {
+        return await this._appServiceClient.acceptPlaceById(id);
+    }
+
+
+
+
     //**** Rate  *****/
 
     async createRate(createRateRequest: CreateRateRepository.Request): Promise<AxiosResponse<CreateRateRepository.Response>> {
@@ -138,6 +149,8 @@ export interface RemoteDataSource {
     getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;
     getPlaceById(id: GetPlaceByIdRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;
     createPlace(createPlaceRequest: CreatePlaceRepository.Request): Promise<AxiosResponse<CreatePlaceRepository.Response>>;
+    deletePlace(id: DeletePlaceRepository.Request): Promise<AxiosResponse<DeletePlaceRepository.Response>>;
+    acceptPlace(id: ValidationPlaceContributionByIdRepository.Request): Promise<AxiosResponse<ValidationPlaceContributionByIdRepository.Response>>;
 
 
     // * Rate *//

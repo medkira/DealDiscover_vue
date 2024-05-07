@@ -1,13 +1,13 @@
 import type { Failure } from "@/data/network/error_handler";
 import type { Either } from "@/domain/either/Either";
 
-export interface DeletePlaceInterface {
+export interface DeletePlaceRepository {
     deleteplace(
-        placeId: DeletePlaceInterface.Request
-    ): Promise<DeletePlaceInterface.Response>;
+        placeId: DeletePlaceRepository.Request
+    ): Promise<DeletePlaceRepository.Response>;
 }
 
-export namespace DeletePlaceInterface {
+export namespace DeletePlaceRepository {
     export type Request = string;
     export type Response = Either<Failure, void>;
 }
