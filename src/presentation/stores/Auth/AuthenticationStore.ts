@@ -5,11 +5,13 @@ import { cookieAdapter } from '@/app/factory/di';
 
 interface AuthenticationState {
     token: string | null;
+    isadmin: Boolean;
 }
 
 export const AuthenticationStore = defineStore('AuthenticationStore', {
     state: (): AuthenticationState => ({
         token: "",
+        isadmin: false,
     }),
     getters: {
         isLoggedIn: (state): boolean => !!(state.token || cookieAdapter.getTokenCookie()),
@@ -26,10 +28,15 @@ export const AuthenticationStore = defineStore('AuthenticationStore', {
             // so for him the state didnt change and it will not rerender the component 
             // thats why i make it null here 
             // this.token = "a"; 
+            this.isAdmin();
+
             this.token = null;
-            cookieAdapter.removeTokenCookie()
+            cookieAdapter.removeTokenCookie();
             // Clear other stores as needed 
         },
+        isAdmin() {
+            this.isadmin = cookieAdapter.getRoleFromToken() === "admin"
+        }
 
 
     },

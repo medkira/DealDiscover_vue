@@ -12,6 +12,7 @@ export const GetPlaceByIdStore = defineStore('GetPlaceByIdStore', {
     getters: {
         placeData: (state) => toRaw(state.GetPlaceByIdSuccess),
 
+        // isLoaded: (state) => toRaw(state.GetPlaceByIdSuccess) !== null,
 
         getFailureMessage: (state) => state.GetPlaceByIdFailure,
         getSuccessMessage: (state) => state.GetPlaceByIdSuccess ? "created post successfuly!" : "",

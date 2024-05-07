@@ -121,7 +121,7 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
 
 
                 <div class="flex items-center gap-2">
-                    <Button @click="submitRateRate" label="Rate Rate" text
+                    <Button @click="submitRateRate" label="Done" text
                         class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                     <Button label="Cancel" @click="[closeCallback()]" text
                         class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>

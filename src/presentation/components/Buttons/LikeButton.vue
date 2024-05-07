@@ -7,13 +7,13 @@ const props = defineProps<({
 })>()
 // const checked = ref(props.isChecked);
 // console.log(props.isChecked)
-const emit = defineEmits(['Add', 'Remove']);
+const emit = defineEmits(['add', 'remove']);
 const check = () => {
     if (props.isChecked == true) {
-        emit('Remove');
+        emit('remove');
     } else {
 
-        emit('Add')
+        emit('add')
     }
 }
 

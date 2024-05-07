@@ -6,7 +6,7 @@ export type PlaceProps = {
   location: string;
   description: string;
   url: string;
-  placeImage: string;
+  placeImage: string | string[];
 };
 
 export class Place {
@@ -17,7 +17,7 @@ export class Place {
   public readonly location: string;
   public readonly description: string;
   public readonly url: string;
-  public readonly placeImage: string;
+  public readonly placeImage: string | string[];
 
   constructor(props: PlaceProps) {
     this.id = props.id;

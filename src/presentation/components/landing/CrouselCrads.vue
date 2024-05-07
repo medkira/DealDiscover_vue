@@ -5,13 +5,14 @@ import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // Default theme
 import '@splidejs/splide/css';
 import router from "@/presentation/router";
+import { toRaw } from "vue";
 const props = defineProps<({
     title: String,
     subTitle: String,
     data: Array<{ id: string, placeImage: any, title: String, name: String }> | undefined;
 })>()
 
-// console.log("from Crousel data", props.data)
+// console.log("from Crousel data", toRaw(props.data))
 
 const navigateTo = (id: string) => {
     router.push({ name: 'place', params: { id: id } });
@@ -32,7 +33,7 @@ const navigateTo = (id: string) => {
                 <div class="image-container">
                     <!-- <img :src="`/src/presentation/resources/images/Beach/${element.image}`" /> -->
 
-                    <img :src=element.placeImage />
+                    <img :src=element.placeImage[0] />
 
 
                     <div class="sub-title">{{ element.name }}</div>

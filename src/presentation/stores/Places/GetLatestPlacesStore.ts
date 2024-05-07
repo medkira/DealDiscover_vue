@@ -10,7 +10,7 @@ export const GetLatestsPlacesStore = defineStore('GetLatestsPlacesStore', {
         GetLatestPlacesSuccess: [] as Place[],
     }),
     getters: {
-        isCreatedPlaceSuccess: (state) => toRaw(state.GetLatestPlacesSuccess),
+        isCreatedPlaceSuccess: (state) => state.GetLatestPlacesSuccess !== null,
 
 
         getFailureMessage: (state) => state.GetLatestPlacesFailure,
@@ -32,7 +32,7 @@ export const GetLatestsPlacesStore = defineStore('GetLatestsPlacesStore', {
             this.$reset();
         },
 
-        async GetLatestPlaces(data: { page?: number, type?: placeTypes, location?: string }) {
+        async GetLatestPlaces(data: { page?: number, type?: placeTypes, location?: string, is_verified: boolean }) {
             this.GetLatestPlacesLoading = true;
             const failureOrSucess = await placeRepository.getPlaces(data);
             failureOrSucess.fold(

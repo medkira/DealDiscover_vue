@@ -60,10 +60,10 @@ export default {
       //     props.text && props.severity === null && !props.plain
       // },
       // Primary Outlined Button
-      {
-        'text-primary-500 border border-primary-500 hover:bg-primary-300/20':
-          props.outlined && props.severity === null && !props.plain
-      },
+      // {
+      //   'text-primary-500 border border-primary-500 hover:bg-primary-300/20':
+      //     props.outlined && props.severity === null && !props.plain
+      // },
 
       // Secondary Button
       {
@@ -199,12 +199,12 @@ export default {
         'hover:bg-primary-600 dark:hover:bg-primary-300 hover:border-primary-600 dark:hover:border-primary-300':
           !props.link && props.severity === null && !props.text && !props.outlined && !props.plain
       },
-      { 'focus:ring-primary-400/50 dark:focus:ring-primary-300/50': props.severity === null },
+      // { 'focus:ring-primary-400/50 dark:focus:ring-primary-300/50': props.severity === null },
       // Text & Outlined Button
-      {
-        'hover:bg-primary-300/20':
-          (props.text || props.outlined) && props.severity === null && !props.plain
-      },
+      // {
+      //   'hover:bg-primary-300/20':
+      //     (props.text || props.outlined) && props.severity === null && !props.plain
+      // },
 
       // Secondary
       {
@@ -212,7 +212,7 @@ export default {
           props.severity === 'secondary' && !props.text && !props.outlined && !props.plain
       },
       {
-        'focus:ring-surface-400/50 dark:focus:ring-surface-300/50': props.severity === 'secondary'
+        // 'focus:ring-surface-400/50 dark:focus:ring-surface-300/50': props.severity === 'secondary'
       },
       // Text & Outlined Button
       {
@@ -221,11 +221,11 @@ export default {
       },
 
       // Success
-      {
-        'hover:bg-green-600 dark:hover:bg-green-300 hover:border-green-600 dark:hover:border-green-300':
-          props.severity === 'success' && !props.text && !props.outlined && !props.plain
-      },
-      { 'focus:ring-green-400/50 dark:focus:ring-green-300/50': props.severity === 'success' },
+      // {
+      //   'hover:bg-green-600 dark:hover:bg-green-300 hover:border-green-600 dark:hover:border-green-300':
+      //     props.severity === 'success' && !props.text && !props.outlined && !props.plain
+      // },
+      // { 'focus:ring-green-400/50 dark:focus:ring-green-300/50': props.severity === 'success' },
       // Text & Outlined Button
       {
         'hover:bg-green-300/20':

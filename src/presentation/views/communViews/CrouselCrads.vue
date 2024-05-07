@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 // @ts-ignore
 import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // Default theme
@@ -10,29 +10,29 @@ const props = defineProps<({
     subTitle: String,
     data: Place
 })>()
-
-
-
+// const test = computed(() => props.data)
+console.log("place data", props.data)
 
 
 onMounted(() => {
+    // console.log(props.data)
     // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
 })
 // this data need to be mounted in onMounted
-const elements = ref([
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { id: "54254", image: 'DjerbaBeach.jpg', subTitle: 'Djerba Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-    { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-    { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' }
-]);
+// const elements = ref([
+//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+//     { id: "54254", image: 'DjerbaBeach.jpg', subTitle: 'Djerba Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
+//     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
+//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' }
+// ]);
 
 
 
@@ -47,7 +47,7 @@ const elements = ref([
             rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
         }" aria-label="Select a slide to show">
             <SplideSlide
-                v-for=" element in [props.data.placeImage, 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png', 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png']"
+                v-for=" element in [...props.data.placeImage, 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png', 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png']"
                 :key="element">
                 <div class="image-container">
                     <!-- <img :src="`/src/presentation/resources/images/Beach/${element.image}`" /> -->

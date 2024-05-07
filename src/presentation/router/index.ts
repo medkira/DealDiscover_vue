@@ -10,10 +10,14 @@ import RouterGuard from './Guard/routerGuards';
 import FoodsView from '../views/foods/FoodsView.vue';
 import PostView from '../views/posts/PostView.vue';
 import CommunView from '../views/communViews/CommunView.vue';
-import LandingLayout from '../layouts/landing/LandingLayout.vue'; '../views/landing/LandingLayout.vue';
+import LandingLayout from '../layouts/landing/LandingLayout.vue'; import AddPlaceView from '../views/AddPlace/AddPlaceView.vue';
+'../views/landing/LandingLayout.vue';
 // import LoginOrRegisterDialog from '../components/LoginOrRegisterDialog.vue';
 
-
+import ImageContributions from '../views/admin/ImageContributions.vue';
+import AdminLayout from '../views/admin/Layout/AdminLayout.vue';
+import PlacesMangement from '../views/admin/PlacesMangement.vue';
+import DashBoard from '../views/admin/DashBoard.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,7 +64,14 @@ const router = createRouter({
     {
       path: '/place/:id',
       name: 'place',
-      component: CommunView
+      component: CommunView,
+
+    },
+    {
+      path: '/place/add',
+      name: 'placeAdd',
+      component: AddPlaceView,
+
     },
     {
       path: '/',
@@ -71,6 +82,27 @@ const router = createRouter({
       meta: { layout: LandingLayout }
 
     },
+    {
+      path: '/admin',
+      name: 'admin',
+      meta: { layout: AdminLayout },
+
+      component: DashBoard
+    },
+    {
+      path: '/ImageContributions',
+      name: 'ImageContributions',
+      component: ImageContributions,
+      meta: { layout: AdminLayout }
+
+    },
+    {
+      path: '/placesManagement',
+      name: 'placesManagement',
+      component: PlacesMangement,
+      meta: { layout: AdminLayout }
+
+    }
   ]
 });
 

@@ -14,11 +14,11 @@ const getPlacesStore = GetLatestsPlacesStore();
 
 const fetchData = async () => {
     await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.hotel })
-    dataHotel.value = toRaw(getPlacesStore.GetLatestPlacesSuccess);
-
+    dataHotel.value = getPlacesStore.GetLatestPlacesSuccess;
     await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.restaurant })
-    dataRestaurants.value = toRaw(getPlacesStore.GetLatestPlacesSuccess);
-    // console.log("from place ", toRaw(getPlacesStore.GetLatestPlacesSuccess));
+    dataRestaurants.value = getPlacesStore.GetLatestPlacesSuccess;
+    // console.log("from place ", dataHotel.value);
+
 };
 fetchData();
 
@@ -36,9 +36,10 @@ fetchData();
         }" :requestInterceptor="requestInterceptor" :responseInterceptor="responseInterceptor" class="deep-chat"
             :demo="false" :introMessage="{ text: 'Hi I am your recommendation assistant, ask me anything!' }" /> -->
         <SliderCards title="Foods for you" sub-title="Use ChatBot for Personalized Recommendations" :data=[] />
-
-        <CrouselCrads title="Best Hotels Rated" sub-title="" :data=dataHotel />
-        <CrouselCrads title="User favorites" sub-title="" :data=dataRestaurants />
+        <!-- conditional randering to load the component when the data get 
+fetched so i can use it it in the script -->
+        <CrouselCrads v-if="dataHotel" title="Best Hotels Rated" sub-title="" :data=dataHotel />
+        <CrouselCrads v-if="dataRestaurants" title="User favorites" sub-title="" :data=dataRestaurants />
 
 
 

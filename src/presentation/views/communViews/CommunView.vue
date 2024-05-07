@@ -15,6 +15,7 @@ import type { Place } from '@/domain/entities/Place';
 import { GetLatestsPlacesStore } from '@/presentation/stores/Places/GetLatestPlacesStore';
 import { GetFavouritePlaceStore } from '@/presentation/stores/Places/GetFavouritePlacesStore';
 import { toRaw } from 'vue';
+import UploadImageButton from './UploadImageButton.vue';
 const route = useRoute();
 const placeId = ref()
 placeId.value = route.params.id as string;
@@ -48,16 +49,17 @@ getFavouritesPlaces();
 
 
 
-//************** FETCH Reviews  **************//
+//************** FETCH Reviews & Places **************//
 // const reviews = ref<Rate[]>([]);
 const getLatestsRatesStore = GetLatestsRatesStore();
 const getPlaceByIdStore = GetPlaceByIdStore()
+const fetchedData = ref();
 
 const currentPage = ref(1);
 const fetchData = async (page: number = 1) => {
     await getLatestsRatesStore.GetLatestRates({ page, rated_id: placeId.value })
     await getPlaceByIdStore.GetPlaceById(placeId.value);
-
+    fetchedData.value = getPlaceByIdStore.placeData
     // const place = getPlaceByIdStore.placeData
 
     // // console.log("FROM communview data", place)
@@ -115,7 +117,7 @@ onBeforeUnmount(() => {
             </div>
         </header>
         <div class="galleria">
-            <CrouselCards title="" sub-title="" :data=getPlaceByIdStore.placeData />
+            <CrouselCards v-if="fetchedData" title="" sub-title="" :data=getPlaceByIdStore.placeData />
         </div>
         <div class="content">
             <div class="images-container">
@@ -139,13 +141,12 @@ onBeforeUnmount(() => {
                 <div class="contribute-buttons">
                     <WriteReview text="Write a review" :rated_id=placeId />
 
-                    <button>
-                        upload a photo
-                    </button>
+                    <UploadImageButton :place_id="placeId" />
 
                     <button>
                         Ask a question
                     </button>
+
 
                 </div>
 

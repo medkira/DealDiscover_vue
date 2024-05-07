@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 export default class AppCookie {
 
     public setCookie = (token: string, options: CookieOptions = {}) => {
@@ -40,10 +42,30 @@ export default class AppCookie {
     public removeTokenCookie(): void {
         this.setCookie('', { name: 'TokenCookie', expires: -1 }); // Set expiry to past date to delete
     }
+
+    public getRoleFromToken() {
+        const token = this.getTokenCookie();
+        if (token) {
+            const decodedToken: decodedToken = jwtDecode(token!)
+            // console.log("decodedToken: ", decodedToken);
+            try {
+                return decodedToken.userRole || null; // Access the 'role' claim from the payload, or return null if not found
+            } catch (error) {
+                console.error("Error decoding token:", error);
+                return null;
+            }
+        }
+    }
+
 }
+
 
 interface CookieOptions {
     name?: string;
     expires?: number;
     path?: string;
+}
+
+interface decodedToken {
+    userRole: string
 }

@@ -6,6 +6,8 @@ import type { GetLatesPlacesRepository } from "@/domain/repository/places/Getlat
 import type { CreateRateRepository } from "@/domain/repository/rates/CreateRateInterface";
 import type { GetLatestRatesRepository } from "@/domain/repository/rates/GetLatestRatesInterface";
 import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlaceByIdInterface";
+import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePlaceInterface";
+import type { GetLatestImageContributionRepository } from "@/domain/repository/imageContribution/GetLatestImageContributionInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -61,8 +63,12 @@ export class AppServiceClient {
         return await this.http.get(`place/${id}`);
     }
 
+    async createPlace(createPlaceRequest: CreatePlaceRepository.Request): Promise<AxiosResponse<any>> {
 
+        return await this.http.post('/place', createPlaceRequest);
+    }
 
+    // async acceptPlaceById
 
     // ? R A T E S
 
@@ -94,6 +100,37 @@ export class AppServiceClient {
     async getFavouritePlaces() {
         return await this.http.get('place/favorites/get');
 
+    }
+
+    // ? I M A G E C O N T R I B U T I O N 
+
+    async createImageContribution(Request: { place_id: string, postImage: File }): Promise<AxiosResponse<any>> {
+        return await this.http.post('/imageContribution', Request);
+    }
+
+    async getImageContributions(reqQuery: GetLatestImageContributionRepository.Request) {
+        // const res = await this.http.get('/imageContribution/page', {
+        //     params: {
+        //         page: reqQuery.page,
+
+        //     }
+        // });
+        // console.log(res);
+        return await this.http.get('/imageContribution/page', {
+            params: {
+                page: reqQuery.page,
+
+            }
+        });
+
+    }
+
+    async acceptImageContribution(id: string): Promise<AxiosResponse<any>> {
+        return await this.http.post(`/imageContribution/validate/${id}`, Request);
+    }
+
+    async refuseImageContribution(id: string): Promise<AxiosResponse<any>> {
+        return await this.http.delete(`/imageContribution/refuse/${id}`);
     }
 
 }

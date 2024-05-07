@@ -152,13 +152,13 @@ background: #2980b9;
                                 class="bg-white/20 border-0 p-4 text-primary-50" type="password">
                             </InputText>
                         </div>
-                        <div class="inline-flex flex-col gap-2">
+                        <!-- <div class="inline-flex flex-col gap-2">
                             <label for="role" class="text-primary-50 font-semibold">Role</label>
                             <Dropdown id="role" v-model="selectedRole" :options="roleOptions"
                                 placeholder="Select a Role" option-label="label" option-value="value"
                                 class="bg-white/20 border-0 p-4 text-primary-50">
                             </Dropdown>
-                        </div>
+                        </div> -->
 
                         <div class="flex items-center gap-2">
                             <Button label="Register" @click="submitRegister" text

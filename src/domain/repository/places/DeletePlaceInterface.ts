@@ -1,14 +1,13 @@
-// import { PlaceProps } from "@domain/entities/Place";
-// import { UseCase } from "../UseCase";
+import type { Failure } from "@/data/network/error_handler";
+import type { Either } from "@/domain/either/Either";
 
-// export interface DeletePlaceInterface
-//   extends UseCase<DeletePlaceInterface.Request, DeletePlaceInterface.Response> {
-//   execute(
-//     placeId: DeletePlaceInterface.Request
-//   ): Promise<DeletePlaceInterface.Response>;
-// }
+export interface DeletePlaceInterface {
+    deleteplace(
+        placeId: DeletePlaceInterface.Request
+    ): Promise<DeletePlaceInterface.Response>;
+}
 
-// export namespace DeletePlaceInterface {
-//   export type Request = string;
-//   export type Response = void;
-// }
+export namespace DeletePlaceInterface {
+    export type Request = string;
+    export type Response = Either<Failure, void>;
+}

@@ -9,12 +9,19 @@ import type { CreateRateRepository } from "@/domain/repository/rates/CreateRateI
 import type { GetLatestRatesRepository } from "@/domain/repository/rates/GetLatestRatesInterface";
 import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlaceByIdInterface";
 import type { GetFavouritePlacesRepository } from "@/domain/repository/places/favourites/GetFavouritePlacesByIdInterface";
+import type { CreateImageContributionRepository } from "@/domain/repository/imageContribution/CreateImageContributionInterface";
+import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePlaceInterface";
+import type { GetLatestImageContributionRepository } from "@/domain/repository/imageContribution/GetLatestImageContributionInterface";
+import type { ValidateImageContributionByIdIRepository } from "@/domain/repository/imageContribution/ValidateImageContributionByIdInterface";
+import type { RefuseImageContributionByIdRepostiory } from "@/domain/repository/imageContribution/RefuseImageContributionByIdInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+
+
 
 
     /***** Auth  *****/
@@ -75,6 +82,9 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
         return await this._appServiceClient.getFavouritePlaces();
     }
 
+    async createPlace(createPlaceRequest: any): Promise<AxiosResponse<CreatePlaceRepository.Response, any>> {
+        return await this._appServiceClient.createPlace(createPlaceRequest);
+    }
 
 
 
@@ -91,6 +101,23 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
         return await this._appServiceClient.getRatesQuery(getLatesRatesRequest);
     }
 
+    //* Image Contribution *//
+    // .Request suppose to be a form data with all the attributes inside of it.
+    // we change it for  now to (any)
+    async createImageContribution(imageContributionRequest: any): Promise<AxiosResponse<CreateImageContributionRepository.Response>> {
+        return await this._appServiceClient.createImageContribution(imageContributionRequest)
+    }
+    async getImageContributions(reqQuery: GetLatestImageContributionRepository.Request): Promise<AxiosResponse<GetLatestImageContributionRepository.Response, any>> {
+        return await this._appServiceClient.getImageContributions(reqQuery);
+    }
+
+    async refuseImageContribution(id: string): Promise<AxiosResponse<RefuseImageContributionByIdRepostiory.Response>> {
+        return await this._appServiceClient.refuseImageContribution(id);
+    }
+    async acceptImageContributions(id: string): Promise<AxiosResponse<ValidateImageContributionByIdIRepository.Response>> {
+        return await this._appServiceClient.acceptImageContribution(id);
+    }
+
 
 }
 
@@ -103,13 +130,14 @@ export interface RemoteDataSource {
 
 
     //* Post *//
-    createPost(createPostRequest: CreatePostRepository.Request): Promise<AxiosResponse<CreatePostRepository.Response>>
+    createPost(createPostRequest: CreatePostRepository.Request): Promise<AxiosResponse<CreatePostRepository.Response>>;
     getLatestPosts(getLatesPostsRequest: GetLatestPostsRepository.Request): Promise<AxiosResponse<GetLatestPostsRepository.Response>>;
 
 
     //* Place *//
     getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;
     getPlaceById(id: GetPlaceByIdRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;
+    createPlace(createPlaceRequest: CreatePlaceRepository.Request): Promise<AxiosResponse<CreatePlaceRepository.Response>>;
 
 
     // * Rate *//
@@ -121,6 +149,11 @@ export interface RemoteDataSource {
     getFavouritePlaces(): Promise<AxiosResponse<GetFavouritePlacesRepository.Response>>;
 
 
+    // * Image Contribution */
+    createImageContribution(imageContributionRequest: CreateImageContributionRepository.Request): Promise<AxiosResponse<CreateImageContributionRepository.Response>>;
+    getImageContributions(reqQuery: GetLatestImageContributionRepository.Request): Promise<AxiosResponse<GetLatestImageContributionRepository.Response>>;
+    acceptImageContributions(req: ValidateImageContributionByIdIRepository.Request): Promise<AxiosResponse<ValidateImageContributionByIdIRepository.Response>>;
+    refuseImageContribution(req: string): Promise<AxiosResponse<any>>;
 }
 
 

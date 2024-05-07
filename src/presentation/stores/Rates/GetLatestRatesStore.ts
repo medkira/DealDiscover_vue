@@ -54,10 +54,10 @@ export const GetLatestsRatesStore = defineStore('GetLatestsRatesStore', {
 
 
                     // this just in developement
-                    setTimeout(() => {
+                    // setTimeout(() => {
 
-                        this.GetLatestRatesLoading = false;
-                    }, 2500)
+                    this.GetLatestRatesLoading = false;
+                    // }, 2500)
                     // this.reset();
                 }
             )

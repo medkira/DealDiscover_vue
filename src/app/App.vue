@@ -6,18 +6,20 @@ import Menu from 'primevue/menu';
 import Toast from 'primevue/toast';
 import Avatar from 'primevue/avatar';
 import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDialog.vue';
-import { useToast } from 'primevue/usetoast';
 
 const authenticationStore = AuthenticationStore(); // this need to be singleton in di
 const menu = ref();
 
-const items = ref([
+const itemsAdmin = ref([
   {
     label: 'Documents',
     items: [
       {
-        label: 'New',
-        icon: 'pi pi-plus'
+        label: 'Add Place',
+        icon: 'pi pi-plus',
+        command: () => {
+          router.push({ name: 'placeAdd' })
+        }
       },
       {
         label: 'Search',
@@ -31,6 +33,7 @@ const items = ref([
       {
         label: 'Settings',
         icon: 'pi pi-cog'
+
       },
       {
         label: 'Logout',
@@ -39,11 +42,70 @@ const items = ref([
           authenticationStore.logout();
           router.push({ name: 'home', replace: true });
 
+          // const role = ref();
+          // role.value = cookieAdapter.getRoleFromToken();
+          // if (role.value === 'admin') {
+          //   items.value.pop()
+          // }
+
+        }
+      }
+    ]
+  },
+  {
+    label: 'Admin',
+    items: [
+      {
+        label: 'DashBoard',
+        icon: 'pi pi-book',
+        command: () => {
+          router.push({ name: 'admin' })
+
         }
       }
     ]
   }
 ]);
+
+const itemsUser = ref([
+  {
+    label: 'Documents',
+    items: [
+      {
+        label: 'Add Place',
+        icon: 'pi pi-plus',
+        command: () => {
+          router.push({ name: 'placeAdd' })
+        }
+      },
+      {
+        label: 'Search',
+        icon: 'pi pi-search'
+      }
+    ]
+  },
+  {
+    label: 'Profile',
+    items: [
+      {
+        label: 'Settings',
+        icon: 'pi pi-cog'
+
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          authenticationStore.logout();
+          router.push({ name: 'home', replace: true });
+
+
+        }
+      }
+    ]
+  }
+]);
+
 
 const toggle = (event: any) => {
   menu.value.toggle(event);
@@ -54,7 +116,13 @@ const toggle = (event: any) => {
 //         toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
 // };
 
-
+// onMounted(() => {
+//   const resetValues = () => {
+//     items.value.pop()
+//   };
+//   resetValues()
+// })
+authenticationStore.isAdmin()
 </script>
 
 <template>
@@ -67,7 +135,9 @@ const toggle = (event: any) => {
     <Avatar v-if="authenticationStore.isLoggedIn" @click="toggle" icon="user_image" class=" Avatar mr-2" size="xlarge"
       shape="circle" />
     <LoginOrRegisterDialog v-else />
-    <Menu ref="menu" class="overlay_menu" :model="items" :popup="true" />
+    <Menu v-if="authenticationStore.isadmin" ref="menu" class="overlay_menu" :model="itemsAdmin" :popup="true" />
+    <Menu v-if="!authenticationStore.isadmin" ref="menu" class="overlay_menu" :model="itemsUser" :popup="true" />
+
   </header>
 
   <nav>
@@ -117,7 +187,7 @@ nav {
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     pointer-events: all;
-
+    color: #bed9e5;
 
   }
 
