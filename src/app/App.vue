@@ -39,14 +39,8 @@ const itemsAdmin = ref([
         label: 'Logout',
         icon: 'pi pi-sign-out',
         command: () => {
-          authenticationStore.logout();
-          router.push({ name: 'home', replace: true });
 
-          // const role = ref();
-          // role.value = cookieAdapter.getRoleFromToken();
-          // if (role.value === 'admin') {
-          //   items.value.pop()
-          // }
+          logOut()
 
         }
       }
@@ -96,8 +90,7 @@ const itemsUser = ref([
         label: 'Logout',
         icon: 'pi pi-sign-out',
         command: () => {
-          authenticationStore.logout();
-          router.push({ name: 'home', replace: true });
+          logOut();
 
 
         }
@@ -106,7 +99,67 @@ const itemsUser = ref([
   }
 ]);
 
+const itemsOwner = ref([
+  {
+    label: 'Documents',
+    items: [
+      {
+        label: 'Add Place',
+        icon: 'pi pi-plus',
+        command: () => {
+          router.push({ name: 'placeAdd' })
+        }
+      },
+      {
+        label: 'Search',
+        icon: 'pi pi-search'
+      }
+    ]
+  },
+  {
+    label: 'Profile',
+    items: [
+      {
+        label: 'Settings',
+        icon: 'pi pi-cog'
 
+      },
+      {
+        label: 'Logout',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          logOut()
+          // const role = ref();
+          // role.value = cookieAdapter.getRoleFromToken();
+          // if (role.value === 'admin') {
+          //   items.value.pop()
+          // }
+
+        }
+      }
+    ]
+  },
+  {
+    label: 'Owner',
+    items: [
+      {
+        label: 'DashBoard',
+        icon: 'pi pi-book',
+        command: () => {
+          router.push({ path: '/owner/placesManagement' })
+
+        }
+      }
+    ]
+  }
+]);
+
+
+const logOut = () => {
+  authenticationStore.logout();
+  router.push({ name: 'home', replace: true });
+
+}
 const toggle = (event: any) => {
   menu.value.toggle(event);
 };
@@ -122,7 +175,8 @@ const toggle = (event: any) => {
 //   };
 //   resetValues()
 // })
-authenticationStore.isAdmin()
+authenticationStore.isAdmin();
+authenticationStore.isOwner();
 </script>
 
 <template>
@@ -136,7 +190,8 @@ authenticationStore.isAdmin()
       shape="circle" />
     <LoginOrRegisterDialog v-else />
     <Menu v-if="authenticationStore.isadmin" ref="menu" class="overlay_menu" :model="itemsAdmin" :popup="true" />
-    <Menu v-if="!authenticationStore.isadmin" ref="menu" class="overlay_menu" :model="itemsUser" :popup="true" />
+    <Menu v-else-if="authenticationStore.isowner" ref="menu" class="overlay_menu" :model="itemsOwner" :popup="true" />
+    <Menu v-else ref="menu" class="overlay_menu" :model="itemsUser" :popup="true" />
 
   </header>
 

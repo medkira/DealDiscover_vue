@@ -1,19 +1,20 @@
-// import { Place, PlaceProps } from "@domain/entities/Place";
-// import { UseCase } from "../UseCase";
-// import { PlaceNotFoundError } from "@application/errors/PlaceNotFoundError";
+import type { Failure } from "@/data/network/error_handler";
+import type { Either } from "@/domain/either/Either";
+import type { Place, PlaceProps } from "@/domain/entities/Place";
 
-// export interface UpdatePlaceInterface
-//   extends UseCase<UpdatePlaceInterface.Request, UpdatePlaceInterface.Response> {
-//   execute(
-//     params: UpdatePlaceInterface.Request
-//   ): Promise<UpdatePlaceInterface.Response>;
-// }
+export interface UpdatePlaceRepository {
+    updatePlace(
+        updatePlaceRequest: UpdatePlaceRepository.Request
+    ): Promise<UpdatePlaceRepository.Response>;
+}
 
-// export namespace UpdatePlaceInterface {
-//   export type placeDataType = Omit<PlaceProps, "id" | "user_id">;
-//   export type Request = {
-//     placeId: string;
-//     placeData: placeDataType;
-//   };
-//   export type Response = Place | PlaceNotFoundError;
-// }
+export namespace UpdatePlaceRepository {
+    export type placeDataType = Omit<PlaceProps, "id" | "user_id">;
+    export type Request = {
+        placeId: string;
+        placeData: any;
+    };
+
+    export type Response = Either<Failure, Place>;
+
+}

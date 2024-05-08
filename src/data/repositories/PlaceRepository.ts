@@ -8,18 +8,50 @@ import type { GetFavouritePlacesRepository } from "@/domain/repository/places/fa
 import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePlaceInterface";
 import type { DeletePlaceRepository } from "@/domain/repository/places/DeletePlaceInterface";
 import type { ValidationPlaceContributionByIdRepository } from "@/domain/repository/places/ValidationPlaceContributionByIdInterface";
+import type { UpdatePlaceRepository } from "@/domain/repository/places/UpdatePlaceInterface";
 
 
 
 export class PlaceRepository implements GetLatesPlacesRepository, GetPlaceByIdRepository,
-    GetFavouritePlacesRepository, CreatePlaceRepository, DeletePlaceRepository, ValidationPlaceContributionByIdRepository {
+    GetFavouritePlacesRepository, CreatePlaceRepository, DeletePlaceRepository,
+    ValidationPlaceContributionByIdRepository, UpdatePlaceRepository {
     constructor(
         public readonly remoteDataSource: RemoteDataSource
     ) { }
+    async updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<UpdatePlaceRepository.Response> {
+        try {
+
+            const { placeData, placeId } = updatePlaceRequest;
+
+            // mapping happens here
+            const formData = new FormData();
+
+            placeData.description && formData.append('description', placeData.description);
+            placeData.location && formData.append('location', placeData.location);
+            placeData.name && formData.append('name', placeData.name);
+            placeData.placeImage && formData.append('placeImage', placeData.placeImage as any);
+            placeData.type && formData.append('type', placeData.type);
+            placeData.email && formData.append('email', placeData.email);
+
+
+            const response: AxiosResponse = await this.remoteDataSource.updatePlace({ placeData: formData, placeId });
+
+            return Either.right(response.data);
+        } catch (error) {
+
+            const errorHandler = new ErrorHandler(error);
+            const failure: Failure = errorHandler.failure;
+
+
+            return Either.left(failure);
+            // }
+
+        }
+    }
 
     async createPlace(placeData: CreatePlaceRepository.Request): Promise<CreatePlaceRepository.Response> {
         try {
-            console.log(placeData)
+            // console.log(placeData)
             // mapping happens here
             const formData = new FormData();
 
@@ -69,6 +101,7 @@ export class PlaceRepository implements GetLatesPlacesRepository, GetPlaceByIdRe
 
     async getPlaces(params: GetLatesPlacesRepository.Request): Promise<GetLatesPlacesRepository.Response> {
         try {
+            // console.log(params)
             // mapping happens here
             const response: AxiosResponse = await this.remoteDataSource.getLatestPlaces(params);
 

@@ -17,102 +17,106 @@ import LandingLayout from '../layouts/landing/LandingLayout.vue'; import AddPlac
 import ImageContributions from '../views/admin/ImageContributions.vue';
 import AdminLayout from '../views/admin/Layout/AdminLayout.vue';
 import PlacesMangement from '../views/admin/PlacesMangement.vue';
-import DashBoard from '../views/admin/DashBoard.vue';
+// import DashBoard from '../views/admin/DashBoard.vue';
 import UsersManagements from '../views/admin/UsersManagements.vue';
+import OwnerLayout from '../views/owner/layout/ownerLayout.vue';
+
+import OwnerPlacesMangement from '../views/owner/OwnerPlacesMangement.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+      alias: '/home',
+      meta: { layout: LandingLayout } // Set layout for home route
+    },
+    {
       path: '/about',
       name: 'about',
-      component: AboutView
+      component: AboutView,
+      meta: { layout: LandingLayout } // Set layout for about route
     },
-
     {
       path: '/places',
       name: 'places',
       component: PlacesView,
-      meta: { layout: LandingLayout }
-
-      // children: [
-      //   {
-      //     path: 'place/:id',
-      //     name: 'place',
-      //     component: CommunView,
-      //   }
-      // ]
-
+      meta: { layout: LandingLayout } // Set layout for places route
     },
     {
       path: '/foods',
       name: 'foods',
       component: FoodsView,
-      meta: { layout: LandingLayout }
-
+      meta: { layout: LandingLayout } // Set layout for foods route
     },
-
     {
       path: '/posts',
       name: 'posts',
       component: PostView,
-      meta: { layout: LandingLayout }
-
+      meta: { layout: LandingLayout } // Set layout for posts route
     },
-
-
-
     {
       path: '/place/:id',
       name: 'place',
-      component: CommunView,
-
+      component: CommunView
     },
     {
       path: '/place/add',
       name: 'placeAdd',
-      component: AddPlaceView,
-
+      component: AddPlaceView
     },
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-      alias: '/home',
 
-      meta: { layout: LandingLayout }
-
-    },
+    // Admin routes
     {
       path: '/admin',
       name: 'admin',
+      // component: DashBoard,
       meta: { layout: AdminLayout },
-
-      component: DashBoard
+      children: [
+        {
+          path: 'imageContributions',
+          name: 'imageContributions',
+          component: ImageContributions
+        },
+        {
+          path: 'adminPlacesManagement',
+          name: 'adminPlacesManagement',
+          component: PlacesMangement
+        },
+        {
+          path: 'usersManagement',
+          name: 'usersManagement',
+          component: UsersManagements
+        },
+        // Add more admin child routes here
+      ]
     },
-    {
-      path: '/ImageContributions',
-      name: 'ImageContributions',
-      component: ImageContributions,
-      meta: { layout: AdminLayout }
 
-    },
+    // Owner routes (assuming similar structure as admin)
     {
-      path: '/placesManagement',
-      name: 'placesManagement',
-      component: PlacesMangement,
-      meta: { layout: AdminLayout }
-
-    },
-    {
-      path: '/usersManagement',
-      name: 'usersManagement',
-      component: UsersManagements,
-      meta: { layout: AdminLayout }
-
+      path: '/owner',
+      name: 'owner',
+      // component: DashBoard,
+      meta: { layout: OwnerLayout },
+      children: [
+        // Add owner child routes here
+        {
+          path: 'placesManagement',
+          name: 'placesManagement',
+          component: OwnerPlacesMangement
+        },
+      ]
     }
   ]
 });
+
+// Optional: Authentication guard (replace with your logic)
+// router.beforeEach((to, from, next) => {
+//   // Implement authentication logic and redirect if necessary
+//   next();
+// });
 
 export default router
 

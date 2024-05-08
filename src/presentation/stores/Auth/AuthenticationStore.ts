@@ -1,17 +1,20 @@
 import { defineStore } from 'pinia';
 // import AppCookie from '@/app/storage/app_cookie';
 import { cookieAdapter } from '@/app/factory/di';
+import { UserRole } from '@/domain/entities/User';
 
 
 interface AuthenticationState {
     token: string | null;
     isadmin: Boolean;
+    isowner: Boolean;
 }
 
 export const AuthenticationStore = defineStore('AuthenticationStore', {
     state: (): AuthenticationState => ({
         token: "",
         isadmin: false,
+        isowner: false,
     }),
     getters: {
         isLoggedIn: (state): boolean => !!(state.token || cookieAdapter.getTokenCookie()),
@@ -35,7 +38,11 @@ export const AuthenticationStore = defineStore('AuthenticationStore', {
             // Clear other stores as needed 
         },
         isAdmin() {
-            this.isadmin = cookieAdapter.getRoleFromToken() === "admin"
+            this.isadmin = cookieAdapter.getRoleFromToken() === UserRole.ADMIN
+        },
+        isOwner() {
+            this.isowner = cookieAdapter.getRoleFromToken() === UserRole.OWNER
+
         }
 
 

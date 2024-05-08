@@ -1,7 +1,7 @@
 <template>
     <footer class="text-gray-500 bg-white bg-opacity-30 px-4 py-5  mx-auto">
         <div class="max-w-lg sm:mx-auto sm:text-center">
-            <img src="https://www.floatui.com/logo.svg" class="w-32 sm:mx-auto" />
+            <!-- <img src="https://www.floatui.com/logo.svg" class="w-32 sm:mx-auto" /> -->
             <p class="leading-relaxed mt-2 text-[15px]">
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
                 took a

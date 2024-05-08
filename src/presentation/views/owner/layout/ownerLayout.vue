@@ -3,19 +3,20 @@ import { ref } from "vue";
 import Sidebar from 'primevue/sidebar';
 import Button from "primevue/button";
 
-const visible = ref(true);
+const visible = ref(false);
 </script>
 
 
 <template>
     <div class="card flex justify-content-center">
-        <Sidebar :dismissable=true v-model:visible="visible" header="Board Admin">
+        <Sidebar :dismissable=true v-model:visible="visible" header="Board Owner">
             <nav>
 
                 <div>
-                    <RouterLink to="/admin/ImageContributions">Images</RouterLink>
-                    <RouterLink to="/admin/adminPlacesManagement">Places</RouterLink>
-                    <RouterLink to="/admin/usersManagement">Users</RouterLink>
+                    <RouterLink to="/owner/placesManagement">Places</RouterLink>
+                    <RouterLink to="/owner/menusManagement">Menus</RouterLink>
+                    <RouterLink to="/owner/foodsManagement">Foods</RouterLink>
+
 
                     <!-- <RouterLink to="/foods">Foods</RouterLink>
                     <RouterLink to="/posts">Posts</RouterLink> -->

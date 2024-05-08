@@ -9,6 +9,6 @@ export interface GetLatesPlacesRepository {
 }
 
 export namespace GetLatesPlacesRepository {
-    export type Request = { page?: number, type?: placeTypes, location?: string, is_verified?: boolean };
+    export type Request = { page?: number, type?: placeTypes, location?: string, is_verified?: boolean, user_id?: string };
     export type Response = Either<Failure, { data: Place[], page: number, total: number, totalPages: number }>;
 }

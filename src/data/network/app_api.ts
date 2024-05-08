@@ -9,6 +9,7 @@ import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlace
 import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePlaceInterface";
 import type { GetLatestImageContributionRepository } from "@/domain/repository/imageContribution/GetLatestImageContributionInterface";
 import type { GetUsersRepository } from "@/domain/repository/user/GetUsersInterface";
+import type { UpdatePlaceRepository } from "@/domain/repository/places/UpdatePlaceInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -55,7 +56,8 @@ export class AppServiceClient {
                 is_verified: reqQuery.is_verified,
                 page: reqQuery.page,
                 type: reqQuery.type,
-                location: reqQuery.location
+                location: reqQuery.location,
+                user_id: reqQuery.user_id,
             }
         })
     }
@@ -74,7 +76,13 @@ export class AppServiceClient {
     }
 
     async refusePlaceById(placeId: string): Promise<AxiosResponse<any>> {
+
         return await this.http.delete(`/place/refuse/${placeId}`)
+    }
+
+    async updaPlcaById(updatePlaceRequest: UpdatePlaceRepository.Request) {
+        const { placeData, placeId } = updatePlaceRequest
+        return await this.http.patch(`/place/${placeId}`, placeData);
     }
 
     // ? R A T E S

@@ -18,12 +18,14 @@ import type { DeletePlaceRepository } from "@/domain/repository/places/DeletePla
 import type { ValidationPlaceContributionByIdRepository } from "@/domain/repository/places/ValidationPlaceContributionByIdInterface";
 import type { GetUsersRepository } from "@/domain/repository/user/GetUsersInterface";
 import type { DeleteUserRepository } from "@/domain/repository/user/DeletUserInterface";
+import type { UpdatePlaceRepository } from "@/domain/repository/places/UpdatePlaceInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+
 
 
     /***** Auth  *****/
@@ -95,11 +97,13 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
     async deletePlace(id: string): Promise<AxiosResponse<DeletePlaceRepository.Response, any>> {
-        return await this._appServiceClient.acceptPlaceById(id);
+        return await this._appServiceClient.refusePlaceById(id);
     }
 
 
-
+    updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<AxiosResponse<UpdatePlaceRepository.Response, any>> {
+        return this._appServiceClient.updaPlcaById(updatePlaceRequest)
+    }
 
     //**** Rate  *****/
 
@@ -165,7 +169,7 @@ export interface RemoteDataSource {
     createPlace(createPlaceRequest: CreatePlaceRepository.Request): Promise<AxiosResponse<CreatePlaceRepository.Response>>;
     deletePlace(id: DeletePlaceRepository.Request): Promise<AxiosResponse<DeletePlaceRepository.Response>>;
     acceptPlace(id: ValidationPlaceContributionByIdRepository.Request): Promise<AxiosResponse<ValidationPlaceContributionByIdRepository.Response>>;
-
+    updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<AxiosResponse<UpdatePlaceRepository.Response>>;
 
     // * Rate *//
     createRate(createRateRequest: CreateRateRepository.Request): Promise<AxiosResponse<CreateRateRepository.Response>>

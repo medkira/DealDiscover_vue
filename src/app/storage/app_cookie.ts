@@ -40,7 +40,7 @@ export default class AppCookie {
     }
 
     public removeTokenCookie(): void {
-        this.setCookie('', { name: 'TokenCookie', expires: -1 }); // Set expiry to past date to delete
+        this.setCookie('', { name: 'TokenCookie', expires: -1 });
     }
 
     public getRoleFromToken() {
@@ -49,7 +49,21 @@ export default class AppCookie {
             const decodedToken: decodedToken = jwtDecode(token!)
             // console.log("decodedToken: ", decodedToken);
             try {
-                return decodedToken.userRole || null; // Access the 'role' claim from the payload, or return null if not found
+                return decodedToken.userRole || null;
+            } catch (error) {
+                console.error("Error decoding token:", error);
+                return null;
+            }
+        }
+    }
+
+    public getIdFromToken() {
+        const token = this.getTokenCookie();
+        if (token) {
+            const decodedToken: decodedToken = jwtDecode(token!)
+            // console.log("decodedToken: ", decodedToken);
+            try {
+                return decodedToken.userId || null;
             } catch (error) {
                 console.error("Error decoding token:", error);
                 return null;
@@ -67,5 +81,7 @@ interface CookieOptions {
 }
 
 interface decodedToken {
-    userRole: string
+    userRole: string,
+    userId: string,
+
 }

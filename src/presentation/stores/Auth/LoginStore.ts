@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { authRepository, cookieAdapter } from '@/app/factory/di';
 import router from '@/presentation/router';
 import { AuthenticationStore } from './AuthenticationStore';
+import { UserRole } from '@/domain/entities/User';
 
 export const LoginStore = defineStore('LoginStore', {
     state: () => ({
@@ -53,13 +54,18 @@ export const LoginStore = defineStore('LoginStore', {
 
                     const authenticationStore = AuthenticationStore();
                     authenticationStore.setToken(response.authenticationToken);
-                    authenticationStore.isAdmin()
+
+                    authenticationStore.isAdmin();
+                    authenticationStore.isOwner();
+
                     this.loginLoading = false;
                     const role = cookieAdapter.getRoleFromToken();
                     console.log('From Store', role)
-                    if (role === 'normal') {
+                    if (role === UserRole.NORMAL) {
                         router.push({ name: 'home', replace: true, params: { id: "placesId" } });
-                    } else if (role === 'admin') {
+                    } else if (role === UserRole.OWNER) {
+                        router.push({ path: 'owner/placesManagement', replace: true })
+                    } else if (role === UserRole.ADMIN) {
                         router.push({ name: 'admin', replace: true })
                     }
                     // this.reset();

@@ -32,7 +32,7 @@ export const GetLatestsPlacesStore = defineStore('GetLatestsPlacesStore', {
             this.$reset();
         },
 
-        async GetLatestPlaces(data: { page?: number, type?: placeTypes, location?: string, is_verified?: boolean }) {
+        async GetLatestPlaces(data: { page?: number, type?: placeTypes, location?: string, is_verified?: boolean, user_id?: string }) {
             this.GetLatestPlacesLoading = true;
             const failureOrSucess = await placeRepository.getPlaces(data);
             failureOrSucess.fold(
@@ -47,7 +47,7 @@ export const GetLatestsPlacesStore = defineStore('GetLatestsPlacesStore', {
                     // ? right -> data (success)
                     // # success state
                     this.GetLatestPlacesSuccess = response.data;
-                    console.log(response.data)
+                    // console.log(response.data)
 
                     // this just in developement
                     setTimeout(() => {
