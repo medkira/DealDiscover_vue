@@ -16,6 +16,8 @@ import type { ValidateImageContributionByIdIRepository } from "@/domain/reposito
 import type { RefuseImageContributionByIdRepostiory } from "@/domain/repository/imageContribution/RefuseImageContributionByIdInterface";
 import type { DeletePlaceRepository } from "@/domain/repository/places/DeletePlaceInterface";
 import type { ValidationPlaceContributionByIdRepository } from "@/domain/repository/places/ValidationPlaceContributionByIdInterface";
+import type { GetUsersRepository } from "@/domain/repository/user/GetUsersInterface";
+import type { DeleteUserRepository } from "@/domain/repository/user/DeletUserInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
@@ -130,6 +132,18 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
 
+    //* USERS *//
+
+    async getUers(getUserRequest: GetUsersRepository.Request) {
+        return await this._appServiceClient.getUsersQuery(getUserRequest);
+    }
+
+    async deleteUser(id: string): Promise<AxiosResponse<DeleteUserRepository.Response, any>> {
+        return await this._appServiceClient.deletUser(id);
+    }
+
+
+
 }
 
 
@@ -167,6 +181,10 @@ export interface RemoteDataSource {
     getImageContributions(reqQuery: GetLatestImageContributionRepository.Request): Promise<AxiosResponse<GetLatestImageContributionRepository.Response>>;
     acceptImageContributions(req: ValidateImageContributionByIdIRepository.Request): Promise<AxiosResponse<ValidateImageContributionByIdIRepository.Response>>;
     refuseImageContribution(req: string): Promise<AxiosResponse<any>>;
+
+    // * Users * //
+    getUers(getUserRequest: GetUsersRepository.Request): Promise<AxiosResponse<GetUsersRepository.Response>>;
+    deleteUser(id: DeleteUserRepository.Request): Promise<AxiosResponse<DeleteUserRepository.Response>>;
 }
 
 

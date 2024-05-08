@@ -8,6 +8,7 @@ import type { GetLatestRatesRepository } from "@/domain/repository/rates/GetLate
 import type { GetPlaceByIdRepository } from "@/domain/repository/places/GetPlaceByIdInterface";
 import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePlaceInterface";
 import type { GetLatestImageContributionRepository } from "@/domain/repository/imageContribution/GetLatestImageContributionInterface";
+import type { GetUsersRepository } from "@/domain/repository/user/GetUsersInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -57,7 +58,6 @@ export class AppServiceClient {
                 location: reqQuery.location
             }
         })
-
     }
 
     async getPlaceById(id: GetPlaceByIdRepository.Request) {
@@ -139,6 +139,25 @@ export class AppServiceClient {
     async refuseImageContribution(id: string): Promise<AxiosResponse<any>> {
         return await this.http.delete(`/imageContribution/refuse/${id}`);
     }
+
+    // ? U S E R S
+
+    async getUsersQuery(reqQuery: GetUsersRepository.Request) {
+        return await this.http.get('/user/page', {
+            params: {
+                isEmailVerified: reqQuery.isEmailVerified,
+                page: reqQuery.page,
+                role: reqQuery.role,
+            }
+        })
+    }
+
+    async deletUser(userId: string): Promise<AxiosResponse<any>> {
+        return await this.http.delete(`/user/${userId}`)
+    }
+
+
+
 
 }
 

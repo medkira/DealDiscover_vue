@@ -18,6 +18,7 @@ import ImageContributions from '../views/admin/ImageContributions.vue';
 import AdminLayout from '../views/admin/Layout/AdminLayout.vue';
 import PlacesMangement from '../views/admin/PlacesMangement.vue';
 import DashBoard from '../views/admin/DashBoard.vue';
+import UsersManagements from '../views/admin/UsersManagements.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -100,6 +101,13 @@ const router = createRouter({
       path: '/placesManagement',
       name: 'placesManagement',
       component: PlacesMangement,
+      meta: { layout: AdminLayout }
+
+    },
+    {
+      path: '/usersManagement',
+      name: 'usersManagement',
+      component: UsersManagements,
       meta: { layout: AdminLayout }
 
     }

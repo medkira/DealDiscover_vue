@@ -1,6 +1,6 @@
 <template>
     <main>
-        <div class="container-failure" v-if="getLatestsPlacesStore.GetLatestPlacesFailure">
+        <div class="container-failure" v-if="getUserStore.GetUsersFailure">
             <h1>No Place Contributions </h1>
             <button @click=" fetchData()" class="btn-class-name">
                 <span class="back"></span>
@@ -9,22 +9,26 @@
             <p>Press to refresh</p>
         </div>
         <div v-else class="container">
-            <section v-for="( item, index ) in   getLatestsPlacesStore.GetLatestPlacesSuccess  " :key="item.id">
+            <section v-for="( item, index ) in   getUserStore.GetUsersSuccess  " :key="item.id">
                 <div class="information">
-                    <h1><span> Description:</span> {{ item.description }}</h1>
-                    <h1><span>Place name:</span> {{ item.name }}</h1>
-                    <h1><span>Type: </span> {{ item.type }}</h1>
-                    <h1><span>Location: </span> {{ item.location }}</h1>
+                    <h1><span> User name:</span> {{ item.username }}</h1>
+                    <h1><span> User email:</span> {{ item.email }}</h1>
+
+                    <h1><span>Role</span> {{ item.role }}</h1>
+                    <h1><span>Phone number: </span> {{ item.phoneNumber }}</h1>
+                    <h1><span>Adress: </span> {{ item.address }}</h1>
+                    <h1><span>Created at: </span> {{ item.createdAt }}</h1>
+
                 </div>
 
 
 
                 <div class="main-section">
                     <!-- <Button label="Show"/> -->
-                    <p class="imageDialog" @click="[visible = true, visiblePlace(index)]">Place Image</p>
+                    <p class="imageDialog" @click="[visible = true, visibleUser(index)]">User Image</p>
                     <div class="buttons-container">
-                        <button @click="acceptPlace(item.id)">Accept</button>
-                        <button @click="refusePlace(item.id)">Refuse</button>
+                        <!-- <button @click="acceptPlace(item.id)">Accept</button> -->
+                        <button @click="deleteUser(item.id)">Delete</button>
                     </div>
                 </div>
             </section>
@@ -33,7 +37,7 @@
         </div>
     </main>
 
-    <Dialog :visible="refusePlaceContributionStore.RefusePlaceContributionByIdLoading
+    <Dialog :visible="deleteUserStore.DeleteUserByIdLoading
             || acceptPlaceContributionStore.AcceptPlaceContributionByIdLoading
             " modal :style="{ width: '40rem' }" close-icon=false>
         <div class="bg-[#2980b9] p-[1rem] rounded-2xl flex flex-col items-center justify-center">
@@ -59,19 +63,21 @@ import LoadingCube from '@/presentation/components/animation/LoadingCube.vue';
 import { GetLatestsPlacesStore } from '@/presentation/stores/Places/GetLatestPlacesStore';
 import { RefusePlaceContributionStore } from '@/presentation/stores/Places/RefusePlaceSotre';
 import { AcceptPlaceContributionStore } from '@/presentation/stores/Places/AcceptPlaceStore';
+import { GetUsersStore } from '@/presentation/stores/Admin/GetUsersStore';
+import { DeleteUserStore } from '@/presentation/stores/Admin/DeleteUserStore';
 const visible = ref(false);
 
 const imgUrl = ref();
-const visiblePlace = (index: number) => {
+const visibleUser = (index: number) => {
     // console.log(index);
 
-    imgUrl.value = getLatestsPlacesStore.GetLatestPlacesSuccess[index].placeImage[0];
+    imgUrl.value = getUserStore.GetUsersSuccess[index].image[0];
 }
 
 
 //**** accept & refuse **********************/
 const acceptPlaceContributionStore = AcceptPlaceContributionStore();
-const refusePlaceContributionStore = RefusePlaceContributionStore()
+const deleteUserStore = DeleteUserStore()
 
 const acceptPlace = (id: string) => {
     acceptPlaceContributionStore.AcceptPlaceContributionById(id);
@@ -79,11 +85,11 @@ const acceptPlace = (id: string) => {
     fetchData();
 }
 
-const refusePlace = async (id: string) => {
+const deleteUser = async (id: string) => {
     // visibleLoadingDialog.value = true;
 
-    await refusePlaceContributionStore.RefusePlaceContributionById(id);
-    // if (refusePlaceContributionStore.RefusePlaceContributionByIdSuccess) {
+    await deleteUserStore.DeleteUserById(id);
+    // if (deleteUserContributionStore.RefusePlaceContributionByIdSuccess) {
     //     visibleLoadingDialog.value = false;
 
     // } else {
@@ -100,11 +106,11 @@ const refusePlace = async (id: string) => {
 
 //********** FETCH Places COntrubutions ***************/
 // let fetchedData: any;
-const getLatestsPlacesStore = GetLatestsPlacesStore();
+const getUserStore = GetUsersStore();
 
 const fetchData = async (page: number = 1) => {
-    getLatestsPlacesStore.$reset();
-    await getLatestsPlacesStore.GetLatestPlaces({ page: page, is_verified: false });
+    getUserStore.$reset();
+    await getUserStore.GetUsers({ page: page });
     // fetchedData = getPlaceContributionsStore.imageContributionsData
     // console.log("DATA IMAGE contributions: ", fetchedData)
 }

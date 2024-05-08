@@ -7,6 +7,7 @@ import { PostRepository } from "@/data/repositories/PostRepository";
 import { PlaceRepository } from "@/data/repositories/PlaceRepository";
 import { RateRepository } from "@/data/repositories/RateRepository";
 import { ImageContributionReposiory } from "@/data/repositories/ImageContributionReposiory";
+import { UserRepository } from "@/data/repositories/UserRepository";
 
 
 
@@ -22,6 +23,8 @@ export const postRepository = new PostRepository(remoteDataSourceInstance);
 export const placeRepository = new PlaceRepository(remoteDataSourceInstance);
 export const rateRepository = new RateRepository(remoteDataSourceInstance);
 export const imageContributionRepository = new ImageContributionReposiory(remoteDataSourceInstance);
+export const userRepository = new UserRepository(remoteDataSourceInstance);
+
 // cookie factory
 export const cookieAdapter = new AppCookie();
 
