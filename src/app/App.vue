@@ -251,10 +251,30 @@ onUnmounted(() => {
   height: 4.9rem;
   z-index: 1;
   position: fixed;
-  left: 11%;
-  top: 1.4%;
+
+  left: 12.2rem;
+  z-index: 5;
+  top: 1rem;
+
+
 }
 
+@media (max-width: 1024px) {
+  .logo {
+    height: 3.5rem;
+    left: 1rem;
+  }
+
+  header {
+    margin-top: -5px;
+    margin-right: -7px;
+  }
+
+  .LoginOrRegisterDialog {
+    transform: scale(0.9);
+    background-color: #bed9e5;
+  }
+}
 
 @media (min-width: 1024px) {
   .main>* {
@@ -333,7 +353,7 @@ nav>* {
     justify-content: center;
     position: fixed;
     // right: 7em;
-    left: 9rem;
+    left: 19rem;
     right: 0rem;
     z-index: 2;
     top: -1.1rem;

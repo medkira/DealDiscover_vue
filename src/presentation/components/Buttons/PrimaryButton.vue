@@ -49,4 +49,19 @@ button:hover svg {
 button:active {
     transform: scale(0.95);
 }
+
+
+@media(max-width: 1024px) {
+    button {
+        span {
+
+            font-size: medium;
+            font-weight: bold;
+        }
+
+        ;
+
+        height: 3.5rem;
+    }
+}
 </style>

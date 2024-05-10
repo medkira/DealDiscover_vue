@@ -158,7 +158,8 @@ const toggle = (event: any) => {
   }
 
   .font {
-    font-size: 58px;
+    padding: 1rem;
+    font-size: 50px;
   }
 
 }
