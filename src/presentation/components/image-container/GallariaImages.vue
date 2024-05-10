@@ -3,151 +3,59 @@ const cities = [
     {
         name: '',
         description: '',
-        imageUrl: 'src/presentation/resources/images/image3.jpg',
+        imageUrl: "/images/image1.jpg",
         rating: 4.5
     },
     {
         name: '',
         description: '',
-        imageUrl: '/src/presentation/resources/images/image2.jpg',
+        imageUrl: "/images/image2.jpg",
         rating: 4.5
     }, {
         name: '',
         description: '',
-        imageUrl: '/src/presentation/resources/images/image3.jpg',
+        imageUrl: "/images/image3.jpg",
         rating: 4.5
     }, {
         name: '',
         description: '',
-        imageUrl: '/src/presentation/resources/images/image4.jpg',
+        imageUrl: "/images/image4.jpg",
         rating: 4.5
     }, {
         name: '',
         description: '',
-        imageUrl: '/src/presentation/resources/images/image5.jpg',
+        imageUrl: "/images/image5.jpg",
         rating: 4.5
     },
     {
         name: '',
         description: '',
-        imageUrl: '/src/presentation/resources/images/image6.jpg',
+        imageUrl: "/images/image6.jpg",
         rating: 4.5
     },
 ]
 </script>
-<template>
 
+
+<template>
     <div class="main">
         <section class="test">
-            <!-- <div>
-                <div v-for="(city, index) in cities" :key="index" class="card">
-                    <div class="card__img">
-                        <img :src="city.imageUrl" :alt="city.name">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path
-                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                            </svg>
-                            {{ city.rating }}
-                        </span>
-                        <div class="card__overlay">
-                            <h2>{{ city.name }}</h2>
-                            <p>{{ city.description }}</p>
-                        </div>
+            <div v-for="(city, index) in cities" :key="index" class="card">
+                <div class="card__img">
+                    <img :src=city.imageUrl>
+                    <div class="card__overlay">
+                        <h2>{{ city.name }}</h2>
+                        <p>{{ }}</p>
                     </div>
                 </div>
-            </div> -->
 
-            <div class="card">
-                <div class="card__img">
-                    <img :src="cities[0].imageUrl" :alt="cities[0].name">
-                    <!-- <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>4.5</span> -->
-                    <div class="card__overlay">
-                        <!-- <h2>London</h2> -->
-                        <!-- <p>Big Ben</p> -->
-                    </div>
-                </div>
             </div>
-            <div class="card">
-                <div class="card__img">
-                    <img :src="cities[1].imageUrl" :alt="cities[0].name">
-                    <!-- <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>5</span> -->
-                    <div class="card__overlay">
-                        <!-- <h2>Paris</h2> -->
-                        <!-- <p>Eiffel Tower</p> -->
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">
-                    <img :src="cities[2].imageUrl" :alt="cities[0].name">
-                    <!-- <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>4.7</span> -->
-                    <div class="card__overlay">
-                        <!-- <h2>Rome</h2> -->
-                        <!-- <p>Colosseum</p> -->
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">
-                    <img :src="cities[3].imageUrl" :alt="cities[0].name">
-                    <!-- <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>4.3</span> -->
-                    <div class="card__overlay">
-                        <!-- <h2>Pisa</h2> -->
-                        <!-- <p>Pisa Tower</p> -->
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">
-                    <img :src="cities[4].imageUrl" :alt="cities[0].name">
-                    <!-- <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>4.8</span> -->
-                    <div class="card__overlay">
-                        <!-- <h2>New York</h2> -->
-                        <!-- <p>Statue of Liberty</p> -->
-                    </div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card__img">
-                    <img :src="cities[5].imageUrl" :alt="cities[0].name">
-                    <!-- <span><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                            fill="currentColor">
-                            <path
-                                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>5</span> -->
-                    <div class="card__overlay">
-                        <!-- <h2>Sydney</h2> -->
-                        <!-- <p>Sydney Opera House</p> -->
-                    </div>
-                </div>
-            </div>
-
         </section>
     </div>
-
 </template>
+
+
+
 
 <style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
@@ -198,6 +106,11 @@ h2 {
     font-weight: 700;
 }
 
+section .card {
+    /* Other styles */
+    transition: transform 0.4s ease-in-out;
+}
+
 section {
     display: grid;
     grid-template-columns: 25% 30% 15% 25%;
@@ -206,8 +119,15 @@ section {
     grid-template-rows: 40% 50%;
     height: 80vh;
     min-height: 460px;
+    transition: transform scale 5s ease-in-out;
     // padding: max(2vh, 1.5rem);
     // background-color: red;
+}
+
+section .card:hover {
+    z-index: 5;
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
 @media screen and (max-width: 690px) {

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 // @ts-ignore
-import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import { Splide, SplideSlide, SplideTrack, Options } from '@splidejs/vue-splide';
 // Default theme
 import '@splidejs/splide/css';
 import router from "@/presentation/router";
+
+import Image from 'primevue/image';
+
 import { toRaw } from "vue";
 const props = defineProps<({
     title: String,
@@ -20,18 +23,26 @@ const navigateTo = (id: string) => {
 
 
 
+
+
 </script>
 
 
 <template>
+
+
+
+
     <h1> {{ title }}</h1>
     <div class="main-container">
         <Splide :options="{
-        rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
+        autoplay: 'play',
+        rewind: true, perPage: 3,
+        paginationKeyboard: true,
+        pagination: true,
     }" aria-label="Select a slide to show">
             <SplideSlide v-for=" element in props.data" :key="element.id" @click="navigateTo(element.id)">
                 <div class="image-container">
-                    <!-- <img :src="`/src/presentation/resources/images/Beach/${element.image}`" /> -->
 
                     <img :src=element.placeImage[0] />
 
@@ -60,13 +71,14 @@ const navigateTo = (id: string) => {
 }
 
 h1 {
-    font-size: 45px;
+    font-size: 3.2rem;
     text-align: start;
     // background-color: red;
     width: 93%;
     color: #f6f6f6;
     margin-bottom: -15px;
     font-weight: bolder;
+
 }
 
 .sub-title {
@@ -75,6 +87,7 @@ h1 {
     padding: 10px;
     width: 80%;
 
+    margin-top: 1rem;
 }
 
 
@@ -92,7 +105,7 @@ h1 {
         object-fit: cover;
         width: 90%;
         // width: 300px;
-        height: 85%;
+        height: 70%;
         // padding-left: 10px;
 
         border-radius: 20px;
@@ -108,6 +121,10 @@ h1 {
 }
 
 @media (max-width: 1024px) {
+    .main-container {
+        margin-top: -60px;
+    }
+
     .image-container {
 
 
@@ -118,7 +135,23 @@ h1 {
     }
 
     .sub-title {
+        margin-top: 1rem;
         font-size: 15px
+    }
+
+    h1 {
+        margin-top: 1rem;
+
+        font-size: 2rem;
+
+    }
+}
+
+@media (min-width: 1024px) {
+    h1 {
+        padding-top: 3rem;
+        padding-bottom: 2rem;
+        margin-left: -50px;
     }
 }
 </style>

@@ -5,6 +5,7 @@ import { Splide, SplideSlide } from '@splidejs/vue-splide';
 // Default theme
 import '@splidejs/splide/css';
 import type { Place } from "@/domain/entities/Place";
+import Image from "primevue/image";
 const props = defineProps<({
     title: String,
     subTitle: String,
@@ -51,7 +52,7 @@ onMounted(() => {
                 :key="element">
                 <div class="image-container">
                     <!-- <img :src="`/src/presentation/resources/images/Beach/${element.image}`" /> -->
-                    <img :src=element />
+                    <Image class="img" :src=element preview />
 
 
                     <!-- <div class="sub-title">{{ element.subTitle }}</div> -->
@@ -104,25 +105,26 @@ h1 {
     // margin: 10px;
     display: flex;
     align-items: center;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
-    border-radius: 20px;
 
-    img {
+    .img {
+        overflow: hidden;
         object-fit: cover;
-        width: 90%;
+        // width: 90%;
         // width: 300px;
-        height: 85%;
+        // height: 85%;
         // padding-left: 10px;
-
+        background-color: red;
         border-radius: 20px;
         cursor: pointer;
         transition: opacity 0.47ms ease-in;
         ;
+
         // overflow: scroll;
     }
 
-    img:hover {
+    .img:hover {
         opacity: 75%;
     }
 }

@@ -1,23 +1,40 @@
 <template>
     <footer class="text-gray-500 bg-white bg-opacity-30 px-4 py-5  mx-auto">
-        <div class="max-w-lg sm:mx-auto sm:text-center">
-            <!-- <img src="https://www.floatui.com/logo.svg" class="w-32 sm:mx-auto" /> -->
+        <!-- <div class="max-w-lg sm:mx-auto sm:text-center">
             <p class="leading-relaxed mt-2 text-[15px]">
                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
                 took a
                 galley of type and scrambled it to make a type specimen book.
             </p>
+        </div> -->
+        <div class="uls ">
+            <ul class="col-elements flex flex-col gap-0.5">
+                <li v-for="item in aboutUs" :key="item.name" class="hover:text-gray-800">
+                    <a href="{{ item.href }}">
+                        {{ item.name }}
+                    </a>
+                </li>
+            </ul>
+            <ul class="col-elements flex flex-col gap-0.5">
+                <li v-for="item in explore" :key="item.name" class="hover:text-gray-800">
+                    <a href="{{ item.href }}">
+                        {{ item.name }}
+                    </a>
+                </li>
+            </ul>
+            <ul class="col-elements flex flex-col gap-0.5">
+                <li v-for="item in doBusiness" :key="item.name" class="hover:text-gray-800">
+                    <a href="{{ item.href }}">
+                        {{ item.name }}
+                    </a>
+                </li>
+            </ul>
         </div>
-        <ul class="items-center justify-center mt-8 space-y-5 sm:flex sm:space-x-4 sm:space-y-0">
-            <li v-for="item in footerNavs" :key="item.name" class="hover:text-gray-800">
-                <a href="{{item.href}}">
-                    {{ item.name }}
-                </a>
-            </li>
-        </ul>
+
+
         <div class="mt-8 items-center justify-between sm:flex">
             <div class="mt-4 sm:mt-0">
-                &copy; 2022 Float UI All rights reserved.
+                &copy; 2022 DealDiscover All rights reserved.
             </div>
             <div class="mt-6 sm:mt-0">
                 <ul class="flex items-center space-x-4">
@@ -71,42 +88,94 @@
 export default {
     data: function () {
         return {
-            footerNavs: [
-                {
-                    href: 'javascript:void()',
-                    name: 'About'
-                },
-                {
-                    href: 'javascript:void()',
-                    name: 'Blog'
-                },
-                {
-                    href: 'javascript:void()',
-                    name: ''
-                },
-                {
-                    href: 'javascript:void()',
-                    name: 'Team'
-                },
-                {
-                    href: 'javascript:void()',
-                    name: 'Careers'
-                },
+            aboutUs: [
+                { href: 'about-us.html', name: 'About DealDiscover' },
+                { href: '#', name: 'About Us' },
+                { href: '#', name: 'Press' },
+                { href: '#', name: 'Resources and Policies' },
+                { href: '#', name: 'Careers' },
+                { href: '#', name: 'Investor Relations' },
+                { href: '#', name: 'Trust & Safety' },
+                { href: '#', name: 'Contact us' },
+                { href: '#', name: 'Accessibility Statement' },
+            ],
+            explore: [
+                { href: '#', name: 'Explore' },
+                { href: '#', name: 'Write a review' },
+                { href: '#', name: 'Add a Place' },
+                { href: '#', name: 'Join ' },
+                { href: '#', name: 'Travelers\' Choice' },
+                { href: '#', name: 'GreenLeaders' },
+                { href: '#', name: 'Blog' },
+                { href: '#', name: 'Help Center' },
+                { href: '#', name: 'Travel Articles' },
+            ],
+            doBusiness: [
+                { href: '#', name: 'Do Business With Us' },
+                { href: '#', name: 'Owners' },
+                { href: '#', name: 'Business Advantage' },
+                { href: '#', name: 'Sponsored Placements' },
+                { href: '#', name: 'Advertise with Us' },
+                { href: '#', name: 'Access our Content API' },
+                { href: '#', name: 'Become an Affiliate' },
+                { href: '#', name: 'Get The App' },
+                { href: '#', name: 'iPhone App' },
+                { href: '#', name: 'Android App' },
+            ],
 
-                {
-                    href: 'javascript:void()',
-                    name: 'Suuport'
-                }
-            ]
         }
     },
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .svg-icon path,
 .svg-icon polygon,
 .svg-icon rect {
     fill: currentColor;
+}
+
+footer {
+    display: flex;
+    flex-direction: column; // background-color: aqua;
+    // width: 100%;
+
+    margin-top: 5rem;
+    font-size: larger;
+    font-weight: bold;
+
+    .uls {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: center;
+        gap: 20%;
+    }
+
+    .col-elements {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    footer {
+
+        justify-content: start;
+        font-size: small;
+        font-weight: bold;
+
+    }
+
+    .uls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 10%;
+    }
+
+
 }
 </style>

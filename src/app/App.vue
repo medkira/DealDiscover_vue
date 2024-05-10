@@ -203,6 +203,10 @@ onUnmounted(() => {
   <Toast position="top-left" group="tl" />
 
   <header>
+    <div class="searchBarContainer">
+
+      <SearchBar v-if="searchBarVisible" />
+    </div>
 
     <div v-if="authenticationStore.isLoggedIn">
       <Avatar @click="toggle" icon="user_image" class=" Avatar mr-2 " size="xlarge" shape="circle" />
@@ -215,15 +219,17 @@ onUnmounted(() => {
     <Menu v-else ref="menu" class="overlay_menu" :model="itemsUser" :popup="true" />
 
 
-  </header>
-  <div class="searchBarContainer">
+    <RouterLink to="/">
+      <img class="logo" src="/src/presentation/resources/images/Logo.png" alt="">
+    </RouterLink>
 
-    <SearchBar v-if="searchBarVisible" />
-  </div>
+  </header>
 
   <nav>
-
     <div>
+
+
+
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/places">Places</RouterLink>
       <RouterLink to="/foods">Foods</RouterLink>
@@ -233,7 +239,7 @@ onUnmounted(() => {
 
   </nav>
 
-  <component :is="$route.meta.layout || 'div'">
+  <component class="main" :is="$route.meta.layout || 'div'">
     <RouterView />
   </component>
 
@@ -241,9 +247,31 @@ onUnmounted(() => {
 
 
 <style scoped lang="scss">
+.logo {
+  height: 4.9rem;
+  z-index: 1;
+  position: fixed;
+  left: 11%;
+  top: 1.4%;
+}
+
+
+@media (min-width: 1024px) {
+  .main>* {
+    margin-left: 10rem;
+    margin-right: 10rem;
+  }
+
+  a:nth-child(1) {
+    margin-left: 5rem;
+  }
+
+}
+
 .searchBarContainer {
   //   opacity: 0;
   display: none;
+  z-index: 10;
 }
 
 header {
@@ -254,7 +282,7 @@ header {
 }
 
 nav {
-  z-index: 1;
+  z-index: 4;
   font-size: 31px;
   text-align: center;
   /* margin-top: 2rem; */
@@ -281,6 +309,8 @@ nav {
     margin: 5px;
   }
 
+
+
 }
 
 
@@ -303,7 +333,7 @@ nav>* {
     justify-content: center;
     position: fixed;
     // right: 7em;
-    left: 0rem;
+    left: 9rem;
     right: 0rem;
     z-index: 2;
     top: -1.1rem;
@@ -326,15 +356,14 @@ nav>* {
 
   header {
     position: fixed;
-    right: 5.5rem;
-    z-index: 2;
+    right: 12rem;
+    z-index: 5;
     top: 1.6rem;
 
     div {
       // background-color: #bed9e5;
       position: fixed;
-      right: 5.5rem;
-      z-index: 2;
+      right: 12rem;
       top: 1.4rem;
 
     }
@@ -343,8 +372,8 @@ nav>* {
 
   nav {
     position: fixed;
-    left: 5rem;
-    right: 5rem;
+    left: 11.5rem;
+    right: 11.5rem;
     // top: 0rem;
     top: 1rem;
     // background-color: red;

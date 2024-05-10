@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router';
 import Rating from 'primevue/rating';
 import Avatar from 'primevue/avatar';
 import WriteReview from './WriteReview.vue';
-import CrouselCards from '@/presentation/views/communViews/CrouselCrads.vue'
 import { GetLatestsRatesStore } from '@/presentation/stores/Rates/GetLatestRatesStore';
 import { onBeforeUnmount } from 'vue';
 import PaginatorPages from '@/presentation/components/paginator/PaginatorPages.vue';
@@ -16,6 +15,7 @@ import { GetLatestsPlacesStore } from '@/presentation/stores/Places/GetLatestPla
 import { GetFavouritePlaceStore } from '@/presentation/stores/Places/GetFavouritePlacesStore';
 import { toRaw } from 'vue';
 import UploadImageButton from './UploadImageButton.vue';
+import GalleryCards from './GalleryCards.vue';
 const route = useRoute();
 const placeId = ref()
 placeId.value = route.params.id as string;
@@ -117,7 +117,7 @@ onBeforeUnmount(() => {
             </div>
         </header>
         <div class="galleria">
-            <CrouselCards v-if="fetchedData" title="" sub-title="" :data=getPlaceByIdStore.placeData />
+            <GalleryCards v-if="fetchedData" title="" sub-title="" :data=getPlaceByIdStore.placeData />
         </div>
         <div class="content">
             <div class="images-container">
