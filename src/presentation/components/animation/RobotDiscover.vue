@@ -1,7 +1,8 @@
 <template>
-    <div class="loader">
+    <div @click="robotEvent" class="loader">
         <div class="modelViewPort">
             <div class="eva">
+                <!-- <h1 class="msg">{{ msgGreeting }}</h1> -->
                 <div class="head">
                     <div class="eyeChamber">
                         <div class="eye"></div>
@@ -20,7 +21,29 @@
 
 </template>
 
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const msgGreeting = ref("")
+const robotEvent = () => {
+    msgGreeting.value = ""
+    const rand = (Math.random());
+    console.log(rand)
+    if (rand > 0.4) {
+        msgGreeting.value = "hiii i can help u in place recomendation"
+        console.log("hiii i can help u in place recomendation");
+    }
+}
+</script>
 <style scoped>
+.msg {
+    font-size: 20px;
+}
+
+.loader {
+    /* background-color: red; */
+}
+
 .modelViewPort {
     /* The black circle background around the model*/
     background-color: transparent;

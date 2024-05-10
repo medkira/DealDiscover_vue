@@ -14,7 +14,6 @@ export const GetFavouritePlaceStore = defineStore('GetFavouritePlaceStore', {
     getters: {
         favouritePlaceData: (state) => toRaw(state.isLiked),
 
-
         getFailureMessage: (state) => state.GetFavouritePlaceFailure,
         getSuccessMessage: (state) => state.GetFavouritePlaceSuccess ? "created post successfuly!" : "",
         GetFavouritePlaceStatusMessage(state): string | null {
@@ -66,10 +65,10 @@ export const GetFavouritePlaceStore = defineStore('GetFavouritePlaceStore', {
 
 
                     // this just in developement
-                    setTimeout(() => {
+                    // setTimeout(() => {
 
-                        this.GetFavouritePlaceLoading = false;
-                    }, 2500)
+                    this.GetFavouritePlaceLoading = false;
+                    // }, 2500)
                     // this.$reset();
                 }
             )

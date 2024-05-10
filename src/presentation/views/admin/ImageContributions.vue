@@ -73,8 +73,8 @@ const visibleImage = (index: number) => {
 const acceptImageContributionStore = AcceptImageContributionStore();
 const refuseImageContributionStore = RefuseImageContributionStore()
 
-const acceptImage = (id: string) => {
-    acceptImageContributionStore.AcceptImageContributionById(id);
+const acceptImage = async (id: string) => {
+    await acceptImageContributionStore.AcceptImageContributionById(id);
 
     fetchData();
 }

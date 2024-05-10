@@ -35,7 +35,7 @@ fetchData();
             method: 'POST',
         }" :requestInterceptor="requestInterceptor" :responseInterceptor="responseInterceptor" class="deep-chat"
             :demo="false" :introMessage="{ text: 'Hi I am your recommendation assistant, ask me anything!' }" /> -->
-        <SliderCards title="Foods for you" sub-title="Use ChatBot for Personalized Recommendations" :data=[] />
+        <!-- <SliderCards title="Foods for you" sub-title="Use ChatBot for Personalized Recommendations" :data=[] /> -->
         <!-- conditional randering to load the component when the data get 
 fetched so i can use it it in the script -->
         <CrouselCrads v-if="dataHotel" title="Best Hotels Rated" sub-title="" :data=dataHotel />

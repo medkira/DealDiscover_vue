@@ -1,13 +1,32 @@
 <script setup lang="ts">
+import { placeTypes } from '@/domain/entities/Place';
 import RobotDiscover from '@/presentation/components/animation/RobotDiscover.vue';
 import GallariaImages from '@/presentation/components/image-container/GallariaImages.vue';
 import CrouselCards from '@/presentation/components/landing/CrouselCrads.vue'
 import SliderCards from '@/presentation/components/landing/SliderCards.vue';
+import { GetLatestsPlacesStore } from '@/presentation/stores/Places/GetLatestPlacesStore';
 import { ref } from 'vue';
 
 // const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }])
 // const items = ref([{ message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }, { message: 'Foo' }, { message: 'Bar' }, { message: 'Foo' }])
 
+
+const dataBeach = ref();
+const dataHotel = ref();
+// let data: any;
+const getPlacesStore = GetLatestsPlacesStore();
+
+const fetchData = async () => {
+  await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.beach })
+  dataBeach.value = getPlacesStore.GetLatestPlacesSuccess;
+  await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.hotel })
+  dataHotel.value = getPlacesStore.GetLatestPlacesSuccess;
+  // console.log("from place ", dataHotel.value);
+
+};
+fetchData();
+
+// console.log("hi")
 </script>
 
 
@@ -39,7 +58,8 @@ import { ref } from 'vue';
 
       <div class="images-container">
 
-        <img
+        <img        <SliderCards title="Foods for you" sub-title="Use ChatBot for Personalized Recommendations" :data=[] />
+
           src="https://images.unsplash.com/photo-1527915676329-fd5ec8a12d4b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
           alt="" />
 
@@ -52,11 +72,11 @@ import { ref } from 'vue';
 
     </div> -->
     <div style=" width: 100%; height: 50px"></div>
-    <CrouselCards title="Best Beaches" sub-title="" :data=[] />
+    <CrouselCards title="Best Beaches" sub-title="" :data=dataBeach />
 
-    <SliderCards title="Best Restaurants" sub-title="" :data=[] />
+    <!-- <SliderCards title="Best Restaurants" sub-title="" :data=[] /> -->
 
-    <CrouselCards title="Top Hotels for your next vacation" sub-title="" :data=[] />
+    <CrouselCards title="Top Hotels for your next vacation" sub-title="" :data=dataHotel />
   </main>
 </template>
 

@@ -22,6 +22,8 @@ import UsersManagements from '../views/admin/UsersManagements.vue';
 import OwnerLayout from '../views/owner/layout/ownerLayout.vue';
 
 import OwnerPlacesMangement from '../views/owner/OwnerPlacesMangement.vue';
+import FavouritePlacesView from '../views/favourites/FavouritePlacesView.vue';
+import ChatBotView from '../views/chatBot/ChatBotView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -67,7 +69,17 @@ const router = createRouter({
       name: 'placeAdd',
       component: AddPlaceView
     },
-
+    {
+      path: '/favourites',
+      name: 'favourites',
+      component: FavouritePlacesView
+    },
+    {
+      path: '/chatBot',
+      name: 'chatBot',
+      component: ChatBotView
+    }
+    ,
     // Admin routes
     {
       path: '/admin',

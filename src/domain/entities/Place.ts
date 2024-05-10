@@ -37,4 +37,5 @@ export enum placeTypes {
   cafe = "cafe",
   hotel = "hotel",
   adventure = "adventure",
+  beach = "beach"
 }

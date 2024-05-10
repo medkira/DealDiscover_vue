@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { AuthenticationStore } from '@/presentation/stores/Auth/AuthenticationStore';
-import { ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import router from '@/presentation/router';
 import Menu from 'primevue/menu';
 import Toast from 'primevue/toast';
 import Avatar from 'primevue/avatar';
 import LoginOrRegisterDialog from '@/presentation/components/LoginOrRegisterDialog.vue';
+import SearchBar from '@/presentation/components/landing/SearchBar.vue';
 
 const authenticationStore = AuthenticationStore(); // this need to be singleton in di
 const menu = ref();
@@ -177,6 +178,24 @@ const toggle = (event: any) => {
 // })
 authenticationStore.isAdmin();
 authenticationStore.isOwner();
+
+
+
+///* STYLE SCROLL *//
+const searchBarVisible = ref(false);
+const scrollThreshold = 480;
+
+const handleScroll = () => {
+  searchBarVisible.value = window.scrollY > scrollThreshold;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <template>
@@ -185,15 +204,22 @@ authenticationStore.isOwner();
 
   <header>
 
+    <div v-if="authenticationStore.isLoggedIn">
+      <Avatar @click="toggle" icon="user_image" class=" Avatar mr-2 " size="xlarge" shape="circle" />
+    </div>
 
-    <Avatar v-if="authenticationStore.isLoggedIn" @click="toggle" icon="user_image" class=" Avatar mr-2" size="xlarge"
-      shape="circle" />
+
     <LoginOrRegisterDialog v-else />
     <Menu v-if="authenticationStore.isadmin" ref="menu" class="overlay_menu" :model="itemsAdmin" :popup="true" />
     <Menu v-else-if="authenticationStore.isowner" ref="menu" class="overlay_menu" :model="itemsOwner" :popup="true" />
     <Menu v-else ref="menu" class="overlay_menu" :model="itemsUser" :popup="true" />
 
+
   </header>
+  <div class="searchBarContainer">
+
+    <SearchBar v-if="searchBarVisible" />
+  </div>
 
   <nav>
 
@@ -215,6 +241,11 @@ authenticationStore.isOwner();
 
 
 <style scoped lang="scss">
+.searchBarContainer {
+  //   opacity: 0;
+  display: none;
+}
+
 header {
   z-index: 1;
   position: fixed;
@@ -264,18 +295,73 @@ nav>* {
 
 
 @media (min-width: 1024px) {
+
+  .searchBarContainer {
+    // opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    // right: 7em;
+    left: 0rem;
+    right: 0rem;
+    z-index: 2;
+    top: -1.1rem;
+    // padding: 5rem;
+    // background-color: red;
+    // height: 50px;
+    transform: scale(0.65);
+    // width: 100%;
+
+    section {
+      // background-color: aliceblue;
+      width: 100%;
+
+      // div {
+      //   // border-radius: 1px;
+
+      // }
+    }
+  }
+
   header {
     position: fixed;
-    right: 15%;
+    right: 5.5rem;
     z-index: 2;
+    top: 1.6rem;
+
+    div {
+      // background-color: #bed9e5;
+      position: fixed;
+      right: 5.5rem;
+      z-index: 2;
+      top: 1.4rem;
+
+    }
   }
 
 
   nav {
     position: fixed;
-    left: 0px;
-    right: 0px;
-    top: 2.1%;
+    left: 5rem;
+    right: 5rem;
+    // top: 0rem;
+    top: 1rem;
+    // background-color: red;
+
+    div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 1rem;
+
+      a {
+        padding: 0.2rem;
+        font-size: xx-large;
+        font-weight: bold;
+      }
+    }
   }
 
   nav>* {

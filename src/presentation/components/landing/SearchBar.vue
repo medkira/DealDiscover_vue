@@ -44,9 +44,9 @@ const onClickAway = () => {
 </script>
 
 <template>
-    <div class="main-container">
+    <section class="main-container">
         <div
-            class="search-container mt-7 mb-2 flex rounded-full  bg-gray-800 shadow-md py-3 px-3 w-full max-w-screen-md mx-auto">
+            class="search-container mt-7 mb-2 flex rounded-full bg-gray-800 shadow-md py-3 px-3 w-full max-w-screen-md mx-auto">
             <input @keyup.enter="search" type="search" name="search" id="search" class="px-4 focus:outline-none   w-full
         focus:ring-opacity-50  text-gray-300 bg-transparent
          placeholder-gray-500" placeholder="Search" @input="search">
@@ -74,7 +74,7 @@ const onClickAway = () => {
         </ul>
 
 
-    </div>
+    </section>
 
     <!-- <div class="card flex justify-content-center">
         <AutoComplete v-model="selectedCountry" forceSelection optionLabel="name" :suggestions="filteredCountries"
@@ -92,6 +92,7 @@ const onClickAway = () => {
     display: flex;
     flex-direction: column;
     position: relative;
+
     // background-color: #008cff;
 
     .search-list {
