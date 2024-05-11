@@ -10,6 +10,10 @@ import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePla
 import type { GetLatestImageContributionRepository } from "@/domain/repository/imageContribution/GetLatestImageContributionInterface";
 import type { GetUsersRepository } from "@/domain/repository/user/GetUsersInterface";
 import type { UpdatePlaceRepository } from "@/domain/repository/places/UpdatePlaceInterface";
+import type { GetLatesFoodsRepository } from "@/domain/repository/foods/GetlatestFoodsInterface";
+import type { CreateFoodRepository } from "@/domain/repository/foods/CreateFoodInterface";
+import type { GetFoodByIdRepository } from "@/domain/repository/foods/GetFoodByIdInterface";
+import type { UpdateFoodRepository } from "@/domain/repository/foods/UpdateFoodInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -164,7 +168,41 @@ export class AppServiceClient {
         return await this.http.delete(`/user/${userId}`)
     }
 
+    // ? F O O D S
 
+
+    async getFoodsQuery(reqQuery: GetLatesFoodsRepository.Request) {
+        return await this.http.get('/food/page', {
+            params: {
+                is_verified: reqQuery.is_verified,
+                page: reqQuery.page,
+                type: reqQuery.type,
+                user_id: reqQuery.user_id,
+                price: reqQuery.price
+            }
+        })
+    }
+
+
+    async getFoodById(id: GetFoodByIdRepository.Request) {
+        return await this.http.get(`food/${id}`);
+    }
+
+    async createFood(createFoodRequest: CreateFoodRepository.Request): Promise<AxiosResponse<any>> {
+
+        return await this.http.post('/food', createFoodRequest);
+    }
+
+
+    async deletFoodById(foodId: string): Promise<AxiosResponse<any>> {
+
+        return await this.http.delete(`/food/${foodId}`)
+    }
+
+    async updaFoodById(updateFoodRequest: UpdateFoodRepository.Request) {
+        const { foodData, foodId } = updateFoodRequest
+        return await this.http.patch(`/food/${foodId}`, foodData);
+    }
 
 
 }

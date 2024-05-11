@@ -19,6 +19,11 @@ import type { ValidationPlaceContributionByIdRepository } from "@/domain/reposit
 import type { GetUsersRepository } from "@/domain/repository/user/GetUsersInterface";
 import type { DeleteUserRepository } from "@/domain/repository/user/DeletUserInterface";
 import type { UpdatePlaceRepository } from "@/domain/repository/places/UpdatePlaceInterface";
+import type { GetLatesFoodsRepository } from "@/domain/repository/foods/GetlatestFoodsInterface";
+import type { DeleteFoodRepository } from "@/domain/repository/foods/DeleteFoodInterface";
+import type { CreateFoodRepository } from "@/domain/repository/foods/CreateFoodInterface";
+import type { UpdateFoodRepository } from "@/domain/repository/foods/UpdateFoodInterface";
+import type { GetFoodByIdRepository } from "@/domain/repository/foods/GetFoodByIdInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
@@ -70,6 +75,8 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
 
+
+
     //***********Place *****************/
 
     async getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>> {
@@ -104,6 +111,34 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<AxiosResponse<UpdatePlaceRepository.Response, any>> {
         return this._appServiceClient.updaPlcaById(updatePlaceRequest)
     }
+
+
+
+    //* Foods 
+    async getLatestFoods(getLatestFoodsRequest: GetLatesFoodsRepository.Request): Promise<AxiosResponse<GetLatesFoodsRepository.Response, any>> {
+        return await this._appServiceClient.getFoodsQuery(getLatestFoodsRequest);
+    }
+
+    async createFood(createFoodRequest: any): Promise<AxiosResponse<CreateFoodRepository.Response, any>> {
+        return await this._appServiceClient.createFood(createFoodRequest);
+    }
+
+    async deleteFood(id: string): Promise<AxiosResponse<DeleteFoodRepository.Response, any>> {
+        return await this._appServiceClient.deletFoodById(id);
+    }
+
+
+    updateFood(updateFoodRequest: UpdateFoodRepository.Request): Promise<AxiosResponse<UpdateFoodRepository.Response, any>> {
+        return this._appServiceClient.updaFoodById(updateFoodRequest)
+    }
+
+    async getFoodById(id: string): Promise<AxiosResponse<GetFoodByIdRepository.Response>> {
+        return await this._appServiceClient.getFoodById(id);
+    }
+
+
+
+
 
     //**** Rate  *****/
 
@@ -170,6 +205,11 @@ export interface RemoteDataSource {
     deletePlace(id: DeletePlaceRepository.Request): Promise<AxiosResponse<DeletePlaceRepository.Response>>;
     acceptPlace(id: ValidationPlaceContributionByIdRepository.Request): Promise<AxiosResponse<ValidationPlaceContributionByIdRepository.Response>>;
     updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<AxiosResponse<UpdatePlaceRepository.Response>>;
+
+
+    //* Food */ 
+    getLatestFoods(getLatestFoodsRequest: GetLatesFoodsRepository.Request): Promise<AxiosResponse<GetLatesFoodsRepository.Response>>;
+
 
     // * Rate *//
     createRate(createRateRequest: CreateRateRepository.Request): Promise<AxiosResponse<CreateRateRepository.Response>>

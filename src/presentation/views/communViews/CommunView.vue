@@ -112,7 +112,7 @@ onBeforeUnmount(() => {
 
             </section>
             <div>
-                <Rating v-model="rate" :stars="7" :cancel="false" :disabled="true" />
+                <Rating v-model="rate" :stars="5" :cancel="false" :disabled="true" />
                 <p>{{ nReviews }} Reviews</p>
             </div>
         </header>
@@ -230,12 +230,6 @@ header {
 
 }
 
-@media (max-width: 1024px) {
-    header {
-        // background-color: #29413f;
-        padding-top: 40%;
-    }
-}
 
 .galleria {
     width: 100%;
@@ -253,12 +247,12 @@ section {
     justify-content: space-evenly;
     // background-color: #29413f;
     width: 100%;
-    min-width: 1250px;
-    padding-right: 30px;
+    // min-width: 1250px;
+    // padding-right: 30px;
 
 
     h1 {
-        font-size: 45px;
+        font-size: 30px;
         text-align: start;
         width: 93%;
         color: #f6f6f6;
@@ -272,20 +266,6 @@ section {
 
 }
 
-@media (max-width: 1024px) {
-    section {
-        min-width: 0px;
-        margin-left: -50px;
-
-        h1 {
-            padding-right: 50%;
-
-            // background-color: red;
-            font-size: 20px;
-        }
-    }
-
-}
 
 .content {
     // padding: 37px;
@@ -490,10 +470,50 @@ section {
         align-items: center;
         justify-content: center;
     }
+
+    .description {
+        h1 {
+            font-size: 2rem;
+        }
+
+        p {
+            font-size: 1.3rem;
+        }
+    }
+
 }
 
-/* div {
-    width: 500px;
-    background-color: red;
-} */
+@media (max-width: 1024px) {
+    header {
+        // background-color: #29413f;
+        padding-top: 40%;
+        padding-left: 8%;
+        padding-right: 6%;
+    }
+
+    section {
+        // min-width: 0px;
+        // background-color: #29413f;
+        display: flex;
+        flex-direction: row;
+        gap: 5vh;
+        align-items: center;
+        // background-color: #3db3dd;
+        justify-content: center;
+
+
+        div {
+            // background-color: red;
+        }
+
+
+        h1 {
+
+
+            // background-color: red;
+            font-size: 1.2rem
+        }
+    }
+
+}
 </style>

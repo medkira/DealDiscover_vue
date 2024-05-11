@@ -12,30 +12,13 @@ const props = defineProps<({
     data: Place
 })>()
 // const test = computed(() => props.data)
-console.log("place data", props.data)
+// console.log("place data", props.data)
 
 
 onMounted(() => {
     // console.log(props.data)
     // ProductService.getProductsSmall().then((data) => (products.value = data.slice(0, 9)));
 })
-// this data need to be mounted in onMounted
-// const elements = ref([
-//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-//     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-//     { id: "54254", image: 'DjerbaBeach.jpg', subTitle: 'Djerba Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-//     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-//     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' },
-//     { id: "54254", image: 'MahdaiBeach.jpg', subTitle: 'Mahdai Beach' },
-//     { id: "54254", image: 'bizerteBeach.jpg', subTitle: 'Bizerte Beach' }
-// ]);
-
-
 
 
 </script>
@@ -45,7 +28,20 @@ onMounted(() => {
     <!-- <h1> {{ props.data.name }}</h1> -->
     <div class="main-container">
         <Splide :options="{
-            rewind: true, perPage: 3, paginationKeyboard: true, pagination: true,
+            rewind: true,
+            paginationKeyboard: true,
+            pagination: true,
+            mediaQuery: 'max',
+            breakpoints: {
+                1024: {
+                    perPage: 1,
+                },
+                3000: {
+                    perPage: 3,
+
+                }
+            },
+
         }" aria-label="Select a slide to show">
             <SplideSlide
                 v-for=" element in [...props.data.placeImage, 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png', 'https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png']"
@@ -130,8 +126,12 @@ h1 {
 }
 
 @media (max-width: 1024px) {
-    .image-container {
 
+
+
+    .image-container {
+        padding: 10px;
+        height: 34vh;
 
         img {
             width: 90%;

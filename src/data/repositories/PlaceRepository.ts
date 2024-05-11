@@ -12,9 +12,14 @@ import type { UpdatePlaceRepository } from "@/domain/repository/places/UpdatePla
 
 
 
-export class PlaceRepository implements GetLatesPlacesRepository, GetPlaceByIdRepository,
-    GetFavouritePlacesRepository, CreatePlaceRepository, DeletePlaceRepository,
-    ValidationPlaceContributionByIdRepository, UpdatePlaceRepository {
+export class PlaceRepository implements
+    GetLatesPlacesRepository,
+    GetPlaceByIdRepository,
+    GetFavouritePlacesRepository,
+    CreatePlaceRepository,
+    DeletePlaceRepository,
+    ValidationPlaceContributionByIdRepository,
+    UpdatePlaceRepository {
     constructor(
         public readonly remoteDataSource: RemoteDataSource
     ) { }

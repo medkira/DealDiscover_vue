@@ -1,27 +1,44 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
 import { ref } from "vue";
-import CrouselCrads from '@/presentation/components/landing/CrouselCrads.vue';
-import SliderCards from '@/presentation/components/landing/SliderCards.vue';
-const datas = ref<any>('');
+// import SliderCards from '@/presentation/components/landing/SliderCards.vue';
+// import { GetFavouritePlaceStore } from '@/presentation/stores/Places/GetFavouritePlacesStore';
+import { GetLatestsFoodsStore } from '@/presentation/stores/Foods/GetLatestFoodStore';
+import CrouselCardsFoods from '@/presentation/components/landing/CrouselCardsFoods.vue';
+import { toRaw } from "vue";
 
-const route = useRoute();
-const id = route.params.id as string;
+
+
+
+//******Fetch Foods ****************/
+
+const dataFood = ref();
+const dataFood1 = ref();
+
+
+const getFoodStore = GetLatestsFoodsStore();
+
 const fetchData = async () => {
+    await getFoodStore.GetLatestFoods({ page: 1 });
+    dataFood.value = getFoodStore.GetLatestFoodsSuccess
 
+    await getFoodStore.GetLatestFoods({ page: 4 });
+    dataFood1.value = getFoodStore.GetLatestFoodsSuccess
+
+    console.log(toRaw(dataFood1))
 };
-fetchData()
-console.log(id);
+fetchData();
+
+/***********************************/
 </script>
 
 <template>
 
 
     <main>
-        <SliderCards title="Foods for you" sub-title="Use ChatBot for Personalized Recommendations" :data=[] />
+        <!-- <SliderCards title="Foods for you" sub-title="Use ChatBot for Personalized Recommendations" :data=[] /> -->
 
-        <CrouselCrads title="Best Foods Rated" sub-title="" :data=[] />
-        <CrouselCrads title="User favorites" sub-title="" :data=[] />
+        <CrouselCardsFoods title="Best Foods Rated" sub-title="" :data=dataFood />
+        <CrouselCardsFoods title="User favorites" sub-title="" :data=dataFood1 />
 
 
     </main>
