@@ -35,8 +35,8 @@ export const CreateFoodStore = defineStore('CreateFoodStore', {
             place_id: string,
             name: string,
             price: number,
-            food_type: foodTypes,
-            menu_id: string,
+            food_type?: foodTypes,
+            menu_id?: string,
         }) {
             this.CreateFoodLoading = true;
             const failureOrSucess = await foodRepository.createFood(data);

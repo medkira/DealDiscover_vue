@@ -24,13 +24,13 @@ import type { DeleteFoodRepository } from "@/domain/repository/foods/DeleteFoodI
 import type { CreateFoodRepository } from "@/domain/repository/foods/CreateFoodInterface";
 import type { UpdateFoodRepository } from "@/domain/repository/foods/UpdateFoodInterface";
 import type { GetFoodByIdRepository } from "@/domain/repository/foods/GetFoodByIdInterface";
+import type { CreateMenuRepository } from "@/domain/repository/menu/CreateMenuInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
-
 
 
     /***** Auth  *****/
@@ -137,7 +137,10 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
 
-
+    //******* Menu ******//
+    async createMenu(createMenuRequest: CreateMenuRepository.Request): Promise<AxiosResponse<CreateMenuRepository.Response>> {
+        return await this._appServiceClient.createMenu(createMenuRequest);
+    }
 
 
     //**** Rate  *****/
@@ -229,6 +232,10 @@ export interface RemoteDataSource {
     // * Users * //
     getUers(getUserRequest: GetUsersRepository.Request): Promise<AxiosResponse<GetUsersRepository.Response>>;
     deleteUser(id: DeleteUserRepository.Request): Promise<AxiosResponse<DeleteUserRepository.Response>>;
+
+
+    // * Menu *//
+    createMenu(createMenuRequest: CreateMenuRepository.Request): Promise<AxiosResponse<CreateMenuRepository.Response>>
 }
 
 

@@ -62,12 +62,12 @@ export class FoodRepository implements
             foodData.foodImage && formData.append('foodImage', foodData.description);
             foodData.food_type && formData.append('food_type', foodData.location);
             foodData.name && formData.append('name', foodData.name);
-            foodData.price && formData.append('price', foodData.placeImage as any);
-            foodData.place_id && formData.append('place_id', foodData.type);
+            foodData.price && formData.append('price', foodData.price);
+            foodData.place_id && formData.append('place_id', foodData.place_id);
 
 
 
-            const response: AxiosResponse = await this.remoteDataSource.createPlace(formData);
+            const response: AxiosResponse = await this.remoteDataSource.createFood(formData);
 
             return Either.right(response.data);
         } catch (error) {

@@ -32,11 +32,11 @@ export const UpdateFoodStore = defineStore('UpdateFoodStore', {
         },
 
         async UpdateFood(data: {
-            place_id: string,
+            place_id?: string,
             name: string,
             price: number,
-            food_type: foodTypes,
-            menu_id: string,
+            food_type?: foodTypes,
+            menu_id?: string,
             FoodId: string
         }) {
             this.UpdateFoodLoading = true;
@@ -56,10 +56,10 @@ export const UpdateFoodStore = defineStore('UpdateFoodStore', {
 
 
                     // this just in developement
-                    // setTimeout(() => {
+                    setTimeout(() => {
 
-                    this.UpdateFoodLoading = false;
-                    // }, 2500);
+                        this.UpdateFoodLoading = false;
+                    }, 2500);
                     // this.reset();
                 }
             )

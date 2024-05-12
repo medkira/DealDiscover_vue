@@ -218,7 +218,6 @@ onUnmounted(() => {
     <Menu v-else-if="authenticationStore.isowner" ref="menu" class="overlay_menu" :model="itemsOwner" :popup="true" />
     <Menu v-else ref="menu" class="overlay_menu" :model="itemsUser" :popup="true" />
 
-
     <RouterLink to="/">
       <img class="logo" src="/src/presentation/resources/images/Logo.png" alt="">
     </RouterLink>
@@ -252,17 +251,16 @@ onUnmounted(() => {
   z-index: 1;
   position: fixed;
 
-  left: 12.2rem;
+  left: 11%;
   z-index: 5;
   top: 1rem;
-
 
 }
 
 @media (max-width: 1024px) {
   .logo {
     height: 3.5rem;
-    left: 1rem;
+    left: 14.5%;
   }
 
   header {
@@ -356,11 +354,11 @@ nav>* {
     left: 19rem;
     right: 0rem;
     z-index: 2;
-    top: -1.1rem;
+    top: -0.95rem;
     // padding: 5rem;
     // background-color: red;
     // height: 50px;
-    transform: scale(0.65);
+    transform: scale(0.5);
     // width: 100%;
 
     section {
@@ -397,6 +395,7 @@ nav>* {
     // top: 0rem;
     top: 1rem;
     // background-color: red;
+    transform: scale(0.8);
 
     div {
       width: 100%;

@@ -28,7 +28,7 @@ const createPlaceStore = CreatePlaceStore();
 
 const submitCreatePlace = async () => {
     // visibleLoadingDialog.value = true;
-    console.log(selectedType.value)
+    // console.log(selectedType.value)
     await createPlaceStore.CreatePlace({
         description: descriptionInput.value, name: nameInput.value, location: locationInput.value,
         placeImage: image.value, type: selectedType.value

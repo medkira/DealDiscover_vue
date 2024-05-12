@@ -14,6 +14,7 @@ import type { GetLatesFoodsRepository } from "@/domain/repository/foods/Getlates
 import type { CreateFoodRepository } from "@/domain/repository/foods/CreateFoodInterface";
 import type { GetFoodByIdRepository } from "@/domain/repository/foods/GetFoodByIdInterface";
 import type { UpdateFoodRepository } from "@/domain/repository/foods/UpdateFoodInterface";
+import type { CreateMenuRepository } from "@/domain/repository/menu/CreateMenuInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -174,10 +175,8 @@ export class AppServiceClient {
     async getFoodsQuery(reqQuery: GetLatesFoodsRepository.Request) {
         return await this.http.get('/food/page', {
             params: {
-                is_verified: reqQuery.is_verified,
                 page: reqQuery.page,
                 type: reqQuery.type,
-                user_id: reqQuery.user_id,
                 price: reqQuery.price
             }
         })
@@ -202,6 +201,12 @@ export class AppServiceClient {
     async updaFoodById(updateFoodRequest: UpdateFoodRepository.Request) {
         const { foodData, foodId } = updateFoodRequest
         return await this.http.patch(`/food/${foodId}`, foodData);
+    }
+
+    // ? M E N U
+
+    async createMenu(createMenuRequest: CreateMenuRepository.Request) {
+        return await this.http.post('/menu', createMenuRequest);
     }
 
 

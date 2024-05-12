@@ -1,5 +1,4 @@
 import { placeRepository } from '@/app/factory/di';
-import type { placeTypes } from '@/domain/entities/Place';
 import { defineStore } from 'pinia'
 
 export const CreatePlaceStore = defineStore('CreatePlaceStore', {

@@ -24,6 +24,7 @@ import OwnerLayout from '../views/owner/layout/ownerLayout.vue';
 import OwnerPlacesMangement from '../views/owner/OwnerPlacesMangement.vue';
 import FavouritePlacesView from '../views/favourites/FavouritePlacesView.vue';
 import ChatBotView from '../views/chatBot/ChatBotView.vue';
+import OwnerMenuManagement from '../views/owner/OwnerMenuManagement.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -119,6 +120,11 @@ const router = createRouter({
           name: 'placesManagement',
           component: OwnerPlacesMangement
         },
+        {
+          path: 'menusManagement',
+          name: 'menusManagement',
+          component: OwnerMenuManagement
+        }
       ]
     }
   ]
