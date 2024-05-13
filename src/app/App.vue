@@ -374,7 +374,7 @@ nav>* {
 
   header {
     position: fixed;
-    right: 12rem;
+    right: 9rem;
     z-index: 5;
     top: 1.6rem;
 

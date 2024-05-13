@@ -1,35 +1,35 @@
 <script setup lang="ts">
 const cities = [
     {
-        name: '',
-        description: '',
+        name: 'bizerte',
+        description: 'Beach',
         imageUrl: "/images/image1.jpg",
         rating: 4.5
     },
     {
-        name: '',
-        description: '',
+        name: 'Sidi bou said',
+        description: 'Beach',
         imageUrl: "/images/image2.jpg",
         rating: 4.5
     }, {
-        name: '',
-        description: '',
+        name: 'Mahdia',
+        description: 'Beach',
         imageUrl: "/images/image3.jpg",
         rating: 4.5
     }, {
-        name: '',
-        description: '',
+        name: 'Beja',
+        description: 'Bridge',
         imageUrl: "/images/image4.jpg",
         rating: 4.5
     }, {
-        name: '',
-        description: '',
+        name: 'Djem',
+        description: 'Amphitheater',
         imageUrl: "/images/image5.jpg",
         rating: 4.5
     },
     {
-        name: '',
-        description: '',
+        name: 'Sousse',
+        description: 'Beach',
         imageUrl: "/images/image6.jpg",
         rating: 4.5
     },
@@ -45,7 +45,7 @@ const cities = [
                     <img :src=city.imageUrl>
                     <div class="card__overlay">
                         <h2>{{ city.name }}</h2>
-                        <p>{{ }}</p>
+                        <p>{{ city.description }}</p>
                     </div>
                 </div>
 
