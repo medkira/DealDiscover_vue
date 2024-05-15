@@ -25,12 +25,15 @@ import type { CreateFoodRepository } from "@/domain/repository/foods/CreateFoodI
 import type { UpdateFoodRepository } from "@/domain/repository/foods/UpdateFoodInterface";
 import type { GetFoodByIdRepository } from "@/domain/repository/foods/GetFoodByIdInterface";
 import type { CreateMenuRepository } from "@/domain/repository/menu/CreateMenuInterface";
+import type { UpdateUserInformationByIdRespository } from "@/domain/repository/user/UpdateUserInformationByIdInterface";
+import type { LoadUserByIdRepository } from "@/domain/repository/user/LoadUserByIdInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+
 
 
     /***** Auth  *****/
@@ -184,6 +187,12 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
         return await this._appServiceClient.deletUser(id);
     }
 
+    async updateUser(reqData: UpdateUserInformationByIdRespository.Request): Promise<AxiosResponse<UpdateUserInformationByIdRespository.Response, any>> {
+        return await this._appServiceClient.updateUser(reqData);
+    }
+    async getUser(): Promise<AxiosResponse<LoadUserByIdRepository.Response, any>> {
+        return await this._appServiceClient.getUser();
+    }
 
 
 }
@@ -232,7 +241,8 @@ export interface RemoteDataSource {
     // * Users * //
     getUers(getUserRequest: GetUsersRepository.Request): Promise<AxiosResponse<GetUsersRepository.Response>>;
     deleteUser(id: DeleteUserRepository.Request): Promise<AxiosResponse<DeleteUserRepository.Response>>;
-
+    updateUser(reqData: UpdateUserInformationByIdRespository.Request): Promise<AxiosResponse<UpdateUserInformationByIdRespository.Response>>;
+    getUser(): Promise<AxiosResponse<LoadUserByIdRepository.Response>>
 
     // * Menu *//
     createMenu(createMenuRequest: CreateMenuRepository.Request): Promise<AxiosResponse<CreateMenuRepository.Response>>

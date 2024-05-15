@@ -23,8 +23,11 @@ const itemsAdmin = ref([
         }
       },
       {
-        label: 'Search',
-        icon: 'pi pi-search'
+        label: 'Favourit Places',
+        icon: 'pi pi-heart',
+        command: () => {
+          router.push({ name: 'favourites' })
+        }
       }
     ]
   },
@@ -33,7 +36,10 @@ const itemsAdmin = ref([
     items: [
       {
         label: 'Settings',
-        icon: 'pi pi-cog'
+        icon: 'pi pi-cog',
+        command: () => {
+          router.push({ name: 'settings' })
+        }
 
       },
       {
@@ -73,9 +79,13 @@ const itemsUser = ref([
           router.push({ name: 'placeAdd' })
         }
       },
+
       {
-        label: 'Search',
-        icon: 'pi pi-search'
+        label: 'Favourit Places',
+        icon: 'pi pi-heart',
+        command: () => {
+          router.push({ name: 'favourites' })
+        }
       }
     ]
   },
@@ -84,7 +94,10 @@ const itemsUser = ref([
     items: [
       {
         label: 'Settings',
-        icon: 'pi pi-cog'
+        icon: 'pi pi-cog',
+        command: () => {
+          router.push({ name: 'settings' })
+        }
 
       },
       {
@@ -111,9 +124,13 @@ const itemsOwner = ref([
           router.push({ name: 'placeAdd' })
         }
       },
+
       {
-        label: 'Search',
-        icon: 'pi pi-search'
+        label: 'Favourit Places',
+        icon: 'pi pi-heart',
+        command: () => {
+          router.push({ name: 'favourites' })
+        }
       }
     ]
   },
@@ -122,7 +139,10 @@ const itemsOwner = ref([
     items: [
       {
         label: 'Settings',
-        icon: 'pi pi-cog'
+        icon: 'pi pi-cog',
+        command: () => {
+          router.push({ name: 'settings' })
+        }
 
       },
       {
@@ -226,14 +246,10 @@ onUnmounted(() => {
 
   <nav>
     <div>
-
-
-
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/places">Places</RouterLink>
       <RouterLink to="/foods">Foods</RouterLink>
       <RouterLink to="/posts">Posts</RouterLink>
-
     </div>
 
   </nav>

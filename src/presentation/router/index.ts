@@ -25,6 +25,9 @@ import OwnerPlacesMangement from '../views/owner/OwnerPlacesMangement.vue';
 import FavouritePlacesView from '../views/favourites/FavouritePlacesView.vue';
 import ChatBotView from '../views/chatBot/ChatBotView.vue';
 import OwnerMenuManagement from '../views/owner/OwnerMenuManagement.vue';
+import ProfileManagement from '../views/settings/ProfileManagement.vue';
+import SettingsLayout from '../views/settings/layout/settingsLayout.vue';
+import ActivityLogs from '../views/settings/ActivityLogs.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -79,6 +82,24 @@ const router = createRouter({
       path: '/chatBot',
       name: 'chatBot',
       component: ChatBotView
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      meta: { layout: SettingsLayout },
+      children: [
+        {
+          path: 'profileManagement',
+          name: 'profileManagement',
+          component: ProfileManagement
+        },
+        {
+          path: 'ActivityLogs',
+          name: 'ActivityLogs',
+          component: ActivityLogs,
+        }
+      ]
+
     }
     ,
     // Admin routes

@@ -32,7 +32,7 @@
         </div>
 
 
-        <div class="mt-8 items-center justify-between sm:flex">
+        <div class="bootorm-footer mt-10 p-5 items-center justify-between sm:flex">
             <div class="mt-4 sm:mt-0">
                 &copy; 2022 DealDiscover All rights reserved.
             </div>
@@ -149,13 +149,16 @@ footer {
         flex-direction: row;
         align-items: start;
         justify-content: center;
-        gap: 20%;
+        // gap: 20%;
     }
 
     .col-elements {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 3vh;
+        // background-color: antiquewhite;
+        font-size: medium;
+        // padding: 5%;
     }
 }
 
@@ -173,9 +176,33 @@ footer {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 10%;
+        gap: 0%;
     }
 
+
+}
+
+
+@media (min-width: 1024px) {
+    footer {
+
+        justify-content: start;
+        font-size: small;
+        font-weight: bold;
+
+    }
+
+    .uls {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 20%;
+    }
+
+    .bootorm-footer {
+        height: 30vh;
+    }
 
 }
 </style>

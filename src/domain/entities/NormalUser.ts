@@ -1,19 +1,19 @@
-import type { Place } from "./Place";
+import { Place } from "./Place";
 import type { UserProps, UserRole } from "./User";
 
 
 export type NormalUserProps = UserProps & {
   gender: boolean;
-  age: number;
+  age: string;
   address: string;
   zone: string;
   jobTitle: string;
   link: string;
-  salary: number;
+  salary: string;
   socialStatus: string;
   parent: boolean;
   isItOwner: boolean;
-  favouritePlaces: string[];
+  favouritePlaces: Place[];
 
 
 };
@@ -21,9 +21,10 @@ export type NormalUserProps = UserProps & {
 export class NormalUser {
   public readonly role: UserRole;
   public readonly id: string;
-  public readonly name: string;
+  public readonly firstName: string;
+  public readonly lastName: string;
   public readonly username: string;
-  public readonly image: File[] | string; // ! need to fix this
+  public readonly profileImage: File[] | string; // ! need to fix this
   public readonly email: string;
   public readonly phoneNumber: string;
   public readonly password: string;
@@ -31,22 +32,26 @@ export class NormalUser {
   public readonly updatedAt: Date;
   public readonly isEmailVerified: boolean;
   public readonly gender: boolean;
-  public readonly age: number;
+  public readonly age: string;
   public readonly zone: string;
   public readonly address: string;
   public readonly jobTitle: string;
   public readonly link: string;
-  public readonly salary: number;
+  public readonly salary: string;
   public readonly socialStatus: string;
   public readonly parent: boolean;
-  public readonly favouritePlaces: string[];
+  public readonly favouritePlaces: Place[];
+  public readonly country: string;
+
 
   constructor(props: NormalUserProps) {
     this.role = props.role;
     this.id = props.id;
-    this.name = props.name;
+    this.firstName = props.firstName;
+    this.lastName = props.lastName;
+    this.country = props.country;
     this.username = props.username;
-    this.image = props.image
+    this.profileImage = props.profileImage
     this.email = props.email;
     this.phoneNumber = props.phoneNumber;
     this.password = props.password;

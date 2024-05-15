@@ -15,6 +15,7 @@ import type { CreateFoodRepository } from "@/domain/repository/foods/CreateFoodI
 import type { GetFoodByIdRepository } from "@/domain/repository/foods/GetFoodByIdInterface";
 import type { UpdateFoodRepository } from "@/domain/repository/foods/UpdateFoodInterface";
 import type { CreateMenuRepository } from "@/domain/repository/menu/CreateMenuInterface";
+import type { UpdateUserInformationByIdRespository } from "@/domain/repository/user/UpdateUserInformationByIdInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -167,6 +168,14 @@ export class AppServiceClient {
 
     async deletUser(userId: string): Promise<AxiosResponse<any>> {
         return await this.http.delete(`/user/${userId}`)
+    }
+
+    async getUser(): Promise<AxiosResponse<any>> {
+        return await this.http.get('/user')
+    }
+
+    async updateUser(updateData: UpdateUserInformationByIdRespository.Request): Promise<AxiosResponse<UpdateUserInformationByIdRespository.Response>> {
+        return await this.http.patch('/user', updateData)
     }
 
     // ? F O O D S

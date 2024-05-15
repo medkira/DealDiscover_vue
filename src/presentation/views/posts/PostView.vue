@@ -511,6 +511,7 @@ main {
     padding: 50px;
     justify-content: center;
     background-color: rgb(#f6f6f6, 0.17);
+    border-radius: 0.5rem;
 
     .post-container {
         display: flex;

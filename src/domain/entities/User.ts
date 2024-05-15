@@ -1,12 +1,14 @@
-// entities/User.ts
+
 
 export type UserProps = {
   id: string;
-  name: string;
   username: string;
+  firstName: string;
+  lastName: string;
+  country: string;
   email: string;
   role: UserRole;
-  image: File[] | string; // ! need to fix this
+  profileImage: File[] | string; // ! need to fix this
   phoneNumber: string;
   password: string;
   createdAt: Date;
