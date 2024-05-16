@@ -110,6 +110,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background-color: #8fc4ed; */
+  /* background-color: #58b1f4; */
 
   background: #2980b9;
   background: linear-gradient(to left, #d1d3d3, #5fbadb, #267db8);

@@ -135,11 +135,13 @@ export default {
     fill: currentColor;
 }
 
+
 footer {
     display: flex;
     flex-direction: column; // background-color: aqua;
     // width: 100%;
-
+    margin-left: 0rem !important;
+    margin-right: 0rem !important;
     margin-top: 5rem;
     font-size: larger;
     font-weight: bold;
