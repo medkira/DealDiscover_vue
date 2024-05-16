@@ -68,7 +68,7 @@
                             <div>
                                 <h1><span>First Name</span> {{ }}</h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="userInfo.email" />
+                                    v-model="userInfo.firstName" />
                             </div>
 
                             <div>
@@ -121,7 +121,7 @@
                 </div> -->
                     </section>
                     <section v-if="item == 'Personal Info'">
-                        <Avatar icon=" user_image" class=" Avatar m-7 " size="xlarge" shape="circle" />
+                        <!-- <Avatar icon=" user_image" class=" Avatar m-7 " size="xlarge" shape="circle" /> -->
 
                         <div class="information">
 
@@ -269,21 +269,23 @@ const updateUser = async () => {
 
     //* check if value changed => create a a new object nad inject it in updateStore *//
 
-    const values = Object.values(userInfo.value).reduce((acc: any) => acc, {})
+    const compareBeforeUPload = (obj1: any, obj2: any) => {
+        return Object.keys(obj1).reduce((diff: any, key) => {
+            // Check if key exists in both objects
+            // Values are different
+            if (obj1[key] !== obj2[key]) {
+                diff[key] = obj1[key]; // Store value from obj1
+            }
 
-    await updateUserStore.UpdateUser({
-        profileImage: userInfo.value.profileImage,
-        username: userInfo.value.username,
-        email: userInfo.value.email,
-        address: userInfo.value.address,
-        jobTitle: userInfo.value.jobTitle,
-        phoneNumber: userInfo.value.phoneNumber,
-        firstName: userInfo.value.firstName,
-        socialStatus: userInfo.value.socialStatus,
-        salary: userInfo.value.budget, // Assuming budget is intended for salary
-        country: userInfo.value.country,
-        lastName: userInfo.value.lastName,
-    });
+            return diff;
+        }, {});
+    }
+
+
+
+    const differences = compareBeforeUPload(userInfo.value, getUserStore.GetUserSuccess);
+    console.log("differences", differences);
+    await updateUserStore.UpdateUser(differences);
 
     fetchData();
     if (updateUserStore.UpdateUsergSuccess) {
@@ -317,7 +319,7 @@ const userInfo = ref({
     country: '',
     address: '',
     jobTitle: '',
-    budget: '', // Assuming budget is intended for salary
+    budget: '',
     socialStatus: '',
     profileImage: '',
 });
@@ -332,6 +334,7 @@ const fetchData = async () => {
     // const userId = cookieAdapter.getIdFromToken();
     await getUserStore.GetUser();
     const { username, address, email, profileImage, salary, jobTitle, phoneNumber, lastName, firstName, socialStatus, country } = getUserStore.GetUserSuccess;
+
     userInfo.value = {
         username,
         email,
@@ -371,20 +374,21 @@ let selectedFile;
 const customUploader = async (event: any) => {
     // console.log("profileImage: ", event)
     selectedFile = event.target.files[0];
-    userInfo.value = selectedFile;
+    userInfo.value.profileImage = selectedFile;
     toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
 
 };
 
 const fileNameLabel = () => {
-    return userInfo.value ? `Selected: ${'profileImageInput.value'}` : 'Chage profile Image';
+
+    return userInfo.value.profileImage !== getUserStore.GetUserSuccess.profileImage ? `Selected new image!` : 'Chage profile Image';
 }
 
 const toast = useToast();
 const showSuccess = (msg: string) => { // i dont like this logic beeing handel here
-    // if (createMenuStore.isCreatedMenuSuccess) {
-    //     toast.add({ severity: 'success', summary: createMenuStore.getSuccessMessage, detail: msg, life: 3000, group: 'tl' });
-    // }
+    if (getUserStore.GetUserSuccess) {
+        toast.add({ severity: 'success', summary: getUserStore.getSuccessMessage, detail: msg, life: 3000, group: 'tl' });
+    }
 };
 //********************************************/
 

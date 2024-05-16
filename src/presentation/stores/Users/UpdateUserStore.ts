@@ -44,7 +44,6 @@ export const UpdateUserStore = defineStore('UpdateUserStore', {
             jobTitle: string;
             profileImage: string;
         }) {
-
             this.UpdateUserLoading = true;
             const failureOrSucess = await userRepository.updateUser(data);
             failureOrSucess.fold(

@@ -52,7 +52,7 @@ const robotEvent = () => {
     }
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
 /* .msg {
     font-size: 20px;
     background-color: red;
@@ -60,6 +60,12 @@ const robotEvent = () => {
 
 .loader {
     /* background-color: red; */
+    cursor: pointer;
+    transition: transform .3s ease-in-out;
+}
+
+.loader:active {
+    transform: scale(0.8);
 }
 
 .modelViewPort {

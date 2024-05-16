@@ -24,7 +24,8 @@ const visible = ref(true);
 
             </nav>
         </Sidebar>
-        <Button icon="pi pi-arrow-right" @click="visible = true" style="transform: scale(1.5); padding: 2rem;" />
+        <Button icon="pi pi-arrow-right" @click="visible = true"
+            style="transform: scale(1.5); padding: 2rem;    margin-left: 0;" />
 
         <!-- <RouterView /> -->
         <slot />

@@ -8,7 +8,7 @@ const visible = ref(false);
 
 
 <template>
-    <div class="card flex justify-content-center">
+    <div class="card flex justify-content-center main">
         <Sidebar :dismissable=true v-model:visible="visible" header="Board Owner">
             <nav>
 
@@ -25,7 +25,8 @@ const visible = ref(false);
 
             </nav>
         </Sidebar>
-        <Button icon="pi pi-arrow-right" @click="visible = true" style="transform: scale(1.5); padding: 2rem;" />
+        <Button icon="pi pi-arrow-right" @click="visible = true" style="transform: scale(1.5); padding: 2rem;
+        margin-left: 0; " />
 
         <!-- <RouterView /> -->
         <slot />
@@ -37,6 +38,7 @@ const visible = ref(false);
 <style scoped lang="scss">
 nav {
     div {
+
         display: flex;
         flex-direction: column;
         gap: 20px;

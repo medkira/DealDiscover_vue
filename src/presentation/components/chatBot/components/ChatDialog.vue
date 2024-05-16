@@ -194,8 +194,62 @@ const onDialogBeforeHide = async () => {
 </script>
 
 <template>
-  <Dialog :visible="isVisibleRef" :position="positionRef" :style="{ width: '25rem' }"
-    @update:visible="() => (isVisibleRef = false)" @show="onDialogShow" @hide="onDialogBeforeHide" :draggable="false">
+  <Dialog :visible="isVisibleRef" :position="positionRef" style=" width: 25rem  
+  " :pt="{
+    header: {
+      class: [
+        // Flexbox and Alignment
+        'flex items-center justify-between',
+        'shrink-0',
+        // Spacing
+        'p-6',
+        // Shape
+        'border-t-0',
+        'rounded-tl-lg',
+        'rounded-tr-lg',
+        // Colors
+        'bg-surface-300 ',
+        'text-surface-700'
+      ]
+    },
+    content: ({ state, instance }) => ({
+      class: [
+        // Spacing
+        'px-6',
+        'pb-8',
+        'pt-0',
+        // Shape
+        {
+          grow: state.maximized,
+          'rounded-bl-lg': !instance.$slots.footer,
+          'rounded-br-lg': !instance.$slots.footer
+        },
+        // Colors
+        'bg-surface-0 ',
+        'text-surface-300 dark:text-surface-0/80',
+        // Misc
+        'overflow-y-auto'
+      ]
+    }),
+    footer: {
+      class: [
+        // Flexbox and Alignment
+        'flex items-center justify-end',
+        'shrink-0',
+        'text-right',
+        'gap-2',
+        // Spacing
+        'px-6',
+        'pb-6',
+        // Shape
+        'border-t-0',
+        'rounded-b-lg',
+        // Colors
+        'bg-surface-300 ',
+        'text-surface-700 dark:text-surface-0/50'
+      ]
+    },
+  }" @update:visible="() => (isVisibleRef = false)" @show="onDialogShow" @hide="onDialogBeforeHide" :draggable="false">
     <template #header>
       <div class="flex">
         <div class="flex rounded-full justify-center items-center h-12 w-12 bg-zinc-200">

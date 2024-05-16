@@ -143,6 +143,7 @@ footer {
     margin-left: 0rem !important;
     margin-right: 0rem !important;
     margin-top: 5rem;
+    padding-top: 5%;
     font-size: larger;
     font-weight: bold;
 
