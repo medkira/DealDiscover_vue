@@ -71,7 +71,7 @@ const imgUrl = ref();
 const visibleUser = (index: number) => {
     // console.log(index);
 
-    imgUrl.value = getUserStore.GetUsersSuccess[index].image[0];
+    imgUrl.value = getUserStore.GetUsersSuccess[index].profileImage[0];
 }
 
 

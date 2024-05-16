@@ -19,13 +19,30 @@
         </div>
     </div>
 
+
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const emit = defineEmits(['openDialog']);
+
+// import { ref } from 'vue';
+// import Image from 'primevue/image';
+// import ChatDialog from '../chatBot/components/ChatDialog.vue';
+// const showChatDialog = ref(false)
+// const position = ref<any>('center');
+
+// const openPosition = (pos: any) => {
+//     position.value = pos;
+//     showChatDialog.value = true;
+// }
+
+
+
 const msgGreeting = ref("")
 const robotEvent = () => {
+    emit('openDialog')
     msgGreeting.value = ""
     const rand = (Math.random());
     console.log(rand)
@@ -36,9 +53,10 @@ const robotEvent = () => {
 }
 </script>
 <style scoped>
-.msg {
+/* .msg {
     font-size: 20px;
-}
+    background-color: red;
+} */
 
 .loader {
     /* background-color: red; */

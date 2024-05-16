@@ -37,7 +37,7 @@
                 <TabsContent v-for="(item, idx) in    tabItems   " :key="idx" class="py-6" :value="item">
                     <section v-if="item == 'Account Info'">
                         <div class="flex items-center">
-                            <Avatar class=" Avatar m-7 " size="xlarge" shape="circle" :image=profileImageInput />
+                            <Avatar class=" Avatar m-7 " size="xlarge" shape="circle" :image=userInfo.profileImage />
                             <div class="uploadInput">
                                 <label for="file" v-bind:textContent="fileNameLabel()" />
                                 <input v-on:change="customUploader" type="file">
@@ -57,38 +57,38 @@
                             <div>
                                 <h1><span>User Name</span> </h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="usernameInput" />
+                                    v-model="userInfo.username" />
                             </div>
                             <div>
                                 <h1><span>Email Adress</span> {{ }}</h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="emailInput" />
+                                    v-model="userInfo.email" />
                             </div>
 
                             <div>
                                 <h1><span>First Name</span> {{ }}</h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="firstNameInput" />
+                                    v-model="userInfo.email" />
                             </div>
 
                             <div>
                                 <h1><span>Last Name</span> {{ }}</h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="lastNameInput" />
+                                    v-model="userInfo.lastName" />
 
                             </div>
 
                             <div>
                                 <h1><span>Phone Number</span> {{ }}</h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="phoneNumberInput" />
+                                    v-model="userInfo.phoneNumber" />
 
                             </div>
 
                             <div>
                                 <h1><span>Country</span> {{ }}</h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="countryInput" />
+                                    v-model="userInfo.country" />
                             </div>
 
                         </div>
@@ -128,24 +128,24 @@
                             <div>
                                 <h1><span>Address</span> </h1>
                                 <InputText id="Adress" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="addressInput" />
+                                    v-model="userInfo.address" />
                             </div>
                             <div>
                                 <h1><span>Job</span> {{ }}</h1>
                                 <InputText id="job" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="jobTitleInput" />
+                                    v-model="userInfo.jobTitle" />
                             </div>
 
                             <div>
                                 <h1><span>Budget</span> {{ }}</h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="budgetInput" />
+                                    v-model="userInfo.budget" />
                             </div>
 
                             <div>
                                 <h1><span>Social Status</span> {{ }}</h1>
                                 <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
-                                    v-model="socialStatusInput" />
+                                    v-model="userInfo.socialStatus" />
 
                             </div>
 
@@ -265,19 +265,26 @@ const tabItems = [
 const updateUserStore = UpdateUserStore();
 
 const updateUser = async () => {
+
+
+    //* check if value changed => create a a new object nad inject it in updateStore *//
+
+    const values = Object.values(userInfo.value).reduce((acc: any) => acc, {})
+
     await updateUserStore.UpdateUser({
-        username: usernameInput.value,
-        email: emailInput.value,
-        address: addressInput.value,
-        jobTitle: jobTitleInput.value,
-        phoneNumber: phoneNumberInput.value,
-        firstName: firstNameInput.value,
-        socialStatus: socialStatusInput.value,
-        salary: budgetInput.value,
-        country: countryInput.value,
-        lastName: lastNameInput.value,
-        profileImage: profileImageInput.value,
+        profileImage: userInfo.value.profileImage,
+        username: userInfo.value.username,
+        email: userInfo.value.email,
+        address: userInfo.value.address,
+        jobTitle: userInfo.value.jobTitle,
+        phoneNumber: userInfo.value.phoneNumber,
+        firstName: userInfo.value.firstName,
+        socialStatus: userInfo.value.socialStatus,
+        salary: userInfo.value.budget, // Assuming budget is intended for salary
+        country: userInfo.value.country,
+        lastName: userInfo.value.lastName,
     });
+
     fetchData();
     if (updateUserStore.UpdateUsergSuccess) {
         visibleAddTomenu.value = false
@@ -288,17 +295,32 @@ const updateUser = async () => {
 //******************************************//
 
 
-const usernameInput = ref('');
-const emailInput = ref('');
-const firstNameInput = ref('');
-const lastNameInput = ref('');
-const phoneNumberInput = ref('');
-const countryInput = ref('');
-const addressInput = ref('');
-const jobTitleInput = ref('');
-const budgetInput = ref('');
-const socialStatusInput = ref('');
-const profileImageInput = ref()
+// const usernameInput = ref('');
+// const emailInput = ref('');
+// const firstNameInput = ref('');
+// const lastNameInput = ref('');
+// const phoneNumberInput = ref('');
+// const countryInput = ref('');
+// const addressInput = ref('');
+// const jobTitleInput = ref('');
+// const budgetInput = ref('');
+// const socialStatusInput = ref('');
+// const profileImageInput = ref();
+
+
+const userInfo = ref({
+    username: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    country: '',
+    address: '',
+    jobTitle: '',
+    budget: '', // Assuming budget is intended for salary
+    socialStatus: '',
+    profileImage: '',
+});
 
 //********** FETCH User Info  ***************/
 // let fetchedData: any;
@@ -310,17 +332,19 @@ const fetchData = async () => {
     // const userId = cookieAdapter.getIdFromToken();
     await getUserStore.GetUser();
     const { username, address, email, profileImage, salary, jobTitle, phoneNumber, lastName, firstName, socialStatus, country } = getUserStore.GetUserSuccess;
-    usernameInput.value = username;
-    emailInput.value = email;
-    addressInput.value = address;
-    jobTitleInput.value = jobTitle;
-    phoneNumberInput.value = phoneNumber;
-    firstNameInput.value = firstName;
-    lastNameInput.value = lastName;
-    socialStatusInput.value = socialStatus;
-    budgetInput.value = salary;
-    countryInput.value = country;
-    profileImageInput.value = profileImage as string;
+    userInfo.value = {
+        username,
+        email,
+        address,
+        jobTitle,
+        phoneNumber,
+        firstName,
+        lastName,
+        socialStatus,
+        budget: salary, // Assuming budget is intended for salary
+        country,
+        profileImage: profileImage as string,
+    };
 
 }
 //*********************************************//
@@ -347,13 +371,13 @@ let selectedFile;
 const customUploader = async (event: any) => {
     // console.log("profileImage: ", event)
     selectedFile = event.target.files[0];
-    profileImageInput.value = selectedFile;
+    userInfo.value = selectedFile;
     toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 });
 
 };
 
 const fileNameLabel = () => {
-    return profileImageInput.value ? `Selected: ${'profileImageInput.value'}` : 'Chage profile Image';
+    return userInfo.value ? `Selected: ${'profileImageInput.value'}` : 'Chage profile Image';
 }
 
 const toast = useToast();
@@ -365,16 +389,18 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
 //********************************************/
 
 
+
+//* data bainding */
 onMounted(() => {
     fetchData();
 })
 
 
 const resetStates = () => {
-    place_id.value = '';
-    profileImageInput.value = '';
-    nameInput.value = '';
-    priceInput.value = '';
+    // place_id.value = '';
+    userInfo.value.profileImage = '';
+    // nameInput.value = '';
+    // priceInput.value = '';
 
 }
 

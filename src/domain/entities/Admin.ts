@@ -5,7 +5,6 @@ export type AdminProps = UserProps;
 export class Admin {
     public readonly role: UserRole;
     public readonly id: string;
-    public readonly name: string;
     public readonly username: string;
     public readonly email: string;
     public readonly phoneNumber: string;
@@ -17,7 +16,6 @@ export class Admin {
     constructor(props: AdminProps) {
         this.role = props.role;
         this.id = props.id;
-        this.name = props.name;
         this.username = props.username;
         this.email = props.email;
         this.phoneNumber = props.phoneNumber;

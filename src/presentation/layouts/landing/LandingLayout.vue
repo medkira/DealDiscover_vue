@@ -11,6 +11,7 @@ import Menu from 'primevue/menu';
 import { ref } from "vue";
 import router from '@/presentation/router';
 import FooterCard from '@/presentation/components/landing/footerCard.vue';
+import ChatDialog from '@/presentation/components/chatBot/components/ChatDialog.vue';
 
 const menu = ref();
 const authenticationStore = AuthenticationStore(); // this need to be singleton in di
@@ -51,7 +52,14 @@ const toggle = (event: any) => {
   menu.value.toggle(event);
 };
 
+import Image from 'primevue/image';
+const showChatDialog = ref(false)
+const position = ref<any>('center');
 
+const openPosition = (pos: any) => {
+  position.value = pos;
+  showChatDialog.value = true;
+}
 </script>
 
 <template>
@@ -87,7 +95,9 @@ const toggle = (event: any) => {
     <!-- <RouterView /> -->
     <slot />
 
-    <RobotDiscover class=" robot" />
+    <RobotDiscover class="robot" @openDialog="openPosition('bottomright')" />
+    <ChatDialog :is-visible="showChatDialog" :position="position" :convId="'1'" :convName="'test'"
+      @update:visible="() => (showChatDialog = false)" />
     <FooterCard />
   </main>
 </template>
@@ -95,12 +105,11 @@ const toggle = (event: any) => {
 
 <style scoped lang="scss">
 .robot {
-  // background-color: #243c54;
   // width: 1140px;
   height: 300px;
   position: fixed;
   bottom: 0%;
-  left: 0%;
+  left: -10%; // problem
 
   transform: scale(0.9);
 }

@@ -1,7 +1,6 @@
 import type { Failure } from "@/data/network/error_handler";
 import type { Either } from "@/domain/either/Either";
 import type { NormalUser, NormalUserProps } from "@/domain/entities/NormalUser";
-import type { Owner } from "@/domain/entities/Owner";
 
 export interface UpdateUserInformationByIdRespository {
     updateUser(
@@ -17,5 +16,5 @@ export namespace UpdateUserInformationByIdRespository {
     //         "id" | "userId" | "createdAt" | "updatedAt" | "password"
     //     >
 
-    export type Response = Either<Failure, Owner | NormalUser>;
+    export type Response = Either<Failure, NormalUser>;
 }

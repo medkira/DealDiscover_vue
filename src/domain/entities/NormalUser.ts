@@ -13,7 +13,7 @@ export type NormalUserProps = UserProps & {
   socialStatus: string;
   parent: boolean;
   isItOwner: boolean;
-  favouritePlaces: Place[];
+  favouritePlaces: String[];
 
 
 };
@@ -40,7 +40,7 @@ export class NormalUser {
   public readonly salary: string;
   public readonly socialStatus: string;
   public readonly parent: boolean;
-  public readonly favouritePlaces: Place[];
+  public readonly favouritePlaces: String[];
   public readonly country: string;
 
 
