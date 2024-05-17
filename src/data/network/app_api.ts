@@ -20,7 +20,10 @@ export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
     ) { }
-
+    //? Rest password
+    async resetPassword(loginRequest: { email: string }): Promise<AxiosResponse<any>> {
+        return await this.http.post(`/resetPassword`, loginRequest);
+    }
 
     //  ? Auth 
     async login(loginRequest: { email: string, password: string }): Promise<AxiosResponse<{ authenticationToken: string }>> {

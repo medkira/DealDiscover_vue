@@ -10,6 +10,7 @@ import { RegisterStore } from '../stores/Auth/RegisterStore';
 import { useToast } from "primevue/usetoast";
 import PrimaryButton from './Buttons/PrimaryButton.vue';
 import LoadingCube from './animation/LoadingCube.vue';
+import ResetPasswordButton from './Buttons/ResetPasswordButton.vue';
 
 
 
@@ -126,6 +127,7 @@ background: #2980b9;
 
 
                         <GoogleAuthButton buttonName="Sign In with google" />
+                        <ResetPasswordButton />
 
                     </template>
 
