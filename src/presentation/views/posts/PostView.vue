@@ -79,12 +79,14 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
         toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
     }
 
+};
+const showSuccessCreateComment = (msg: string) => {
+
     if (createCommentStore.isCreatedCommentSuccess) {
         toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
 
     }
-};
-
+}
 
 //************ creaet comments   ******************//
 const commentInput = ref('');
@@ -94,7 +96,7 @@ const createCommentStore = CreateCommentStore();
 const createComment = async () => {
     await createCommentStore.CreateComment({ postId: selectedPostId.value, text: commentInput.value });
     // console.log(createCommentStore.CreateCommentLoading)
-    showSuccess(createCommentStore.getSuccessMessage)
+    showSuccessCreateComment(createCommentStore.getSuccessMessage)
     await fetchComments(selectedPostId.value);
 }
 
@@ -146,10 +148,11 @@ const comments = ref();
         <div class="do-post-container">
             <LookingEyes />
 
-            <h1 class="text-[#f6f6f6]">Waiting for your Post-Rate!</h1>
+            <h1 class="text-[#f6f6f6]">Waiting for your Post-Rate! </h1>
 
 
             <PrimaryButton @click="[visibleAddPostDialog = true]" class="primary-button" text="POST" />
+
             <Dialog :close-on-escape="true" :dismissable-mask="true" v-model:visible="visibleAddPostDialog" modal :pt="{
                 mask: {
                     style: 'backdrop-filter: blur(2px)'
@@ -159,7 +162,7 @@ const comments = ref();
 
                 <template #container="{ closeCallback }">
                     <!-- LOADING VIEW -->
-                    <div v-if="createPostStore.CreatePostLoading || createCommentStore.CreateCommentLoading"
+                    <div v-if="createCommentStore.CreateCommentLoading || createPostStore.CreatePostLoading"
                         class="bg-[#2980b9] p-[200px] rounded-2xl flex flex-col items-center justify-between">
                         <LoadingCube />
                         <h1 class="font-bold text-3xl pt-32">Loading ....</h1>
@@ -234,6 +237,9 @@ const comments = ref();
         </div>
 
 
+
+
+        <!-- view Lates Posts -->
         <h1 class="title">Latest Post-Rates</h1>
         <div class="posts-container">
 
@@ -264,7 +270,7 @@ const comments = ref();
         </div>
 
         <!-- View Post and Add comment dialog -->
-        <Dialog :dismissableMask="true" :close-on-escape="true" class="   w-[80%]   lg:w-[30%]"
+        <Dialog :dismissableMask="true" :close-on-escape="true" class="   w-[90%]   lg:w-[35%]"
             v-model:visible="visibleAddcomments" modal :pt="{
                 mask: {
                     style: 'backdrop-filter: blur(5px'
@@ -272,7 +278,12 @@ const comments = ref();
 
             }">
             <template #container="{ closeCallback }">
-                <div class="flex flex-col px-10 py-7 gap-5 " style="border-radius: 12px; background: #2980b9;
+                <div v-if="createCommentStore.CreateCommentLoading"
+                    class="bg-[#2980b9] p-[200px] rounded-2xl flex flex-col items-center justify-between  ">
+                    <LoadingCube />
+                    <h1 class="font-bold text-3xl pt-32">Loading ....</h1>
+                </div>
+                <div v-else class="flex flex-col px-10 py-7 gap-5 " style="border-radius: 12px; background: #2980b9;
 ">
 
                     <!-- Post content -->
@@ -302,11 +313,11 @@ const comments = ref();
                                 class="no-scrollbar custom-scroller border-1 surface-border border-round">
                                 >
                                 <template v-slot:item="{ item }">
-                                    <div class="flex align-items-center p-2" style="height: 70px">
+                                    <div class="flex align-items-center p-2 gap-5 al" style="height: 70px">
                                         <Avatar :image="item.profileImage" :size="'large'" shape="circle" />
                                         <div class="ml-2">
-                                            <span class="text-sm text-primary-50">{{ item.username }}</span>
-                                            <p class="text-sm text-primary-50">{{ item.text }}</p>
+                                            <span class=" text-primary-50 text-xl">{{ item.username }}</span>
+                                            <p class="text-base text-primary-50 text-lg">{{ item.text }}</p>
                                         </div>
                                     </div>
                                 </template>
@@ -332,7 +343,6 @@ const comments = ref();
 
             </template>
         </Dialog>
-
 
     </main>
 </template>
