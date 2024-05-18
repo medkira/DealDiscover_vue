@@ -27,13 +27,14 @@ import type { GetFoodByIdRepository } from "@/domain/repository/foods/GetFoodByI
 import type { CreateMenuRepository } from "@/domain/repository/menu/CreateMenuInterface";
 import type { UpdateUserInformationByIdRespository } from "@/domain/repository/user/UpdateUserInformationByIdInterface";
 import type { LoadUserByIdRepository } from "@/domain/repository/user/LoadUserByIdInterface";
+import type { CreateCommentRepository } from "@/domain/repository/comments/CreateCommentInterface";
+import type { GetLatestCommentsRepository } from "@/domain/repository/comments/GetLatestCommentsInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
-
 
 
     /***** Auth  *****/
@@ -78,6 +79,13 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
 
+    //****** Comment ******************//
+    async createComment(createCommentRequest: CreateCommentRepository.Request): Promise<AxiosResponse<CreateCommentRepository.Response, any>> {
+        return await this._appServiceClient.createComment(createCommentRequest);
+    }
+    async getLatestComments(getLatesCommentsRequest: GetLatestCommentsRepository.Request): Promise<AxiosResponse<GetLatestCommentsRepository.Response, any>> {
+        return await this._appServiceClient.getLatestComments(getLatesCommentsRequest);
+    }
 
 
     //***********Place *****************/
@@ -209,6 +217,9 @@ export interface RemoteDataSource {
     createPost(createPostRequest: CreatePostRepository.Request): Promise<AxiosResponse<CreatePostRepository.Response>>;
     getLatestPosts(getLatesPostsRequest: GetLatestPostsRepository.Request): Promise<AxiosResponse<GetLatestPostsRepository.Response>>;
 
+    //* comment *//
+    createComment(createCommentRequest: CreateCommentRepository.Request): Promise<AxiosResponse<CreateCommentRepository.Response>>;
+    getLatestComments(getLatesCommentsRequest: GetLatestCommentsRepository.Request): Promise<AxiosResponse<GetLatestCommentsRepository.Response>>;
 
     //* Place *//
     getLatestPlaces(getLatestPlacesRequest: GetLatesPlacesRepository.Request): Promise<AxiosResponse<GetLatesPlacesRepository.Response>>;

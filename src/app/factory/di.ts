@@ -10,6 +10,7 @@ import { ImageContributionReposiory } from "@/data/repositories/ImageContributio
 import { UserRepository } from "@/data/repositories/UserRepository";
 import { FoodRepository } from "@/data/repositories/FoodRepository";
 import { MenuRepository } from "@/data/repositories/MenuRepository";
+import { CommentRepository } from "@/data/repositories/CommentRepository";
 
 
 
@@ -28,6 +29,7 @@ export const imageContributionRepository = new ImageContributionReposiory(remote
 export const userRepository = new UserRepository(remoteDataSourceInstance);
 export const foodRepository = new FoodRepository(remoteDataSourceInstance);
 export const menuRepository = new MenuRepository(remoteDataSourceInstance);
+export const commentRepository = new CommentRepository(remoteDataSourceInstance);
 
 // cookie factory
 export const cookieAdapter = new AppCookie();

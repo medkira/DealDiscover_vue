@@ -16,6 +16,8 @@ import type { GetFoodByIdRepository } from "@/domain/repository/foods/GetFoodByI
 import type { UpdateFoodRepository } from "@/domain/repository/foods/UpdateFoodInterface";
 import type { CreateMenuRepository } from "@/domain/repository/menu/CreateMenuInterface";
 import type { UpdateUserInformationByIdRespository } from "@/domain/repository/user/UpdateUserInformationByIdInterface";
+import type { CreateCommentRepository } from "@/domain/repository/comments/CreateCommentInterface";
+import type { GetLatestCommentsRepository } from "@/domain/repository/comments/GetLatestCommentsInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -55,6 +57,20 @@ export class AppServiceClient {
         // console.log("from app api ", createPostRequest.postImage)
         // console.log("From app api", this.http.post('/posts', createPostRequest));
         return await this.http.post('/posts', createPostRequest);
+    }
+
+    // ? C O M M E N T
+    async getLatestComments(reqQuery: GetLatestCommentsRepository.Request) {
+        return await this.http.get(`/comments/page`, {
+            params: {
+                page: reqQuery.page,
+                postId: reqQuery.postId
+            }
+        });
+    }
+    async createComment(createPostRequest: CreateCommentRepository.Request): Promise<AxiosResponse<any>> {
+
+        return await this.http.post('/comments', createPostRequest);
     }
 
     // ? P L A C E S

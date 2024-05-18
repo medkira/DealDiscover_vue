@@ -17,6 +17,11 @@ import { CreatePostStore } from "@/presentation/stores/Posts/CreatePostStore";
 import { GetLatestsPostsStore } from "@/presentation/stores/Posts/GetLatestPostsStore";
 import LoadingCube from "@/presentation/components/animation/LoadingCube.vue"
 import { Post } from "@/domain/entities/Post"
+import { onMounted } from "vue";
+import { GetLatestsCommentsStore } from "@/presentation/stores/Comments/GetLatestCommentsStore";
+import { CreateCommentStore } from "@/presentation/stores/Comments/CreateCommentStore";
+import { NormalUser } from "@/domain/entities/NormalUser";
+import type { Comment } from "@/domain/entities/Comment";
 
 const visibleAddPostDialog = ref(false);
 const visibleAddcomments = ref(false)
@@ -43,6 +48,7 @@ const submitPostRate = async () => {
         image.value = "";
     }
 
+    fetchData();
 }
 
 
@@ -72,105 +78,62 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
     if (createPostStore.isCreatedPostSuccess) {
         toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
     }
+
+    if (createCommentStore.isCreatedCommentSuccess) {
+        toast.add({ severity: 'success', summary: 'Success Message', detail: msg, life: 3000, group: 'tl' });
+
+    }
 };
 
 
+//************ creaet comments   ******************//
+const commentInput = ref('');
+const selectedPostId = ref('');
+const createCommentStore = CreateCommentStore();
+
+const createComment = async () => {
+    await createCommentStore.CreateComment({ postId: selectedPostId.value, text: commentInput.value });
+    // console.log(createCommentStore.CreateCommentLoading)
+    showSuccess(createCommentStore.getSuccessMessage)
+    await fetchComments(selectedPostId.value);
+}
+
+//*************************************************//
 
 
 
 
-
-//************** FETCH POSTS  **************/
+//************** FETCH POSTS & COMMENTS **************/
 const getLatestsPostsStore = GetLatestsPostsStore()
+const getLatestCommentsStore = GetLatestsCommentsStore();
 
+
+
+const fetchComments = async (postId: string) => {
+    // console.log(postId)
+    selectedPostId.value = postId
+    await getLatestCommentsStore.GetLatestComments({ postId, page: 1 });
+    // console.log(getLatestCommentsStore.GetLatestCommentsSuccess);
+    comments.value = getLatestCommentsStore.GetLatestCommentsSuccess
+
+}
 
 const fetchData = async () => {
     await getLatestsPostsStore.GetLatestPosts({ page: 1 })
     const data = getLatestsPostsStore.GetLatestPostsSuccess
     items.value = toRaw(data)
-    console.log(toRaw(data))
+    // console.log(toRaw(data))
 };
-fetchData()
+
+onMounted(() => {
+    fetchData();
+})
 //****************************************************************************** */
 
 
-// const datas = ref<any>('');
-// const route = useRoute();
-// const id = route.params.id as string;
-
-// console.log(id);
-
-// const items = ref([{ post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 2 },
-// { post: 'Foo', user: "testUser", rate: 2 }, { post: 'Foo', user: "testUser", rate: 2 }, { post: 'Bar', user: "testUser", rate: 4 },
-// { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 4 },
-// { post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 3 },])
 const items = ref<Post[]>([]);
 
-
-const comments = ref([
-    {
-        id: 1,
-        username: 'John Doe',
-        avatar: 'https://picsum.photos/200/300',
-        comment: 'This is a sample comment',
-    },
-    {
-        id: 2,
-        username: 'Jane Doe',
-        avatar: 'https://picsum.photos/200/301',
-        comment: 'This is another sample comment',
-    },
-    {
-        id: 1,
-        username: 'John Doe',
-        avatar: 'https://picsum.photos/200/300',
-        comment: 'This is a sample comment',
-    },
-    {
-        id: 2,
-        username: 'Jane Doe',
-        avatar: 'https://picsum.photos/200/301',
-        comment: 'This is another sample comment',
-    },
-    {
-        id: 1,
-        username: 'John Doe',
-        avatar: 'https://picsum.photos/200/300',
-        comment: 'This is a sample comment',
-    },
-    {
-        id: 2,
-        username: 'Jane Doe',
-        avatar: 'https://picsum.photos/200/301',
-        comment: 'This is another sample comment',
-    },
-    {
-        id: 1,
-        username: 'John Doe',
-        avatar: 'https://picsum.photos/200/300',
-        comment: 'This is a sample comment',
-    },
-    {
-        id: 2,
-        username: 'Jane Doe',
-        avatar: 'https://picsum.photos/200/301',
-        comment: 'This is another sample comment',
-    },
-    {
-        id: 1,
-        username: 'John Doe',
-        avatar: 'https://picsum.photos/200/300',
-        comment: 'This is a sample comment',
-    },
-    {
-        id: 2,
-        username: 'Jane Doe',
-        avatar: 'https://picsum.photos/200/301',
-        comment: 'This is another sample comment',
-    },
-    // ...
-]);
-
+const comments = ref();
 
 
 </script>
@@ -196,7 +159,7 @@ const comments = ref([
 
                 <template #container="{ closeCallback }">
                     <!-- LOADING VIEW -->
-                    <div v-if="createPostStore.CreatePostLoading"
+                    <div v-if="createPostStore.CreatePostLoading || createCommentStore.CreateCommentLoading"
                         class="bg-[#2980b9] p-[200px] rounded-2xl flex flex-col items-center justify-between">
                         <LoadingCube />
                         <h1 class="font-bold text-3xl pt-32">Loading ....</h1>
@@ -274,25 +237,25 @@ const comments = ref([
         <h1 class="title">Latest Post-Rates</h1>
         <div class="posts-container">
 
-            <div class="post-container" v-for="(  item  ) in    items   " :key="item.id">
+            <div class="post-container" v-for="(  post  ) in    getLatestsPostsStore.GetLatestPostsSuccess   "
+                :key="post.id">
 
                 <!-- "/src/presentation/resources/images/Beach/bizerteBeach.jpg"  -->
-                <!-- <img clas="tes" :src=item.postImage[0] alt="post rate image" loading="lazy"> -->
-                <img clas="tes" src="/src/presentation/resources/images/Beach/bizerteBeach.jpg" alt="post rate image"
-                    loading="lazy">
+                <!-- <img clas="tes" :src=post.postImage[0] alt="post rate image" loading="lazy"> -->
+                <img clas="tes" :src=post.postImage alt="post rate image" loading="lazy">
 
 
 
                 <div class="user-container">
                     <Avatar class=" Avatar " size="large" shape="circle" />
-                    <h1>{{ item.user_name }}</h1>
+                    <h1>{{ post.user_name }}</h1>
                 </div>
 
-                <h2 class="post-text">{{ item.content }} </h2>
+                <h2 class="post-text">{{ post.content }} </h2>
 
-                <Rating v-model="item.likes" :stars="7" :cancel="false" readonly />
+                <Rating v-model="post.likes" :stars="7" :cancel="false" readonly />
                 <div>
-                    <PostButton @click="[visibleAddcomments = true]" />
+                    <PostButton @click="[visibleAddcomments = true, fetchComments(post.id)]" />
                 </div>
             </div>
 
@@ -301,7 +264,7 @@ const comments = ref([
         </div>
 
         <!-- View Post and Add comment dialog -->
-        <Dialog :dismissableMask="true" :close-on-escape="true" class="   w-[90%]   lg:w-[50%]"
+        <Dialog :dismissableMask="true" :close-on-escape="true" class="   w-[80%]   lg:w-[30%]"
             v-model:visible="visibleAddcomments" modal :pt="{
                 mask: {
                     style: 'backdrop-filter: blur(5px'
@@ -324,9 +287,10 @@ const comments = ref([
                     <!-- Add comment section -->
                     <div class="flex flex-col gap-2">
                         <label for="comment" class="text-primary-50 font-semibold">Add a comment</label>
-                        <InputText id="comment" class="bg-white/20 border-0 p-4 text-primary-50" type="text">
+                        <InputText v-model="commentInput" id="comment" class="bg-white/20 border-0 p-4 text-primary-50"
+                            type="text">
                         </InputText>
-                        <Button label="Comment" text
+                        <Button @click="createComment()" label="Comment" text
                             class="p-4 w-full text-primary-50 border border-white-alpha-30 hover:bg-white/10"></Button>
                     </div>
                     <!-- View comments section -->
@@ -335,13 +299,14 @@ const comments = ref([
                             <span class="font-bold block mb-2">Comments</span>
                             <VirtualScroller :items="comments" :itemSize="70" showLoader :delay="250"
                                 :class="[' w-[60vh] h-[300px]  ']"
-                                class="custom-scroller border-1 surface-border border-round">
+                                class="no-scrollbar custom-scroller border-1 surface-border border-round">
+                                >
                                 <template v-slot:item="{ item }">
                                     <div class="flex align-items-center p-2" style="height: 70px">
-                                        <Avatar :image="item.avatar" :size="'large'" shape="circle" />
+                                        <Avatar :image="item.profileImage" :size="'large'" shape="circle" />
                                         <div class="ml-2">
                                             <span class="text-sm text-primary-50">{{ item.username }}</span>
-                                            <p class="text-sm text-primary-50">{{ item.comment }}</p>
+                                            <p class="text-sm text-primary-50">{{ item.text }}</p>
                                         </div>
                                     </div>
                                 </template>
@@ -373,6 +338,10 @@ const comments = ref([
 </template>
 
 <style scoped lang="scss">
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
 .uploadInput {
     border: none;
     display: flex;
