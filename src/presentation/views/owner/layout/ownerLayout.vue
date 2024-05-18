@@ -15,7 +15,7 @@ const visible = ref(false);
                 <div>
                     <RouterLink to="/owner/placesManagement">Places</RouterLink>
                     <RouterLink to="/owner/menusManagement">Menus</RouterLink>
-                    <RouterLink to="/owner/foodsManagement">Foods</RouterLink>
+                    <!-- <RouterLink to="/owner/foodsManagement">Foods</RouterLink> -->
 
 
                     <!-- <RouterLink to="/foods">Foods</RouterLink>
