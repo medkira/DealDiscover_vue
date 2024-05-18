@@ -179,6 +179,67 @@
                     </Accordion>
                 </div> -->
                     </section>
+                    <section v-if="item == 'Security Info'">
+                        <!-- <Avatar icon=" user_image" class=" Avatar m-7 " size="xlarge" shape="circle" /> -->
+
+                        <!-- <div class="information">
+
+                            <div>
+                                <h1><span>Address</span> </h1>
+                                <InputText id="Adress" class="bg-white/20 border-0 p-4 text-primary-50"
+                                    v-model="userInfo.address" />
+                            </div>
+                            <div>
+                                <h1><span>Job</span> {{ }}</h1>
+                                <InputText id="job" class="bg-white/20 border-0 p-4 text-primary-50"
+                                    v-model="userInfo.jobTitle" />
+                            </div>
+
+                            <div>
+                                <h1><span>Budget</span> {{ }}</h1>
+                                <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
+                                    v-model="userInfo.budget" />
+                            </div>
+
+                            <div>
+                                <h1><span>Social Status</span> {{ }}</h1>
+                                <InputText id="emailInput" class="bg-white/20 border-0 p-4 text-primary-50"
+                                    v-model="userInfo.socialStatus" />
+
+                            </div>
+
+
+                        </div> -->
+
+
+
+                        <div class="main-section">
+                            <!-- <p class="profileImageDialog" @click="[visible = true, visiblePlace(index)]">Place Image</p> -->
+                            <div class="buttons-container">
+
+                                <button @click="[verifyEmail()]">Validate Email</button>
+                                <button @click="[resetPassword()]">Reset Password</button>
+
+                                <!-- <button @click="[visibleAddTomenu = true]">Add To menu</button>
+                        <button @click="[visibleUpdate = true]">Delete</button> -->
+
+
+                                <!-- <button @click="deletePlace(item.id)">Delete</button> -->
+                            </div>
+                        </div>
+
+                        <!-- <div class="card overflow-hidden">
+                    <Accordion :activeIndex="0" style=" font-size: larger; color: aliceblue; font-weight: bold;">
+                        <AccordionTab header="View Menue">
+                            <div v-if="fetchedData">
+                                <FoodDataContainer :data="getLatestFoodStore.GetLatestFoodsSuccess" :place_id=place_id
+                                    @fetchdata="fetchData" />
+                            </div>
+                        </AccordionTab>
+
+                    </Accordion>
+                </div> -->
+                    </section>
                 </TabsContent>
             </TabsRoot>
         </div>
@@ -243,13 +304,15 @@ import { useToast } from 'primevue/usetoast';
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from 'radix-vue';
 import { GetUserStore } from '@/presentation/stores/Users/GetUserStore';
 import { UpdateUserStore } from '@/presentation/stores/Users/UpdateUserStore';
+import { appServiceClientInstance } from '@/app/factory/di';
 
 
 const selectedTabInput = ref("Account Info");
 
 const tabItems = [
     "Account Info",
-    "Personal Info"
+    "Personal Info",
+    "Security Info"
     // "Integration",
     // "Billing",
     // "Transactions",
@@ -354,17 +417,59 @@ const fetchData = async () => {
 
 
 
+//*************** Security Verify Email && reset Password *************//
+//!!!!!! this worng 
+const verifyEmail = async () => {
+    try {
+        console.log(userInfo.value.email)
+        await appServiceClientInstance.verifyEmail({ email: userInfo.value.email });
+        toast.add({
+            severity: 'success',
+            summary: "Email Verification Sent",
+            detail: `A verification email has been sent to ${userInfo.value.email}. Please check your inbox and follow the instructions to verify your email address.`,
+            life: 3000,
+            group: 'tl'
+        });
+    } catch (error) {
+        toast.add({
+            severity: 'error',
+            summary: "Verification Failed",
+            detail: `There was an error sending the verification email to ${userInfo.value.email}. Please try again later.`,
+            life: 3000,
+            group: 'tl'
+        });
+    }
+}
 
-
+const resetPassword = async () => {
+    try {
+        await appServiceClientInstance.resetPassword({ email: userInfo.value.email });
+        toast.add({
+            severity: 'success',
+            summary: "Password Reset Email Sent",
+            detail: `A password reset link has been sent to ${userInfo.value.email}. Please check your inbox and follow the instructions to reset your password.`,
+            life: 3000,
+            group: 'tl'
+        });
+    } catch (error) {
+        toast.add({
+            severity: 'error',
+            summary: "Reset Failed",
+            detail: `There was an error sending the password reset email to ${userInfo.value.email}. Please try again later.`,
+            life: 3000,
+            group: 'tl'
+        });
+    }
+}
 
 
 
 
 const visibleAddTomenu = ref(false);
 const visibleUpdate = ref(false)
-const place_id = ref();
-const nameInput = ref();
-const priceInput = ref();
+// const place_id = ref();
+// const nameInput = ref();
+// const priceInput = ref();
 
 
 

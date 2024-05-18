@@ -317,7 +317,7 @@ const comments = ref();
                                         <Avatar :image="item.profileImage" :size="'large'" shape="circle" />
                                         <div class="ml-2">
                                             <span class=" text-primary-50 text-xl">{{ item.username }}</span>
-                                            <p class="text-base text-primary-50 text-lg">{{ item.text }}</p>
+                                            <p class=" text-primary-50 text-lg">{{ item.text }}</p>
                                         </div>
                                     </div>
                                 </template>

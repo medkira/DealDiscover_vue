@@ -22,6 +22,11 @@ export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
     ) { }
+    // ? Verify Email
+    async verifyEmail(verifyReq: { email: string }): Promise<AxiosResponse<any>> {
+        return await this.http.post('/verifyEmail', verifyReq);
+    }
+
     //? Rest password
     async resetPassword(loginRequest: { email: string }): Promise<AxiosResponse<any>> {
         return await this.http.post(`/resetPassword`, loginRequest);
