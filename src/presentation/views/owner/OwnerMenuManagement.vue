@@ -234,7 +234,7 @@ const customUploader = async (event: any) => {
 };
 
 const fileNameLabel = () => {
-    return menuImage.value ? `Selected: ${menuImage.value.name}` : 'Choose food image';
+    return menuImage.value ? `Selected: ${menuImage.value.name}` : 'Upload your menu image';
 }
 
 const toast = useToast();
