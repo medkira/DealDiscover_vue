@@ -73,10 +73,10 @@ const visiblePlace = (index: number) => {
 const acceptPlaceContributionStore = AcceptPlaceContributionStore();
 const refusePlaceContributionStore = RefusePlaceContributionStore()
 
-const acceptPlace = (id: string) => {
-    acceptPlaceContributionStore.AcceptPlaceContributionById(id);
+const acceptPlace = async (id: string) => {
+    await acceptPlaceContributionStore.AcceptPlaceContributionById(id);
 
-    fetchData();
+    await fetchData();
 }
 
 const refusePlace = async (id: string) => {
