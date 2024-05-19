@@ -33,6 +33,7 @@ export const GetLatestsFoodsStore = defineStore('GetLatestsFoodsStore', {
 
         async GetLatestFoods(data: { page?: number, type?: foodTypes, price?: number, place_id?: string }) {
             this.GetLatestFoodsLoading = true;
+            // console.log(data.place_id)
             const failureOrSucess = await foodRepository.getFoods(data);
             failureOrSucess.fold(
                 error => {
@@ -46,7 +47,6 @@ export const GetLatestsFoodsStore = defineStore('GetLatestsFoodsStore', {
                     // ? right -> data (success)
                     // # success state
                     this.GetLatestFoodsSuccess = response.data;
-                    // console.log(response.data)
 
                     // this just in developement
                     // setTimeout(() => {

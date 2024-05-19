@@ -76,9 +76,11 @@ import InputText from "primevue/inputtext";
 
 
 const props = defineProps<{
-    data: Food[];
-    place_id: string;
+    data: Food[] | undefined;
+    place_id: string | undefined;
 }>();
+
+console.log("from menu ", props.data)
 
 const emit = defineEmits(['fetchdata']);
 

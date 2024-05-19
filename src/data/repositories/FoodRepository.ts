@@ -116,7 +116,6 @@ export class FoodRepository implements
 
     async getFoods(params: GetLatesFoodsRepository.Request): Promise<GetLatesFoodsRepository.Response> {
         try {
-            // console.log(params)
             // mapping happens here
             const response: AxiosResponse = await this.remoteDataSource.getLatestFoods(params);
 

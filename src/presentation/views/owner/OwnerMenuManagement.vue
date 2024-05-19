@@ -9,14 +9,14 @@
             <p>Press to refresh</p>
         </div>
         <div v-else class="container">
-            <section v-for="( item ) in   getLatestsPlacesStore.GetLatestPlacesSuccess  " :key="item.id">
+            <section v-for="( place, index ) in   getLatestsPlacesStore.GetLatestPlacesSuccess  " :key="place.id">
                 <div class="information">
-                    <!-- <h1><span> Description:</span> {{ item.description }}</h1> -->
+                    <!-- <h1><span> Description:</span> {{ place.description }}</h1> -->
                     <h1><span>Menu</span> {{ }}</h1>
 
-                    <h1><span>Place name:</span> {{ item.name }}</h1>
-                    <h1><span>Type: </span> {{ item.type }}</h1>
-                    <!-- <h1><span>Loscation: </span> {{ item.location }}</h1> -->
+                    <h1><span>Place name:</span> {{ place.name }}</h1>
+                    <h1><span>Type: </span> {{ place.type }}</h1>
+                    <!-- <h1><span>Loscation: </span> {{ place.location }}</h1> -->
                 </div>
 
 
@@ -25,9 +25,9 @@
                     <!-- <p class="menuImageDialog" @click="[visible = true, visiblePlace(index)]">Place Image</p> -->
                     <div class="buttons-container">
 
-                        <button @click="[visibleUpdate = true, place_id = item.id]">Create</button>
-                        <button @click="[visibleAddTomenu = true, place_id = item.id]">Add To menu</button>
-                        <button @click="[visibleUpdate = true, place_id = item.id]">Delete</button>
+                        <button @click="[visibleUpdate = true, place_id = place.id]">Create</button>
+                        <button @click="[visibleAddTomenu = true, place_id = place.id]">Add To menu</button>
+                        <button @click="[visibleUpdate = true, place_id = place.id]">Delete</button>
 
 
                         <!-- <button @click="deletePlace(item.id)">Delete</button> -->
@@ -37,8 +37,8 @@
                 <div class="card overflow-hidden">
                     <Accordion :activeIndex="0" style=" font-size: larger; color: aliceblue; font-weight: bold;">
                         <AccordionTab header="View Menue">
-                            <div v-if="fetchedData">
-                                <FoodDataContainer :data="getLatestFoodStore.GetLatestFoodsSuccess" :place_id=place_id
+                            <div v-if="fetchedMenuData.length !== 0">
+                                <FoodDataContainer :data="fetchedMenuData[index]" :place_id=place_id
                                     @fetchdata="fetchData" />
                             </div>
                         </AccordionTab>
@@ -145,9 +145,12 @@ import FoodDataContainer from './FoodDataContainer.vue';
 import { CreateMenuStore } from '@/presentation/stores/Foods/CreateMenuStore';
 import { GetLatestsFoodsStore } from '@/presentation/stores/Foods/GetLatestFoodStore';
 import { CreateFoodStore } from '@/presentation/stores/Foods/CreateFoodStore';
-const visible = ref(false);
+import type { Food } from '@/domain/entities/Food';
+import type { Place } from '@/domain/entities/Place';
+import { toRaw } from 'vue';
+// const visible = ref(false);
 
-const imgUrl = ref();
+// const imgUrl = ref();
 
 
 //**************** CreateFood *************//
@@ -166,25 +169,26 @@ const createFood = async () => {
 
 
 
-//********** FETCH Places  ***************/
+//********** FETCH Places && Menu ***************/
 // let fetchedData: any;
 const getLatestsPlacesStore = GetLatestsPlacesStore();
-const getLatestFoodStore = GetLatestsFoodsStore()
+const getLatestFoodStore = GetLatestsFoodsStore();
 
-const fetchedData = ref()
+const fetchedMenuData = ref<any>([]);
 
 const fetchData = async (page: number = 1) => {
     const userId = cookieAdapter.getIdFromToken();
 
     getLatestsPlacesStore.$reset();
     await getLatestsPlacesStore.GetLatestPlaces({ page: page, is_verified: true, user_id: userId ?? "" });
-    // console.log(getLatestsPlacesStore.GetLatestPlacesSuccess)
-    const { id } = getLatestsPlacesStore.GetLatestPlacesSuccess[0];
-    place_id.value = id
 
-    await getLatestFoodStore.GetLatestFoods({ place_id: place_id.value });
-    // console.log(getLatestFoodStore.GetLatestFoodsSuccess)
-    fetchedData.value = getLatestFoodStore.GetLatestFoodsSuccess
+    for (const place of getLatestsPlacesStore.GetLatestPlacesSuccess) {
+        await getLatestFoodStore.GetLatestFoods({ place_id: place.id });
+        // console.log(toRaw(getLatestFoodStore.GetLatestFoodsSuccess));
+        fetchedMenuData.value.push(getLatestFoodStore.GetLatestFoodsSuccess);
+        // getLatestFoodStore.$reset();
+    }
+
 }
 
 

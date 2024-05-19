@@ -210,7 +210,8 @@ export class AppServiceClient {
             params: {
                 page: reqQuery.page,
                 type: reqQuery.type,
-                price: reqQuery.price
+                price: reqQuery.price,
+                place_id: reqQuery.place_id
             }
         })
     }
