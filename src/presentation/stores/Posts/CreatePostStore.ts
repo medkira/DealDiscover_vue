@@ -31,7 +31,7 @@ export const CreatePostStore = defineStore('CreatePostStore', {
             this.$reset();
         },
 
-        async CreatePost(data: { content: string, post_type: postType, postImage: File[] }) {
+        async CreatePost(data: { content: string, post_type: postType, postImage: File[], rate: number }) {
             this.CreatePostLoading = true;
             const failureOrSucess = await postRepository.createPost(data);
             failureOrSucess.fold(

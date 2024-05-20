@@ -35,6 +35,7 @@ export class PostRepository implements CreatePostRepository, GetLatestPostsRepos
             // mapping happens here
             const formData = new FormData();
             postData.postImage && formData.append('postImage', postData.postImage);
+            postData.rate && formData.append('rate', postData.rate);
             formData.append('content', postData.content);
             // formData.append('rate', rate.value);
             formData.append('post_type', postData.post_type);

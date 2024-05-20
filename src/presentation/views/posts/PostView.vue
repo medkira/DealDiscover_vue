@@ -32,14 +32,13 @@ const post_type = ref<any>();
 const content = ref('');
 const rate = ref(0);
 const image = ref();
-
 const createPostStore = CreatePostStore();
 
 
 
 var selectedFile;
 const submitPostRate = async () => {
-    await createPostStore.CreatePost({ content: content.value, post_type: post_type.value, postImage: image.value });
+    await createPostStore.CreatePost({ content: content.value, post_type: post_type.value, postImage: image.value, rate: rate.value });
 
     if (createPostStore.isCreatedPostSuccess) {
         showSuccess(createPostStore.getSuccessMessage as string);
@@ -259,7 +258,7 @@ const comments = ref();
 
                 <h2 class="post-text">{{ post.content }} </h2>
 
-                <Rating v-model="post.likes" :stars="7" :cancel="false" readonly />
+                <Rating v-model="post.rate" :stars="7" :cancel="false" readonly />
                 <div>
                     <PostButton @click="[visibleAddcomments = true, fetchComments(post.id)]" />
                 </div>
