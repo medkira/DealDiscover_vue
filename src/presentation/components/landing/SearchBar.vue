@@ -1,39 +1,54 @@
 <script setup lang="ts">
-import AutoComplete from 'primevue/autocomplete';
+import type { Place } from '@/domain/entities/Place';
+import router from '@/presentation/router';
+import { AutoCompletePlaceSearchStore } from '@/presentation/stores/Places/autoCompletePlaceSearchStore';
 // import TheWelcome from '@/presentation/components/TheWelcome.vue'
-import { toRaw, isProxy } from 'vue';
-import { ref, onMounted } from "vue";
-const handleSearch = async () => {
-};
+import { ref, watch } from "vue";
+import { date } from 'yup';
+// const handleSearch = async () => {
+// };
 
 
 
 // fetched data in array ob object(image, name)
-const data = [{ imageUrl: "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg", name: "test 0" },
-{ imageUrl: "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg", name: "test 1" }]
+// const data = [{ imageUrl: "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg", name: "test 0" },
+// { imageUrl: "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg", name: "test 1" }]
 
-// const testImgUrl = "https://res.cloudinary.com/dpbb1gfnc/image/upload/v1711029428/imjtuqledcy4zrkmfabr.jpg"
-const values = ref("");
-const items = ref<any[]>(["ok"]);
-const items1 = ref([{ post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 2 },
-{ post: 'Foo', user: "testUser", rate: 2 }, { post: 'Foo', user: "testUser", rate: 2 }])
+const items = ref<Place[]>([]);
+// const items1 = ref([{ post: 'Foo', user: "testUser", rate: 4 }, { post: 'Bar', user: "testUser", rate: 2 },
+// { post: 'Foo', user: "testUser", rate: 2 }, { post: 'Foo', user: "testUser", rate: 2 }])
 
-// items1.value = []
+
 
 
 // ? will take user input 
 // ? => will fetch data and map it in a arrayData of objects(imageUrl, name)
 const visibleList = ref(false);
+const query = ref('')
 
-const search = (event: any) => {
+const autoCompletePlaceSearchStore = AutoCompletePlaceSearchStore()
+
+
+const navigateTo = (id: string) => {
+    router.push({ name: 'place', params: { id: id } });
+}
+
+
+
+const search = async () => {
+    items.value = []
     visibleList.value = true;
     // api_service => data source => repository(evnt.query) : return data
-    console.log(event.data);
-    data.push(event.data) /// this will be replaced with searchStore.search
-    items1.value = [event.data, ...items1.value] // this wil be replace with searchStore.result
 
+    // data.push(event.data) /// this will be replaced with searchStore.search
+    await autoCompletePlaceSearchStore.autoCompletePlaceSearch({ query: query.value });
+    // data.push(autoCompletePlaceSearchStore.autoCompletePlaceSearchSuccess)
+
+    items.value = autoCompletePlaceSearchStore.autoCompletePlaceSearchSuccess // this wil be replace with searchStore.result
 
 }
+
+watch(query, search);
 
 const onClickAway = () => {
     visibleList.value = false;
@@ -49,9 +64,9 @@ const onClickAway = () => {
             class="search-container mt-7 mb-2 flex rounded-full bg-gray-800 shadow-md py-3 px-3 w-full max-w-screen-md mx-auto">
             <input @keyup.enter="search" type="search" name="search" id="search" class="px-4 focus:outline-none   w-full
         focus:ring-opacity-50  text-gray-300 bg-transparent
-         placeholder-gray-500" placeholder="Search" @input="search">
+         placeholder-gray-500" v-model="query" placeholder="Search">
 
-            <button @click="handleSearch" class="btn"> <svg viewBox="0 0 24 24" class="search__icon">
+            <button @click="search" class="btn"> <svg viewBox="0 0 24 24" class="search__icon">
                     <g>
                         <path
                             d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z">
@@ -61,13 +76,13 @@ const onClickAway = () => {
         </div>
 
         <ul v-if="items && visibleList" class="search-list" ref="divRef" v-click-away="onClickAway">
-            <li v-for="item in items1" :key="item.user" @click="handleSearch">
+            <li v-for="item in items" :key="item.name" @click="navigateTo(item.id)">
                 <div>
-                    image
+                    <img :src="item.placeImage as string" />
                 </div>
 
                 <h1>
-                    {{ item }}
+                    {{ item.name }}
 
                 </h1>
             </li>
@@ -127,10 +142,17 @@ const onClickAway = () => {
             }
 
             div {
-                width: 70px;
-                height: 70px;
-                border-radius: 10px;
-                background-color: #d2d6d9;
+                width: 25%;
+                height: 25%;
+                border-radius: 0.7rem;
+                // background-color: #d2d6d9;
+                object-fit: cover;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
             }
 
             h1 {
@@ -269,3 +291,30 @@ const search = (event) => {
 
 // items.value = [data.length].map((item) => event.query + '-' + data[item].name);
 // console.log(data.length) -->
+
+<!-- // !!!!!! what is this :) !!!!!!!!!!!!!!!!!
+// const search = async (event: any) => {
+
+//     if (event.inputType === "deleteContentBackward") {
+//         query.value = query.value.slice(0, -1)
+//     } else if (event.data !== undefined) {
+//         console.log(event)
+//         query.value = query.value + event.data
+//         console.log(query.value)
+//     }
+
+
+//     if (query.value) {
+//         items.value = []
+//         visibleList.value = true;
+//         // api_service => data source => repository(evnt.query) : return data
+
+//         // data.push(event.data) /// this will be replaced with searchStore.search
+//         await autoCompletePlaceSearchStore.autoCompletePlaceSearch({ query: query.value });
+//         // data.push(autoCompletePlaceSearchStore.autoCompletePlaceSearchSuccess)
+
+//         items.value = autoCompletePlaceSearchStore.autoCompletePlaceSearchSuccess // this wil be replace with searchStore.result
+//     }
+
+
+// } -->

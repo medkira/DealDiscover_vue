@@ -18,6 +18,7 @@ import type { CreateMenuRepository } from "@/domain/repository/menu/CreateMenuIn
 import type { UpdateUserInformationByIdRespository } from "@/domain/repository/user/UpdateUserInformationByIdInterface";
 import type { CreateCommentRepository } from "@/domain/repository/comments/CreateCommentInterface";
 import type { GetLatestCommentsRepository } from "@/domain/repository/comments/GetLatestCommentsInterface";
+import type { AutoCompletePlaceSearchRepository } from "@/domain/repository/places/AutoCompletePlaceSearchInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -243,6 +244,16 @@ export class AppServiceClient {
         return await this.http.post('/menu', createMenuRequest);
     }
 
+    // ? P L A C E  S E A R C H autocomplete
+
+    async autoCompletePlaceSearch(queryRequest: AutoCompletePlaceSearchRepository.Request) {
+        // console.log("from app api ", q)
+        return await this.http.get('/place/search/autocomplete', {
+            params: {
+                query: queryRequest.query,
+            }
+        })
+    }
 
 }
 

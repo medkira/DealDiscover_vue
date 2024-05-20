@@ -29,12 +29,15 @@ import type { UpdateUserInformationByIdRespository } from "@/domain/repository/u
 import type { LoadUserByIdRepository } from "@/domain/repository/user/LoadUserByIdInterface";
 import type { CreateCommentRepository } from "@/domain/repository/comments/CreateCommentInterface";
 import type { GetLatestCommentsRepository } from "@/domain/repository/comments/GetLatestCommentsInterface";
+import type { AutoCompletePlaceSearchRepository } from "@/domain/repository/places/AutoCompletePlaceSearchInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
+
+
 
 
     /***** Auth  *****/
@@ -119,12 +122,15 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
 
-    updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<AxiosResponse<UpdatePlaceRepository.Response, any>> {
-        return this._appServiceClient.updaPlcaById(updatePlaceRequest)
+    async updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<AxiosResponse<UpdatePlaceRepository.Response, any>> {
+        return await this._appServiceClient.updaPlcaById(updatePlaceRequest)
     }
 
+    // * place search autocomplete //*
 
-
+    async autoCompletePlaceSearch(queryRequest: AutoCompletePlaceSearchRepository.Request): Promise<AxiosResponse<AutoCompletePlaceSearchRepository.Response>> {
+        return await this._appServiceClient.autoCompletePlaceSearch(queryRequest);
+    }
     //* Foods 
     async getLatestFoods(getLatestFoodsRequest: GetLatesFoodsRepository.Request): Promise<AxiosResponse<GetLatesFoodsRepository.Response, any>> {
         return await this._appServiceClient.getFoodsQuery(getLatestFoodsRequest);
@@ -139,8 +145,8 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     }
 
 
-    updateFood(updateFoodRequest: UpdateFoodRepository.Request): Promise<AxiosResponse<UpdateFoodRepository.Response, any>> {
-        return this._appServiceClient.updaFoodById(updateFoodRequest)
+    async updateFood(updateFoodRequest: UpdateFoodRepository.Request): Promise<AxiosResponse<UpdateFoodRepository.Response, any>> {
+        return await this._appServiceClient.updaFoodById(updateFoodRequest)
     }
 
     async getFoodById(id: string): Promise<AxiosResponse<GetFoodByIdRepository.Response>> {
@@ -257,6 +263,10 @@ export interface RemoteDataSource {
 
     // * Menu *//
     createMenu(createMenuRequest: CreateMenuRepository.Request): Promise<AxiosResponse<CreateMenuRepository.Response>>
+
+    // * P L A C E  S E A R C H autocomplete *//
+    autoCompletePlaceSearch(queryRequest: AutoCompletePlaceSearchRepository.Request): Promise<AxiosResponse<AutoCompletePlaceSearchRepository.Response>>;
+
 }
 
 

@@ -9,6 +9,7 @@ import type { CreatePlaceRepository } from "@/domain/repository/places/CreatePla
 import type { DeletePlaceRepository } from "@/domain/repository/places/DeletePlaceInterface";
 import type { ValidationPlaceContributionByIdRepository } from "@/domain/repository/places/ValidationPlaceContributionByIdInterface";
 import type { UpdatePlaceRepository } from "@/domain/repository/places/UpdatePlaceInterface";
+import type { AutoCompletePlaceSearchRepository } from "@/domain/repository/places/AutoCompletePlaceSearchInterface";
 
 
 
@@ -19,10 +20,27 @@ export class PlaceRepository implements
     CreatePlaceRepository,
     DeletePlaceRepository,
     ValidationPlaceContributionByIdRepository,
-    UpdatePlaceRepository {
+    UpdatePlaceRepository,
+    AutoCompletePlaceSearchRepository {
     constructor(
         public readonly remoteDataSource: RemoteDataSource
     ) { }
+
+
+    async autoCompletePlaceSearch(params: AutoCompletePlaceSearchRepository.Request): Promise<AutoCompletePlaceSearchRepository.Response> {
+        try {
+            const response: AxiosResponse = await this.remoteDataSource.autoCompletePlaceSearch({ query: params.query });
+
+            return Either.right(response.data);
+
+        } catch (error) {
+            const errorHandler = new ErrorHandler(error);
+            const failure: Failure = errorHandler.failure;
+
+
+            return Either.left(failure);
+        }
+    }
     async updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<UpdatePlaceRepository.Response> {
         try {
 

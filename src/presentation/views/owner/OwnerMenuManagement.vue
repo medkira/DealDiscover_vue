@@ -27,7 +27,7 @@
 
                         <button @click="[visibleUpdate = true, place_id = place.id]">Create</button>
                         <button @click="[visibleAddTomenu = true, place_id = place.id]">Add To menu</button>
-                        <button @click="[visibleUpdate = true, place_id = place.id]">Delete</button>
+                        <button @click="[deleteMenu(place.id)]">Delete</button>
 
 
                         <!-- <button @click="deletePlace(item.id)">Delete</button> -->
@@ -104,7 +104,7 @@
                     <label for="Price" class="text-primary-50 font-semibold">Price</label>
                     <InputText id="Price" class="bg-white/90 border-0 p-4 text-primary-50" v-model="priceInput" />
                     <div class="uploadInput">
-                        <label for="file" v-bind:textContent="fileNameLabel()" />
+                        <label for="file" v-bind:textContent="fileNameLabelFood()" />
                         <input v-on:change="customUploader" type="file">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                             stroke="currentColor" aria-hidden="true">
@@ -148,6 +148,7 @@ import { CreateFoodStore } from '@/presentation/stores/Foods/CreateFoodStore';
 import type { Food } from '@/domain/entities/Food';
 import type { Place } from '@/domain/entities/Place';
 import { toRaw } from 'vue';
+import { DeleteFoodStore } from '@/presentation/stores/Foods/DeleteFoodStore';
 // const visible = ref(false);
 
 // const imgUrl = ref();
@@ -177,6 +178,7 @@ const getLatestFoodStore = GetLatestsFoodsStore();
 const fetchedMenuData = ref<any>([]);
 
 const fetchData = async (page: number = 1) => {
+    fetchedMenuData.value = [];
     const userId = cookieAdapter.getIdFromToken();
 
     getLatestsPlacesStore.$reset();
@@ -190,9 +192,6 @@ const fetchData = async (page: number = 1) => {
     }
 
 }
-
-
-
 //*********************************************//
 
 
@@ -212,9 +211,32 @@ const createMenu = async () => {
         showSuccess(createMenuStore.CreateMenuStatusMessage!);
         resetStates();
     }
-    fetchData();
+    await fetchData();
 }
 
+//*********************************************//
+
+
+const deleteFoodSotre = DeleteFoodStore();
+//***************** DELETE MENU **********************//
+const deleteMenu = async (placeId: string) => {
+
+
+    await getLatestFoodStore.GetLatestFoods({ place_id: placeId });
+    // console.log(toRaw(getLatestFoodStore.GetLatestFoodsSuccess));
+    const foods = getLatestFoodStore.GetLatestFoodsSuccess
+
+    for (const food of foods) {
+        // console.log(toRaw(getLatestFoodStore.GetLatestFoodsSuccess));
+        await deleteFoodSotre.DeleteFoodById(food.id);
+
+    }
+
+    fetchData();
+
+}
+
+//*********************************************//
 
 
 const visibleAddTomenu = ref(false);
@@ -239,6 +261,9 @@ const customUploader = async (event: any) => {
 
 const fileNameLabel = () => {
     return menuImage.value ? `Selected: ${menuImage.value.name}` : 'Upload your menu image';
+}
+const fileNameLabelFood = () => {
+    return menuImage.value ? `Selected: ${menuImage.value.name}` : 'Upload Food image';
 }
 
 const toast = useToast();
