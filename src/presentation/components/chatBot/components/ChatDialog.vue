@@ -273,6 +273,7 @@ const onDialogBeforeHide = async () => {
       </div>
     </template>
     <template #footer>
+
       <div class="flex">
         <InputTextWithValidation v-on:keyup.enter="onSubmit" name="message" :placeholder="'enter a message'"
           style="width: 310px" />
@@ -314,13 +315,13 @@ const onDialogBeforeHide = async () => {
   color: black;
   transition: all 0.4s;
 
-  &:focus,
-  &:active {
-    color: rgb(74, 168, 222);
-  }
+  // &:focus,
+  // &:active {
+  //   color: rgb(74, 168, 222);
+  // }
 
-  &:hover {
-    color: rgb(74, 168, 222);
-  }
+  // &:hover {
+  //   color: rgb(74, 168, 222);
+  // }
 }
 </style>

@@ -34,21 +34,13 @@ const props = defineProps({
 
 const { errorMessage, value } = useField<string>(toRef(props, 'name'))
 </script>
-  
+
 <template>
   <div class="block">
     <label class="flex mb-2" :for="name" :class="labelClass">{{ label }}</label>
-    <InputText
-      :id="id"
-      class="block w-full"
-      v-model.trim="value"
-      :aria-describedby="`${name}-help`"
-      :class="{ 'p-invalid': errorMessage }"
-      :type="type"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :maxlength="maxLength"
-    />
+    <InputText :id="id" class="block w-full" v-model.trim="value" :aria-describedby="`${name}-help`"
+      :class="{ 'p-invalid': errorMessage }" :type="type" :placeholder="placeholder" :disabled="disabled"
+      :maxlength="maxLength" />
     <small :id="`${name}-help`" class="p-error text-xs">{{ errorMessage }}</small>
   </div>
 </template>
@@ -57,6 +49,7 @@ const { errorMessage, value } = useField<string>(toRef(props, 'name'))
 .p-inputtext {
   font-family: Roboto;
   height: 3.5rem;
+
   &:focus,
   &:active {
     border-color: var(--green-500x);
@@ -70,6 +63,7 @@ const { errorMessage, value } = useField<string>(toRef(props, 'name'))
   &:disabled {
     border: 1px solid #cccccc !important;
     background-color: #ececec;
+
     &:active {
       box-shadow: none;
     }

@@ -13,6 +13,7 @@ export type PostProps = {
   totalComments: number;
   rate: number;
 
+
 };
 
 export class Post {

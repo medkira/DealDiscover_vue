@@ -75,7 +75,9 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
 
 
         <div class="containerInputs">
-
+            <div v-if="createPlaceStore.CreatePlaceFailure" class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50">
+                {{ createPlaceStore.getFailureMessage }}
+            </div>
             <section>
                 <label for="role" class="text-primary-50 font-semibold">Type</label>
                 <Dropdown id="role" v-model="selectedType" :options="roleOptions" placeholder="Select a Role"
@@ -83,8 +85,8 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
                 </Dropdown>
             </section>
             <section>
-                <label for="Name" class="text-primary-50 font-semibold">Name</label>
-                <InputText id="Name" class="bg-white/20 border-0 p-4 text-primary-50" v-model="nameInput" />
+                <label for="Name" class="text-primary-50 font-semibold">Place name</label>
+                <InputText id="Name" class="bg-white/20 border-0 p-4 text-primary-50" v-model="nameInput" invalid />
             </section>
 
             <section>
@@ -127,10 +129,10 @@ const showSuccess = (msg: string) => { // i dont like this logic beeing handel h
         </div>
 
         <Dialog :close-on-escape="true" :dismissable-mask="true" v-model:visible="visibleLoadingDialog" modal :pt="{
-                    mask: {
-                        style: 'backdrop-filter: blur(2px)'
-                    }
-                }">
+                mask: {
+                    style: 'backdrop-filter: blur(2px)'
+                }
+            }">
             <template #container="{ }">
                 <!-- LOADING VIEW -->
                 <div class="bg-[#2980b9] p-[200px] rounded-2xl flex flex-col items-center justify-between">

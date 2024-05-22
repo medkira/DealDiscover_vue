@@ -123,7 +123,7 @@ const fetchData = async () => {
     await getLatestsPostsStore.GetLatestPosts({ page: 1 })
     const data = getLatestsPostsStore.GetLatestPostsSuccess
     items.value = toRaw(data)
-    // console.log(toRaw(data))
+    console.log(toRaw(data))
 };
 
 onMounted(() => {
@@ -171,10 +171,11 @@ const comments = ref();
                     <!-- CREATE POST FORM -->
                     <div v-else class="flex flex-col px-10 py-7 gap-5 "
                         style="border-radius: 12px; background: #2980b9;">
-                        <!-- <div v-if="logingStore.loginStatusMessage"
-                                class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50">
-                                {{ logingStore.loginStatusMessage }}
-                            </div> -->
+
+                        <div v-if="createPostStore.CreatePostFailure"
+                            class="p-4 my-4 text-sm text-red-800 rounded-lg bg-red-50">
+                            {{ createPostStore.getFailureMessage }}
+                        </div>
                         <div class="inline-flex flex-col gap-2">
                             <label for="post type" class="text-primary-50 font-semibold">Post type</label>
                             <InputText v-model="post_type" id="post type"
@@ -242,12 +243,15 @@ const comments = ref();
         <h1 class="title">Latest Post-Rates</h1>
         <div class="posts-container">
 
-            <div class="post-container" v-for="(  post  ) in    getLatestsPostsStore.GetLatestPostsSuccess   "
+            <div class="post-container" v-for="(  post ) in    getLatestsPostsStore.GetLatestPostsSuccess   "
                 :key="post.id">
 
                 <!-- "/src/presentation/resources/images/Beach/bizerteBeach.jpg"  -->
                 <!-- <img clas="tes" :src=post.postImage[0] alt="post rate image" loading="lazy"> -->
-                <img clas="tes" :src=post.postImage alt="post rate image" loading="lazy">
+
+                <img v-if="post.postImage.length !== 0" clas="tes" :src=post.postImage alt="no image" loading="lazy">
+                <img v-else clas="tes" src="/src/presentation/resources/images/Beach/bizerteBeach.jpg"
+                    alt="/src/presentation/resources/images/Beach/bizerteBeach.jpg" loading="lazy">
 
 
 
@@ -255,6 +259,7 @@ const comments = ref();
                     <Avatar class=" Avatar " size="large" shape="circle" />
                     <h1>{{ post.user_name }}</h1>
                 </div>
+                <h1 class="post-text font-bold">{{ post.post_type }} </h1>
 
                 <h2 class="post-text">{{ post.content }} </h2>
 
@@ -287,8 +292,9 @@ const comments = ref();
 
                     <!-- Post content -->
                     <div class="flex flex-col gap-2 mb-4">
-                        <h2 class="text-lg font-bold text-primary-50">Post Title</h2>
-                        <p class="text-sm text-primary-50">Post content...</p>
+                        <h2 class="text-lg font-bold text-primary-50">{{ getLatestsPostsStore.GetLatestPostsSuccess
+                .find(item => item.id === selectedPostId)?.post_type }}</h2>
+                        <!-- <p class="text-sm text-primary-50">Post content...</p> -->
                         <!-- <img class="h-[300px] w-[300px]" src="/src/presentation/resources/images/Beach/bizerteBeach.jpg"
                             alt="" loading="lazy"> -->
 
