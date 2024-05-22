@@ -17,9 +17,9 @@ const dataHotel = ref();
 const getPlacesStore = GetLatestsPlacesStore();
 
 const fetchData = async () => {
-  await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.beach })
+  await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.beach, is_verified: true })
   dataBeach.value = getPlacesStore.GetLatestPlacesSuccess;
-  await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.hotel })
+  await getPlacesStore.GetLatestPlaces({ page: 1, type: placeTypes.hotel, is_verified: true })
   dataHotel.value = getPlacesStore.GetLatestPlacesSuccess;
   // console.log("from place ", dataHotel.value);
 

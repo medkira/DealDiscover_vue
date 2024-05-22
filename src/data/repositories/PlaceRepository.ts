@@ -10,6 +10,7 @@ import type { DeletePlaceRepository } from "@/domain/repository/places/DeletePla
 import type { ValidationPlaceContributionByIdRepository } from "@/domain/repository/places/ValidationPlaceContributionByIdInterface";
 import type { UpdatePlaceRepository } from "@/domain/repository/places/UpdatePlaceInterface";
 import type { AutoCompletePlaceSearchRepository } from "@/domain/repository/places/AutoCompletePlaceSearchInterface";
+import type { DataScrapingByUrlRepository } from "@/domain/repository/dataScraping/DataScrapingInterface";
 
 
 
@@ -21,10 +22,27 @@ export class PlaceRepository implements
     DeletePlaceRepository,
     ValidationPlaceContributionByIdRepository,
     UpdatePlaceRepository,
-    AutoCompletePlaceSearchRepository {
+    AutoCompletePlaceSearchRepository,
+    DataScrapingByUrlRepository {
     constructor(
         public readonly remoteDataSource: RemoteDataSource
     ) { }
+    async dataScrape(parmas: DataScrapingByUrlRepository.Request): Promise<DataScrapingByUrlRepository.Response> {
+        try {
+            // console.log(params)
+            // mapping happens here
+            const response: AxiosResponse = await this.remoteDataSource.dataScrapingPlace(parmas);
+
+            return Either.right(response.data);
+
+        } catch (error) {
+            const errorHandler = new ErrorHandler(error);
+            const failure: Failure = errorHandler.failure;
+
+
+            return Either.left(failure);
+        }
+    }
 
 
     async autoCompletePlaceSearch(params: AutoCompletePlaceSearchRepository.Request): Promise<AutoCompletePlaceSearchRepository.Response> {

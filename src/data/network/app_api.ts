@@ -19,6 +19,7 @@ import type { UpdateUserInformationByIdRespository } from "@/domain/repository/u
 import type { CreateCommentRepository } from "@/domain/repository/comments/CreateCommentInterface";
 import type { GetLatestCommentsRepository } from "@/domain/repository/comments/GetLatestCommentsInterface";
 import type { AutoCompletePlaceSearchRepository } from "@/domain/repository/places/AutoCompletePlaceSearchInterface";
+import type { DataScrapingByUrlRepository } from "@/domain/repository/dataScraping/DataScrapingInterface";
 export class AppServiceClient {
     constructor(
         private readonly http: AxiosInstance
@@ -254,6 +255,8 @@ export class AppServiceClient {
             }
         })
     }
-
+    async dataScraping(params: DataScrapingByUrlRepository.Request) {
+        return await this.http.post('/dataScraping', params)
+    }
 }
 

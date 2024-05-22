@@ -16,6 +16,7 @@ const visible = ref(true);
                     <RouterLink to="/admin/ImageContributions">Images</RouterLink>
                     <RouterLink to="/admin/adminPlacesManagement">Places</RouterLink>
                     <RouterLink to="/admin/usersManagement">Users</RouterLink>
+                    <RouterLink to="/admin/scrapedDataPlacesMangement">sraped data</RouterLink>
 
                     <!-- <RouterLink to="/foods">Foods</RouterLink>
                     <RouterLink to="/posts">Posts</RouterLink> -->

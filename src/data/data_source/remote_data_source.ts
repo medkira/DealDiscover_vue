@@ -30,15 +30,13 @@ import type { LoadUserByIdRepository } from "@/domain/repository/user/LoadUserBy
 import type { CreateCommentRepository } from "@/domain/repository/comments/CreateCommentInterface";
 import type { GetLatestCommentsRepository } from "@/domain/repository/comments/GetLatestCommentsInterface";
 import type { AutoCompletePlaceSearchRepository } from "@/domain/repository/places/AutoCompletePlaceSearchInterface";
+import type { DataScrapingByUrlRepository } from "@/domain/repository/dataScraping/DataScrapingInterface";
 
 export class RemoteDataSourceImpl implements RemoteDataSource {
 
     constructor(
         private readonly _appServiceClient: AppServiceClient
     ) { }
-
-
-
 
     /***** Auth  *****/
 
@@ -125,6 +123,15 @@ export class RemoteDataSourceImpl implements RemoteDataSource {
     async updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<AxiosResponse<UpdatePlaceRepository.Response, any>> {
         return await this._appServiceClient.updaPlcaById(updatePlaceRequest)
     }
+
+    async dataScrapingPlace(params: DataScrapingByUrlRepository.Request): Promise<AxiosResponse<DataScrapingByUrlRepository.Response, any>> {
+        return await this._appServiceClient.dataScraping(params)
+    }
+
+
+
+
+
 
     // * place search autocomplete //*
 
@@ -234,6 +241,7 @@ export interface RemoteDataSource {
     deletePlace(id: DeletePlaceRepository.Request): Promise<AxiosResponse<DeletePlaceRepository.Response>>;
     acceptPlace(id: ValidationPlaceContributionByIdRepository.Request): Promise<AxiosResponse<ValidationPlaceContributionByIdRepository.Response>>;
     updatePlace(updatePlaceRequest: UpdatePlaceRepository.Request): Promise<AxiosResponse<UpdatePlaceRepository.Response>>;
+    dataScrapingPlace(params: DataScrapingByUrlRepository.Request): Promise<AxiosResponse<DataScrapingByUrlRepository.Response>>
 
 
     //* Food */ 

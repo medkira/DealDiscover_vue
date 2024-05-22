@@ -28,7 +28,7 @@ import OwnerMenuManagement from '../views/owner/OwnerMenuManagement.vue';
 import ProfileManagement from '../views/settings/ProfileManagement.vue';
 import SettingsLayout from '../views/settings/layout/settingsLayout.vue';
 import ActivityLogs from '../views/settings/ActivityLogs.vue';
-
+import ScrapedDataPlacesMangement from '../views/admin/ScrapedDataPlacesMangement.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -124,18 +124,21 @@ const router = createRouter({
           name: 'usersManagement',
           component: UsersManagements
         },
+        {
+          path: 'scrapedDataPlacesMangement',
+          name: 'scrapedDataPlacesMangement',
+          component: ScrapedDataPlacesMangement
+        },
         // Add more admin child routes here
       ]
     },
 
-    // Owner routes (assuming similar structure as admin)
     {
       path: '/owner',
       name: 'owner',
       // component: DashBoard,
       meta: { layout: OwnerLayout },
       children: [
-        // Add owner child routes here
         {
           path: 'placesManagement',
           name: 'placesManagement',
