@@ -16,6 +16,7 @@ import { GetFavouritePlaceStore } from '@/presentation/stores/Places/GetFavourit
 import { toRaw } from 'vue';
 import UploadImageButton from './UploadImageButton.vue';
 import GalleryCards from './GalleryCards.vue';
+import { AuthenticationStore } from '@/presentation/stores/Auth/AuthenticationStore';
 const route = useRoute();
 const placeId = ref()
 placeId.value = route.params.id as string;
@@ -91,6 +92,7 @@ onBeforeUnmount(() => {
     getFavouritePlace.$reset();
 })
 
+const authenticationStore = AuthenticationStore();
 
 
 </script>
@@ -104,7 +106,7 @@ onBeforeUnmount(() => {
             <section>
                 <h1>{{ getPlaceByIdStore.placeData.name }}</h1>
                 <!-- <div class="pi pi-heart-fill" style="font-size: 3rem"></div> -->
-                <div>
+                <div v-if="authenticationStore.isLoggedIn">
                     <p style="text-align: center;">Add favourite</p>
 
                     <LikeButton :is-checked=isChecked @add="addToFavourites" @remove="removeFromFavourites" />
@@ -135,7 +137,7 @@ onBeforeUnmount(() => {
                 <p>{{ getPlaceByIdStore.placeData.location }}</p>
 
             </div>
-            <div class="contribute">
+            <div class="contribute" v-if="authenticationStore.isLoggedIn">
                 <h1>Contribute</h1>
 
                 <div class="contribute-buttons">
@@ -154,7 +156,7 @@ onBeforeUnmount(() => {
             <div class="reviews-qa">
                 <h1>Reviews</h1>
                 <div class="posts-container">
-                    <div class="post-container" v-for="(   item   ) in     getLatestsRatesStore.getReviews"
+                    <div class="post-container" v-for="(   item   ) in getLatestsRatesStore.getReviews"
                         :key="item.rate">
 
                         <div class="user-container">

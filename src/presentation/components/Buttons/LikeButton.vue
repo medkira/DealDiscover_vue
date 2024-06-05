@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import { AuthenticationStore } from '@/presentation/stores/Auth/AuthenticationStore';
 import { ref } from 'vue';
 const props = defineProps<({
     isChecked: any
@@ -17,13 +18,14 @@ const check = () => {
     }
 }
 
+const authenticationStore = AuthenticationStore();
 
 
 
 // getFavouritesPlaces();
 </script>
 <template>
-    <div>
+    <div v-if="authenticationStore.isLoggedIn">
         <label class="container">
             <input :checked="props.isChecked" type="checkbox" @click="check">
             <div class="checkmark">

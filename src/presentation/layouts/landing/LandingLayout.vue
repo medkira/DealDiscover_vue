@@ -205,7 +205,6 @@ const openPosition = (pos: any) => {
 
 
 
-
 // header {
 //   z-index: 1;
 //   position: fixed;

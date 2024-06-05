@@ -22,6 +22,7 @@ import { GetLatestsCommentsStore } from "@/presentation/stores/Comments/GetLates
 import { CreateCommentStore } from "@/presentation/stores/Comments/CreateCommentStore";
 import { NormalUser } from "@/domain/entities/NormalUser";
 import type { Comment } from "@/domain/entities/Comment";
+import { AuthenticationStore } from "@/presentation/stores/Auth/AuthenticationStore";
 
 const visibleAddPostDialog = ref(false);
 const visibleAddcomments = ref(false)
@@ -129,6 +130,7 @@ const fetchData = async () => {
 onMounted(() => {
     fetchData();
 })
+const authenticationStore = AuthenticationStore();
 //****************************************************************************** */
 
 
@@ -144,7 +146,7 @@ const comments = ref();
 
     <main>
 
-        <div class="do-post-container">
+        <div class="do-post-container" v-if="authenticationStore.isLoggedIn">
             <LookingEyes />
 
             <h1 class="text-[#f6f6f6]">Waiting for your Post-Rate! </h1>
@@ -235,6 +237,7 @@ const comments = ref();
             </Dialog>
 
         </div>
+        <div v-else class="mt-10"></div>
 
 
 
@@ -243,7 +246,7 @@ const comments = ref();
         <h1 class="title">Latest Post-Rates</h1>
         <div class="posts-container">
 
-            <div class="post-container" v-for="(  post ) in    getLatestsPostsStore.GetLatestPostsSuccess   "
+            <div class="post-container" v-for="(  post ) in getLatestsPostsStore.GetLatestPostsSuccess   "
                 :key="post.id">
 
                 <!-- "/src/presentation/resources/images/Beach/bizerteBeach.jpg"  -->
@@ -293,7 +296,7 @@ const comments = ref();
                     <!-- Post content -->
                     <div class="flex flex-col gap-2 mb-4">
                         <h2 class="text-lg font-bold text-primary-50">{{ getLatestsPostsStore.GetLatestPostsSuccess
-                .find(item => item.id === selectedPostId)?.post_type }}</h2>
+                            .find(item => item.id === selectedPostId)?.post_type }}</h2>
                         <!-- <p class="text-sm text-primary-50">Post content...</p> -->
                         <!-- <img class="h-[300px] w-[300px]" src="/src/presentation/resources/images/Beach/bizerteBeach.jpg"
                             alt="" loading="lazy"> -->
